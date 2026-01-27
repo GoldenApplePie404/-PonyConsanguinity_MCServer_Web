@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面标题 - 万驹同源</title>
+    
+    <!-- ========== CSS样式文件引入 ========== -->
+    <link rel="stylesheet" href="../css/style.css?v=3.22">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <link rel="stylesheet" href="../css/back-to-top.css?v=1.0">
+    
+    <!-- ========== 页面特定样式 ========== -->
+    <style>
+        /* 在这里添加页面特定的CSS样式 */
+        /* 例如：.custom-class { ... } */
+    </style>
+</head>
+<!-- ========== body标签中的data-components属性 ========== -->
+<!-- 可用组件：sidebarPlayer, backToTop, navbar, footer -->
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- ========== 导航栏组件 ========== -->
+    <div id="app-navbar"></div>
+
+    <!-- ========== Banner区域（可选） ========== -->
+    <!-- 如果页面需要Banner，使用以下代码 -->
+    <section class="subpage-banner">
+        <div class="subpage-banner-bg"></div>
+        <div class="subpage-banner-particles"></div>
+        <div class="container">
+            <div class="subpage-banner-content">
+                <h1 class="subpage-banner-title">页面标题</h1>
+                <p class="subpage-banner-subtitle">副标题描述</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 主要内容区域 ========== -->
+    <div class="section">
+        <div class="container">
+            <!-- 在这里添加页面主要内容 -->
+            <!-- 示例：卡片布局 -->
+            <div class="card fade-in">
+                <div class="card-header">
+                    <h2>卡片标题</h2>
+                </div>
+                <div class="card-body">
+                    <p>卡片内容...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 页脚组件 ========== -->
+    <div id="app-footer"></div>
+
+    <!-- ========== 回到顶部组件占位符 ========== -->
+    <div id="app-back-to-top"></div>
+
+    <!-- ========== 音乐播放器组件占位符 ========== -->
+    <div id="app-sidebar-player"></div>
+
+    <!-- ========== JavaScript脚本引入 ========== -->
+    <!-- 注意：引入顺序很重要，必须按照以下顺序 -->
+    
+    <!-- 1. API工具库（如果需要） -->
+    <script src="../js/api.js"></script>
+    
+    <!-- 2. 主脚本（包含常用函数） -->
+    <script src="../js/main.js?v=3.5"></script>
+    
+    <!-- 3. 回到顶部脚本 -->
+    <script src="../js/back-to-top.js?v=1.0"></script>
+    
+    <!-- 4. 导航栏脚本 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    
+    <!-- 5. 音乐播放器脚本 -->
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    
+    <!-- 6. 组件加载器 -->
+    <script src="../components/loader.js?v=3.0"></script>
+
+    <!-- ========== 页面特定脚本 ========== -->
+    <script>
+        // 在这里添加页面特定的JavaScript代码
+        document.addEventListener('DOMContentLoaded', () => {
+            // 页面加载完成后执行的代码
+            console.log('页面加载完成');
+        });
+    </script>
+
+</body>
+</html>
