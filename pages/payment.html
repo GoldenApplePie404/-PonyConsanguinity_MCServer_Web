@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值中心 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.19">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .vip-section {
+            padding: 60px 0;
+        }
+
+        .vip-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .vip-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .vip-card.featured {
+            border: 3px solid var(--accent-color);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .vip-badge.gold {
+            background-color: #ffd700;
+            color: #333;
+        }
+
+        .vip-badge.diamond {
+            background-color: #b9f2ff;
+            color: #333;
+        }
+
+        .vip-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .vip-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .vip-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .vip-period {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .vip-features {
+            text-align: left;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .vip-features ul {
+            list-style: none;
+        }
+
+        .vip-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vip-features li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .btn-vip {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-vip-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-vip-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+        }
+
+        .btn-vip-diamond {
+            background: linear-gradient(135deg, #b9f2ff 0%, #76ddff 100%);
+            color: #333;
+        }
+
+        .btn-vip:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-methods {
+            padding: 60px 0;
+            background-color: var(--light-bg);
+        }
+
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .payment-method {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: #f0fff0;
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .payment-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .faq-section {
+            padding: 60px 0;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .notice-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+
+        .notice-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .notice-box ul {
+            color: #856404;
+            padding-left: 20px;
+        }
+
+        .notice-box li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .vip-price {
+                font-size: 2rem;
+            }
+
+            .vip-levels {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <!-- 充值页面Banner区域 -->
+    <section class="subpage-banner">
+        <div class="subpage-banner-bg"></div>
+        <div class="subpage-banner-particles"></div>
+        <div class="container">
+            <div class="subpage-banner-content">
+                <h1 class="subpage-banner-title">充值中心</h1>
+                <p class="subpage-banner-subtitle">开通会员 · 享受特权 · 尊享服务</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会员等级 -->
+    <section class="vip-section">
+        <div class="container">
+            <h2 class="section-title fade-in">会员套餐</h2>
+            <div class="vip-levels">
+                <div class="vip-card fade-in-delay-1">
+                    <div class="vip-icon">🥉</div>
+                    <h3 class="vip-title">月卡会员</h3>
+                    <div class="vip-price">¥30</div>
+                    <div class="vip-period">/ 30天</div>
+                    <div class="vip-features">
+                        <ul>
+                            <li>专属称号【月卡】</li>
+                            <li>每日签到额外奖励</li>
+                            <li>优先进入服务器</li>
+                            <li>背包容量+50</li>
+                            <li>死亡不掉落50%物品</li>
+                        </ul>
+                    </div>
+                    <button class="btn-vip btn-vip-primary" onclick="selectPackage('month')">立即开通</button>
+                </div>
+
+                <div class="vip-card featured fade-in-delay-2">
+                    <div class="vip-badge gold">推荐</div>
+                    <div class="vip-icon">🥈</div>
+                    <h3 class="vip-title">季卡会员</h3>
+                    <div class="vip-price">¥80</div>
+                    <div class="vip-period">/ 90天（省¥10）</div>
+                    <div class="vip-features">
+                        <ul>
+                            <li>专属称号【季卡】</li>
+                            <li>包含月卡所有特权</li>
+                            <li>专属宠物【小火龙】</li>
+                            <li>背包容量+100</li>
+                            <li>死亡不掉落100%物品</li>
+                            <li>每周金币+5000</li>
+                            <li>优先客服支持</li>
+                        </ul>
+                    </div>
+                    <button class="btn-vip btn-vip-gold" onclick="selectPackage('season')">立即开通</button>
+                </div>
+
+                <div class="vip-card fade-in-delay-3">
+                    <div class="vip-badge diamond">超值</div>
+                    <div class="vip-icon">🥇</div>
+                    <h3 class="vip-title">年卡会员</h3>
+                    <div class="vip-price">¥280</div>
+                    <div class="vip-period">/ 365天（省¥80）</div>
+                    <div class="vip-features">
+                        <ul>
+                            <li>专属称号【年卡】</li>
+                            <li>包含季卡所有特权</li>
+                            <li>专属翅膀【幻影之翼】</li>
+                            <li>背包容量+200</li>
+                            <li>死亡不掉落100%物品</li>
+                            <li>每周金币+10000</li>
+                            <li>专属飞行权限</li>
+                            <li>参与VIP专属活动</li>
+                            <li>24小时优先客服</li>
+                        </ul>
+                    </div>
+                    <button class="btn-vip btn-vip-diamond" onclick="selectPackage('year')">立即开通</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 支付方式 -->
+    <section class="payment-methods">
+        <div class="container">
+            <h2 class="section-title">支付方式</h2>
+            <div class="payment-methods-grid">
+                <div class="payment-method" onclick="selectPayment('alipay')">
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-name">支付宝</div>
+                </div>
+                <div class="payment-method" onclick="selectPayment('wechat')">
+                    <div class="payment-icon">💬</div>
+                    <div class="payment-name">微信支付</div>
+                </div>
+                <div class="payment-method" onclick="selectPayment('qq')">
+                    <div class="payment-icon">🐧</div>
+                    <div class="payment-name">QQ钱包</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 充值说明 -->
+    <div class="container">
+        <div class="notice-box">
+            <h3>⚠️ 充值须知</h3>
+            <ul>
+                <li>充值后会员特权即时生效，有效期从充值成功时开始计算</li>
+                <li>会员不支持退款，请谨慎选择套餐</li>
+                <li>如充值后未到账，请联系客服处理（提供充值订单号）</li>
+                <li>严禁使用外挂、脚本等非法方式获取金币，一经发现永久封禁</li>
+                <li>最终解释权归服务器所有</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 常见问题 -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">常见问题</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">Q: 充值后多久到账？</div>
+                    <div class="faq-answer">A: 正常情况下，充值成功后5分钟内到账。如超过30分钟未到账，请联系客服。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 会员可以叠加购买吗？</div>
+                    <div class="faq-answer">A: 可以。购买新的会员时长会叠加到现有有效期上。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 会员期间服务器关闭怎么办？</div>
+                    <div class="faq-answer">A: 会员有效期不受服务器关闭影响，重新开放后继续计算。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 如何联系客服？</div>
+                    <div class="faq-answer">A: QQ群：569208814 或 发送邮件至 czhdqqyx6044@qq.com</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.4"></script>
+    <script>
+        let selectedPackage = null;
+        let selectedPayment = null;
+
+        function selectPackage(pkg) {
+            selectedPackage = pkg;
+            const packageName = {
+                'month': '月卡会员 - ¥30',
+                'season': '季卡会员 - ¥80',
+                'year': '年卡会员 - ¥280'
+            }[pkg];
+
+            showToast('已选择套餐：' + packageName + '\n请选择支付方式继续', 'success');
+            document.querySelector('.payment-methods').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectPayment(method) {
+            if (!selectedPackage) {
+                showToast('请先选择会员套餐', 'error');
+                return;
+            }
+
+            selectedPayment = method;
+
+            // 高亮选中的支付方式
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            processPayment(method, selectedPackage);
+        }
+
+        function processPayment(method, packageId) {
+            const packageName = {
+                'month': '月卡会员 - ¥30',
+                'season': '季卡会员 - ¥80',
+                'year': '年卡会员 - ¥280'
+            }[packageId];
+
+            const paymentName = {
+                'alipay': '支付宝',
+                'wechat': '微信支付',
+                'qq': 'QQ钱包'
+            }[method];
+
+            showToast(`正在跳转至${paymentName}支付页面...\n订单：${packageName}`, 'success');
+
+            // 模拟支付跳转
+            setTimeout(() => {
+                alert('支付功能正在开发中，敬请期待！');
+            }, 1500);
+        }
+    </script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

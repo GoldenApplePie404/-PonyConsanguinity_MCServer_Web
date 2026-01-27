@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - Minecraft服务器官网</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .profile-container {
+            padding: 40px 0;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        .profile-sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .user-card {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .user-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .user-role.admin {
+            background: #e74c3c;
+        }
+
+        .user-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box-small {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .stat-box-small .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-box-small .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-list li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-list li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-list a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s;
+        }
+
+        .menu-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .profile-main {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .profile-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            position: relative;
+        }
+
+        .profile-tab.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .profile-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: bold;
+        }
+
+        .admin-panel {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .admin-btn {
+            padding: 12px 20px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: #286090;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-item {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .achievement-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .achievement-date {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ranking-table th {
+            background: var(--dark-bg);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .ranking-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rank-1 {
+            background: #fff8e1;
+        }
+
+        .rank-2 {
+            background: #f5f5f5;
+        }
+
+        .rank-3 {
+            background: #fafafa;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            background-color: #ea6051;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #f73f2b;
+            transform: translateY(-1px);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="container profile-container">
+        <div class="profile-layout">
+            <aside class="profile-sidebar">
+                <div class="user-card">
+                    <div class="user-avatar-large">👤</div>
+                    <div class="user-name" id="profile-username">玩家名称</div>
+                    <span class="user-role" id="profile-role">普通用户</span>
+                    <div class="user-stats-grid">
+                        <!--<div class="stat-box-small">
+                            <div class="stat-value">28</div>
+                            <div class="stat-label">等级</div>
+                        </div>
+                        <div class="stat-box-small">
+                            <div class="stat-value">1580</div>
+                            <div class="stat-label">积分</div>
+                        </div>-->
+                    </div>
+                </div>
+
+                <ul class="menu-list">
+                    <!--<li><a href="#">📋 个人资料</a></li>
+                    <li><a href="#">💎 我的充值</a></li>
+                    <li><a href="#">⭐ 我的收藏</a></li>
+                    <li><a href="#">🏆 我的成就</a></li>
+                    <li><a href="#">⚙️ 账户设置</a></li>-->
+                    <li><a href="#" onclick="logout()" class="logout-btn">退出登录</a></li>
+
+                </ul>
+            </aside>
+
+            <main class="profile-main">
+                <h2 style="margin-bottom: 20px;">个人中心</h2>
+
+                <div class="profile-tabs">
+                    <button class="profile-tab active" onclick="switchProfileTab('overview')">概览</button>
+                    <!--<button class="profile-tab" onclick="switchProfileTab('achievements')">成就</button>
+                    <button class="profile-tab" onclick="switchProfileTab('ranking')">排行榜</button>-->
+                </div>
+
+                <!-- 概览 -->
+                <div id="tab-overview" class="tab-content active">
+                    <div id="admin-section" class="admin-panel" style="display: none;">
+                        <h3>管理员面板</h3>
+                        <p style="margin-bottom: 15px; color: #856404;">您拥有管理员权限，可以访问以下功能：</p>
+                        <div class="admin-actions">
+                            <button class="admin-btn"
+                                onclick="window.open('https://mcpanel.eqmemory.cn/mcs/', '_blank')">🖥️
+                                MCSManager</button>
+                            
+                            <button class="admin-btn"
+                                onclick="window.open('http://localhost:8000/pages/db_test.html', '_blank')">📊
+                                数据库查询</button>
+                            <button class="admin-btn" onclick="alert('此功能开发中')">🤖 QQ机器人管理</button>
+                            <!--<button class="admin-btn" onclick="alert('此功能开发中')">⚙️ 网站后台</button>
+                            <button class="admin-btn" onclick="alert('此功能开发中')">👥 用户管理</button>-->
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <span class="info-value" id="profile-level">暂无内容</span>
+
+                        </div>
+                    </div>
+
+                    <!--<div class="info-grid">
+                        <div class="info-card">
+                            <h3>游戏数据</h3>
+                            <div class="info-item">
+                                <span class="info-label">游戏时长</span>
+                                <span class="info-value">156 小时</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">游戏币</span>
+                                <span class="info-value">52,380</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">击杀数</span>
+                                <span class="info-value">1,284</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">死亡次数</span>
+                                <span class="info-value">89</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>账户信息</h3>
+                            <div class="info-item">
+                                <span class="info-label">注册时间</span>
+                                <span class="info-value">2024-06-15</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">最后登录</span>
+                                <span class="info-value">2025-01-20</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">会员状态</span>
+                                <span class="info-value">季卡会员</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">会员到期</span>
+                                <span class="info-value">2025-04-20</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>社区数据</h3>
+                            <div class="info-item">
+                                <span class="info-label">发帖数</span>
+                                <span class="info-value">23</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">回复数</span>
+                                <span class="info-value">156</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">获赞数</span>
+                                <span class="info-value">89</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">论坛等级</span>
+                                <span class="info-value">Lv.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                    <!-- 成就 -->
+                    <!--<div id="tab-achievements" class="tab-content">
+                    <h3 style="margin-bottom: 20px;">我的成就</h3>
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🏆</div>
+                            <div class="achievement-name">首杀</div>
+                            <div class="achievement-date">2024-06-20</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🏠</div>
+                            <div class="achievement-name">家园</div>
+                            <div class="achievement-date">2024-06-25</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">⚔️</div>
+                            <div class="achievement-name">战士</div>
+                            <div class="achievement-date">2024-07-10</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">💰</div>
+                            <div class="achievement-name">富豪</div>
+                            <div class="achievement-date">2024-08-05</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">⭐</div>
+                            <div class="achievement-name">人气王</div>
+                            <div class="achievement-date">2024-09-15</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🎨</div>
+                            <div class="achievement-name">建筑师</div>
+                            <div class="achievement-date">2024-10-20</div>
+                        </div>
+                    </div>
+                </div>-->
+
+                    <!-- 排行榜 -->
+                    <!--<div id="tab-ranking" class="tab-content">
+                    <h3 style="margin-bottom: 20px;">服务器排行榜</h3>
+                    <div class="tabs">
+                        <button class="tab active" data-tab="level">等级榜</button>
+                        <button class="tab" data-tab="wealth">财富榜</button>
+                        <button class="tab" data-tab="online">在线时长榜</button>
+                    </div>
+
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>玩家</th>
+                                <th>等级</th>
+                                <th>游戏币</th>
+                                <th>在线时长</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="rank-1">
+                                <td>🥇</td>
+                                <td>土豪玩家</td>
+                                <td>58</td>
+                                <td>999,999</td>
+                                <td>520h</td>
+                            </tr>
+                            <tr class="rank-2">
+                                <td>🥈</td>
+                                <td>建筑师小明</td>
+                                <td>52</td>
+                                <td>456,789</td>
+                                <td>485h</td>
+                            </tr>
+                            <tr class="rank-3">
+                                <td>🥉</td>
+                                <td>冒险家老王</td>
+                                <td>48</td>
+                                <td>321,456</td>
+                                <td>420h</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>新手小白</td>
+                                <td>42</td>
+                                <td>258,963</td>
+                                <td>380h</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>PVP高手</td>
+                                <td>40</td>
+                                <td>198,456</td>
+                                <td>350h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>-->
+            </main>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+    <script>
+        function switchProfileTab(tab) {
+            document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            isLoggedIn = false;
+            currentUser = null;
+            showMessage('已退出登录', 'info');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                isLoggedIn = true;
+
+                document.getElementById('profile-username').textContent = currentUser.username;
+                const roleEl = document.getElementById('profile-role');
+                roleEl.textContent = currentUser.role === 'admin' ? '管理员' : '普通用户';
+                if (currentUser.role === 'admin') {
+                    roleEl.classList.add('admin');
+                    document.getElementById('admin-section').style.display = 'block';
+                }
+            } else {
+                showMessage('请先登录', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        });
+    </script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+
+</html>

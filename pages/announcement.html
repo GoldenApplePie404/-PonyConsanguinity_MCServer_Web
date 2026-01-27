@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新公告 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.19">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-page {
+            padding: 40px 0;
+        }
+
+        .announcement-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .announcement-item {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid #e8e8e8;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .announcement-item > * {
+            width: 100%;
+        }
+
+        .announcement-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            z-index: 1;
+        }
+
+        .announcement-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .announcement-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .announcement-item:hover::after {
+            opacity: 1;
+        }
+
+        .announcement-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .announcement-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin: 0;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .announcement-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .announcement-type {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .announcement-type.update {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .announcement-type.event {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .announcement-type.notice {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .announcement-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .announcement-content {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .announcement-actions {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .announcement-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .announcement-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .announcement-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .announcement-title {
+                font-size: 1.3rem;
+            }
+
+            .announcement-meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .announcement-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <!-- 公告Banner区域 -->
+    <section class="subpage-banner">
+        <div class="subpage-banner-bg"></div>
+        <div class="subpage-banner-particles"></div>
+        <div class="container">
+            <div class="subpage-banner-content">
+                <h1 class="subpage-banner-title">最新公告</h1>
+                <p class="subpage-banner-subtitle">实时动态 · 版本更新 · 活动预告</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公告内容区 -->
+    <div class="section announcement-page">
+        <div class="container">
+            <div class="announcement-list">
+                <div class="announcement-item fade-in">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">烟火璀璨映新春 —— "烟火派对"除夕夜特别活动</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type event">活动</span>
+                            <span class="announcement-date">2025年1月22日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>在这个辞旧迎新的美好时刻，我们诚挚地邀请您参加一场别开生面的除夕夜盛宴——"烟火派对"！在这个特别的日子里，我们将用璀璨的烟花和无尽的欢乐，共同迎接新春的到来...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-firework.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-1">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.4版本更新公告</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2025年1月1日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>亲爱的玩家们，万驹同源服务器v3.4版本现已上线！本次更新带来了多项新功能和优化，让我们一起来看看吧...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.4.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-2">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">城堡躲猫猫活动开启！</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type event">活动</span>
+                            <span class="announcement-date">2024年7月27日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>新的一年新的开始！万驹同源特别推出"城堡躲猫猫"趣味活动...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-hide-and-seek.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-3">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.3版本更新</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2024年7月9日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>一起来看看服务器更新了啥...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.3.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-4">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.2版本更新</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2024年3月7日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>一起来看看服务器更新了啥...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.2.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-5">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.1版本更新</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2024年1月1日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>一起来看看服务器更新了啥...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.1.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-6">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.0大版本更新公告</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2023年11月18日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>经过长时间的开发和测试，万驹同源v3.0版本终于和大家见面了！这是服务器历史上最大的一次更新...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.0.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.4"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

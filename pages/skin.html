@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>皮肤站&地图 - Minecraft服务器官网</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .skin-header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .btn-card {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: var(--primary-color);
+            color: white;
+            margin-right: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-card:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="skin-header">
+        <div class="container">
+            <h1>皮肤站</h1>
+            <p>让你的角色多一点个性~</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="cards-container">
+                <div class="feature-card">
+                    <h3 class="card-title">👕 自定义皮肤站</h3>
+                    <p class="mb-2">上传和更换你的专属皮肤，展示个性！支持正版和盗版皮肤。</p>
+                    <a href="https://skin.eqmemory.cn/" target="_blank" class="btn-card">上传皮肤</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

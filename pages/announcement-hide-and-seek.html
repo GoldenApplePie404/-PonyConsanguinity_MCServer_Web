@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万驹同源躲猫猫邀请赛 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-detail-page {
+            padding: 40px 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-header::before {
+            content: '🏰';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        .detail-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item span {
+            font-weight: 500;
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-content p {
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-content strong {
+            color: #fa709a;
+            font-weight: 600;
+        }
+
+        .detail-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content li::marker {
+            color: #fa709a;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fa709a;
+            margin: 35px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fa709a;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff8e1 100%);
+            border-left: 4px solid #fa709a;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-left: 4px solid #ffc107;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-header .meta-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-content {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="detail-header">
+        <div class="container">
+            <h1>🏰 万驹同源躲猫猫邀请赛</h1>
+            <div class="meta-info">
+                <div class="meta-item">📅 <span>2024-07-27</span></div>
+                <div class="meta-item">📍 <span>旧姐妹城堡遗址</span></div>
+                <div class="meta-item">🎮 <span>小游戏服</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="announcement.html" class="back-btn">返回公告列表</a>
+
+        <div class="detail-content">
+            <p>亲爱的友友们：大家好！马国记忆专属我的世界服务器 "万驹同源" 精心筹备的躲猫猫小游戏 ——"躲猫猫邀请赛" 即将开启内测啦！✨</p>
+            <p>搭载精选小马国地图🗺️，现诚邀各位群友踊跃参与，共同体验这场刺激又好玩的竞技盛宴！</p>
+
+            <h3 class="section-title">一、活动名称</h3>
+            <p><strong>万驹同源躲猫猫邀请赛</strong></p>
+
+            <h3 class="section-title">二、活动时间</h3>
+            <p>敬请关注群内公告，我们将提前通知具体内测时间</p>
+
+            <h3 class="section-title">三、活动地点</h3>
+            <p><strong>"万驹同源" 小游戏服 —— 旧姐妹城堡遗址</strong></p>
+
+            <h3 class="section-title">四、活动内容</h3>
+            <p>在旧姐妹城堡遗址🏰中化身方块，寻找合适的藏身之处，与捉鬼师傅展开智勇大比拼！</p>
+            <p><strong>本次邀请赛共三轮游戏：</strong></p>
+            <ul>
+                <li><strong>第一轮：</strong>热身阶段，大家自由探索城堡，体验流程，不计输赢。</li>
+                <li><strong>第二轮：</strong>竞技阶段，玩家自由加入两个阵营，比拼输赢。</li>
+                <li><strong>第三轮：</strong>决胜阶段，不允许改换阵营，再次进行比赛，连胜两次的阵营🏆将获得丰厚奖励。</li>
+            </ul>
+            <p>测试游戏的可玩性和抗压能力，为正式上线提供宝贵意见；</p>
+            <p>丰厚奖品🎁等你来拿，内测后所有参与者将获得神秘奖励，胜出队伍更有大礼相送！</p>
+
+            <h3 class="section-title">五、参与方式</h3>
+            <p>关注群内公告。</p>
+            <p>内测时间公布后，准时登录服务器参与活动，到场者视为报名。</p>
+            <p>随后填写简单的问卷，为我们的躲猫猫小游戏完善贡献力量。</p>
+
+            <h3 class="section-title">六、温馨提示</h3>
+            <ul>
+                <li>请确保您的游戏版本与服务器兼容，以免影响游戏体验；</li>
+                <li>内测期间，请遵守游戏规则，保持友善交流，共同营造和谐游戏氛围；</li>
+                <li>如遇问题，请及时与管理人员联系，我们将竭诚为您解答。</li>
+            </ul>
+
+            <p>激情碰撞，智力角逐，躲猫猫邀请赛等你来战！让我们在 "万驹同源" 的小马世界里，共创美好回忆。期待您的参与，共同见证这场精彩纷呈的内测盛宴！</p>
+            <p>敬请关注，踊跃报名！</p>
+            <p><strong>马国记忆 "万驹同源" 管理团队敬上</strong></p>
+
+            <div class="info-box">
+                <p><strong>📝 补充说明：</strong></p>
+                <p><strong>1. ❤️ 入场问题解决，熟悉环境</strong><br>明日下午就开放场地，欢迎各位前来注册登陆参观，熟悉地形。另，我们还试做了抢羊大战小游戏，欢迎游览期间乘便体验。</p>
+                <p><strong>2. 🤠 晚间正式比赛</strong><br>晚间8:10左右管理员视到场情况最多等待20分钟，预计8:30正式开始躲猫猫比赛，最迟10:00结束。每局20分钟，中场10分钟休息。第一轮全体熟悉流程，不计输赢。第二轮第三轮正式比拼，自选攻受方不许更改。</p>
+                <p><strong>3. 👋 唯一规则，不允许安装任何小地图工具</strong><br>管理员全程录像，可疑者视为服务器作弊行为。由于处于内测阶段，我们支持您在游玩时利用任何漏洞，敬请反馈！</p>
+                <p><strong>4. 👍 本游戏处于内测阶段，欢迎反馈体验信息</strong><br>诚邀您赛后填写一份简单的调查表。</p>
+                <p><strong>5. 🤔 如何注册账号请查看其他公告，咨询管理员</strong><br>进入服务器大厅 → 右键时钟菜单 → 选择小游戏子服 → 选择躲猫猫小游戏</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

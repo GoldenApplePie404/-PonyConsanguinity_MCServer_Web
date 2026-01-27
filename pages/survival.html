@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生存服特色 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.19">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .survival-page {
+            padding: 40px 0;
+        }
+
+        .content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-section {
+            margin-bottom: 60px;
+        }
+
+        .feature-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f5f3ff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-card h4 {
+            font-size: 1.2rem;
+            color: #667eea;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f5f3ff 100%);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .highlight-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box p {
+            line-height: 1.8;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 30px 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <!-- 生存游戏Banner区域 -->
+    <section class="subpage-banner">
+        <div class="subpage-banner-bg"></div>
+        <div class="subpage-banner-particles"></div>
+        <div class="container">
+            <div class="subpage-banner-content">
+                <h1 class="subpage-banner-title">生存游戏特色</h1>
+                <p class="subpage-banner-subtitle">自由探索 · 丰富玩法 · 无限可能</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生存游戏内容区 -->
+    <div class="section survival-page">
+        <div class="container">
+            <a href="../index.html" class="back-btn">返回首页</a>
+
+            <div class="content-wrapper fade-in">
+                <div class="feature-section">
+                    <div class="feature-title">🌍 开放世界探索</div>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🗺️ 广阔地图</h4>
+                            <p>拥有超大的生存世界，包含平原、森林、山地、沙漠、海洋等多种地形，等待你去探索。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⛰️ 自然奇观</h4>
+                            <p>精心设计的自然景观，瀑布、峡谷、洞穴等，每一处都是拍照打卡的好地方。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🏛️ 神秘遗迹</h4>
+                            <p>散布在世界各地的古代遗迹，隐藏着珍贵的宝藏和神秘的故事。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">⚔️ 生存挑战</div>
+                    <div class="highlight-box">
+                        <h4>💀 危险与机遇并存</h4>
+                        <p>在万驹同源的生存世界中，你需要面对各种挑战。白天搜集资源发展自身，夜晚抵御怪物袭击。</p>
+                        <p>每一次冒险都是对智慧和勇气的考验，每一次成功都是成长的见证。</p>
+                    </div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">🎮 丰富玩法系统</div>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>💰 经济系统</h4>
+                            <p>完善的经济系统，支持玩家间交易、商店购物、拍卖行拍卖等多种交易方式。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🎒 背包系统</h4>
+                            <p>扩展的背包空间，VIP玩家可以享受更多背包容量，轻松管理物品。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🏆 排行榜</h4>
+                            <p>全服排行榜系统，比拼财富、等级、建筑等多方面，展现你的实力。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">🎁 特色功能</div>
+                    <ul class="feature-list">
+                        <li><strong>死亡保护：</strong>会员玩家享受死亡不掉落特权，降低游戏挫败感</li>
+                        <li><strong>传送功能：</strong>家园传送、公共传送点，快速移动到想去的地方</li>
+                        <li><strong>锁箱保护：</strong>保护你的珍贵物品，防止被他人拿取</li>
+                        <li><strong>领地系统：</strong>圈地建设，保护你的建筑和财物</li>
+                        <li><strong>宠物系统：</strong>可爱的宠物伙伴，陪伴你的冒险之旅</li>
+                        <li><strong>翅膀系统：</strong>炫酷的翅膀装饰，让你与众不同</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">👥 社区互动</div>
+                    <div class="highlight-box">
+                        <h4>🤝 共同成长</h4>
+                        <p>万驹同源不仅仅是一个游戏服务器，更是一个温暖的社区。在这里，你可以：</p>
+                        <ul>
+                            <li>结交志同道合的朋友，一起组队冒险</li>
+                            <li>参与社区活动，赢取丰厚奖励</li>
+                            <li>在论坛分享你的游戏心得和作品</li>
+                            <li>参与服务器建设，为社区贡献力量</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.4"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

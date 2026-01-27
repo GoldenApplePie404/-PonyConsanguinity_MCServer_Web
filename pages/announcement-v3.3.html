@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万驹同源服务器V3.3版本更新公告 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-detail-page {
+            padding: 40px 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-header::before {
+            content: '⚔️';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        .detail-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item span {
+            font-weight: 500;
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-content p {
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-content strong {
+            color: #f5576c;
+            font-weight: 600;
+        }
+
+        .detail-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content li::marker {
+            color: #f5576c;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f5576c;
+            margin: 35px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f5576c;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-left: 4px solid #f5576c;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-header .meta-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-content {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="detail-header">
+        <div class="container">
+            <h1>⚔️ 万驹同源服务器V3.3版本更新公告</h1>
+            <div class="meta-info">
+                <div class="meta-item">📅 <span>更新时间：2024/7/10 12:00</span></div>
+                <div class="meta-item">🎮 <span>版本：1.8.x～1.20.x [推荐：1.18.2 ~ 1.20.1]</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="announcement.html" class="back-btn">返回公告列表</a>
+
+        <div class="detail-content">
+            <h3 class="section-title">① 生存服</h3>
+
+            <h4 style="color: #f5576c; margin: 25px 0 15px; font-size: 1.15rem;">🎨 梦幻卡池内容变动：</h4>
+            <p>新增20+怪物种类，现有怪物实力大幅提升；引入全新BOSS——<strong>Herobrine</strong>，需通过祭坛召唤挑战；末影龙战斗全面升级，场景、音乐、技能焕然一新；每个副本独特怪物等你挑战，战胜它们即可赢取丰富奖品（即将上线）；推出15+原版武器特色皮肤，每款皮肤附带独特特效与属性加成。</p>
+
+            <h4 style="color: #f5576c; margin: 25px 0 15px; font-size: 1.15rem;">🎁 梦幻卡池：</h4>
+            <p>增添了生存物资-杂项、生存物资-工具、生存物资-附魔书、粘液科技-科技、粘液科技-魔法、粘液科技-无尽贪婪六种卡池，其中<strong>生存物资-附魔书</strong>、<strong>粘液科技-无尽贪婪</strong>为限期概率UP卡池（每期的概率UP物品不一样）。</p>
+
+            <h4 style="color: #f5576c; margin: 25px 0 15px; font-size: 1.15rem;">✨ 概率UP：</h4>
+            <ul>
+                <li><strong>① 生存物资-附魔书：</strong> 附魔书：火焰附加 X；附魔书：效率VI+耐久X；附魔书：节肢杀手10+锋利10+亡灵杀手10+横扫之刃10 +火焰附加5 （备注：高等级附魔书请使用粘液科技相关机器进行附魔，以免普通铁砧降等级！）</li>
+                <li><strong>② 粘液科技-无尽贪婪：</strong> 寰宇支配之剑、无尽锭x16</li>
+            </ul>
+
+            <h4 style="color: #f5576c; margin: 25px 0 15px; font-size: 1.15rem;">🔧 优化&修复：</h4>
+            <p>移除了公告菜单，临时新增活动菜单；主城公告栏修改为了版本公告栏；修复了主城无法使用食物、主手拿取物品无法交互的问题。</p>
+
+            <h3 class="section-title">② [活动] 下界迷宫挑战</h3>
+            <p>下界迷宫震撼开启！这座根据下界特色打造的迷宫，挑战与奇遇并存。你的目标：深入迷宫，寻找自由之路。路上不孤单，怪物出没，凶猛狡猾，备好武器，智勇双全应战！更有无数宝箱藏身迷宫，宝藏道具等你发掘。智慧、勇气加运气，打造你的传奇冒险。即刻启程，成为下界迷宫首位征服者！</p>
+
+            <div class="info-box">
+                <p><strong>💡 补充说明：</strong> 此活动可以在主城NPC：金苹果派的"活动中心"查看。在迷宫终点有丰富的奖品等着第一位抵达的挑战者，同时挑战成功后可以获取道具"神秘的下界之星"，可用于兑换稀有材料和活动限定武器：妙妙弓（耐久无限）。</p>
+            </div>
+
+            <h3 class="section-title">③ 小游戏服（测试）</h3>
+            <p>小游戏服首次开放测试，并上线了"抢羊大赛"、"城堡躲猫猫"两种玩法；临时美化了一下大厅，增添了必要的全息字。</p>
+
+            <div class="info-box">
+                <p><strong>📋 其它说明：</strong></p>
+                <p>游戏版本：1.8.x～1.20.x [推荐版本：1.18.2 ~ 1.20.1]</p>
+                <p>服务器官网/游戏地址：mc.eqmemory.cn</p>
+                <p>新功能：万驹同源状态网页</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

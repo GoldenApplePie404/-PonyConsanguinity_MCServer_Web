@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万驹同源服务器V3.2版本更新公告 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-detail-page {
+            padding: 40px 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-header::before {
+            content: '🔧';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        .detail-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item span {
+            font-weight: 500;
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-content p {
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-content strong {
+            color: #00f2fe;
+            font-weight: 600;
+        }
+
+        .detail-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content li::marker {
+            color: #00f2fe;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00f2fe;
+            margin: 35px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00f2fe;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+            border-left: 4px solid #00f2fe;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-header .meta-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-content {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="detail-header">
+        <div class="container">
+            <h1>🔧 万驹同源服务器V3.2版本更新公告</h1>
+            <div class="meta-info">
+                <div class="meta-item">📅 <span>更新时间：2024/3/7 12:00</span></div>
+                <div class="meta-item">🎮 <span>版本：1.8.x～1.20.x [推荐：1.18.2 ~ 1.20.1]</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="announcement.html" class="back-btn">返回公告列表</a>
+
+        <div class="detail-content">
+            <h3 class="section-title">生存服</h3>
+
+            <h4 style="color: #00f2fe; margin: 25px 0 15px; font-size: 1.15rem;">🔄 新增/移除的玩法&功能：</h4>
+            <ul>
+                <li>移除了粘液科技附属："星系"</li>
+                <li>微调了主城商店物品价格</li>
+                <li>梦幻卡池更新了6种卡池，具体信息可以在菜单-梦幻卡池查看</li>
+            </ul>
+
+            <h4 style="color: #00f2fe; margin: 25px 0 15px; font-size: 1.15rem;">🎁 梦幻卡池：</h4>
+            <p>增添了生存物资-杂项、生存物资-工具、生存物资-附魔书、粘液科技-科技、粘液科技-魔法、粘液科技-无尽贪婪六种卡池，其中<strong>生存物资-附魔书</strong>、<strong>粘液科技-无尽贪婪</strong>为限期概率UP卡池（每期的概率UP物品不一样）。</p>
+
+            <h4 style="color: #00f2fe; margin: 25px 0 15px; font-size: 1.15rem;">✨ 概率UP：</h4>
+            <ul>
+                <li><strong>① 生存物资-附魔书：</strong> 附魔书：火焰附加 X；附魔书：效率VI+耐久X</li>
+                <li><strong>② 粘液科技-无尽贪婪：</strong> 世界崩解之镐、无尽锭x16</li>
+            </ul>
+
+            <h4 style="color: #00f2fe; margin: 25px 0 15px; font-size: 1.15rem;">🔧 优化&修复：</h4>
+            <p>修复了意见反馈无法输入的问题。</p>
+
+            <div class="info-box">
+                <p><strong>📋 其它说明：</strong></p>
+                <p>游戏版本：1.8.x～1.20.x [推荐版本：1.18.2 ~ 1.20.1]</p>
+                <p>服务器官网/游戏地址：mc.eqmemory.cn</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

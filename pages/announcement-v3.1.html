@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万驹同源服务器V3.1版本更新公告 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-detail-page {
+            padding: 40px 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-header::before {
+            content: '🎉';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        .detail-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item span {
+            font-weight: 500;
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-content p {
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-content strong {
+            color: #fa709a;
+            font-weight: 600;
+        }
+
+        .detail-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content li::marker {
+            color: #fa709a;
+            font-weight: bold;
+        }
+
+        .detail-content ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content ol li {
+            margin-bottom: 8px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content ol li::marker {
+            color: #fa709a;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fa709a;
+            margin: 35px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fa709a;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff8e1 100%);
+            border-left: 4px solid #fa709a;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-header .meta-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-content {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="detail-header">
+        <div class="container">
+            <h1>🎉 万驹同源服务器V3.1版本更新公告</h1>
+            <div class="meta-info">
+                <div class="meta-item">📅 <span>更新时间：2024/1/1 12:00</span></div>
+                <div class="meta-item">🎮 <span>版本：1.8.x～1.20.x [推荐：1.12.x ~ 1.20.x]</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="announcement.html" class="back-btn">返回公告列表</a>
+
+        <div class="detail-content">
+            <h3 class="section-title">① 生存服</h3>
+
+            <h4 style="color: #fa709a; margin: 25px 0 15px; font-size: 1.15rem;">🔄 新增/移除的玩法&功能：</h4>
+            <ul>
+                <li>粘液科技兑换商店新增了更多的物品</li>
+                <li>每日任务新增更多任务类型</li>
+                <li>调整了各类商店物品的价格</li>
+                <li>更换了技能插件</li>
+                <li>增加了更真实的砍树效果</li>
+                <li>邮箱优化：在有邮件时会提示玩家领取</li>
+                <li>移除了宠物插件</li>
+                <li>调整了菜单的界面</li>
+                <li>加入了"小雌驹"，"土豪"称号</li>
+                <li>金苹果派の杂货店已开放（开放时间：2024.1.1~2024.2.29）</li>
+            </ul>
+
+            <h4 style="color: #fa709a; margin: 25px 0 15px; font-size: 1.15rem;">🎁 版本福利：</h4>
+            <div class="info-box">
+                <p>在2024.1.1~2024.2.29期间，每日签到增加福利，可通过每日签到获得大量梦幻币、黄金券、梦幻之钥、梦幻结晶等（VIP玩家奖励翻倍），具体签到内容请在评论区查看。</p>
+            </div>
+
+            <h4 style="color: #fa709a; margin: 25px 0 15px; font-size: 1.15rem;">🔧 优化&修复：</h4>
+            <ul>
+                <li>修复了主城的小麦会被水冲没的问题</li>
+                <li>修复了无法进入资源世界的问题</li>
+            </ul>
+
+            <h3 class="section-title">② RPG服</h3>
+
+            <h4 style="color: #fa709a; margin: 25px 0 15px; font-size: 1.15rem;">🎮 更新内容：</h4>
+            <p>全新的RPG服已上线，全新的故事，全新的装备，全新的玩法！</p>
+            <div class="info-box">
+                <p><strong>💡 注：</strong>为了让玩家有良好的游玩体验，请使用专属的客户端进行游玩！</p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>📋 其它说明：</strong></p>
+                <p>游戏版本：1.8.x～1.20.x [推荐版本：1.12.x ~ 1.20.x]</p>
+                <p>服务器官网/游戏地址：mc.eqmemory.cn</p>
+                <p>新功能：万驹同源状态网页</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>

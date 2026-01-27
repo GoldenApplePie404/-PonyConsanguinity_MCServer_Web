@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万驹同源服务器V3.4版本更新公告 - 万驹同源</title>
+    <link rel="stylesheet" href="../css/style.css?v=3.18">
+    <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
+    <style>
+        .announcement-detail-page {
+            padding: 40px 0;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-header::before {
+            content: '🚀';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        .detail-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item span {
+            font-weight: 500;
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-content p {
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-content strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .detail-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #555;
+            position: relative;
+        }
+
+        .detail-content li::marker {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 35px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f5f3ff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .attachment-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-left: 4px solid #f5576c;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .attachment-box a {
+            color: #f5576c;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-header .meta-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-content {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+
+</head>
+<body data-components="sidebarPlayer,backToTop,navbar,footer">
+
+    <!-- 导航栏组件 -->
+    <div id="app-navbar"></div>
+
+    <div class="detail-header">
+        <div class="container">
+            <h1>🚀 万驹同源服务器V3.4版本更新公告</h1>
+            <div class="meta-info">
+                <div class="meta-item">📅 <span>更新时间：2025/1/1 12:00</span></div>
+                <div class="meta-item">🎮 <span>版本：1.8.x～1.20.x [推荐：1.18.2 ~ 1.20.1]</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="announcement.html" class="back-btn">返回公告列表</a>
+
+        <div class="detail-content">
+            <h3 class="section-title">① 生存服</h3>
+            <p>从该版本开始，生存服将迎来新一轮的生存挑战，届时，玩家的数据与地图存档都会清空。</p>
+
+            <h4 style="color: #667eea; margin: 25px 0 15px; font-size: 1.15rem;">新增/移除的玩法&功能：</h4>
+            <ul>
+                <li>新增了30+种世界建筑结构</li>
+                <li>修改了世界生成规则：更深的海洋、更高的山、更平滑的坡面、更壮观的地下河……</li>
+                <li>修复了playerpoints插件无法保存数据的问题</li>
+                <li>修复了主城NPC无法触发对话菜单的问题</li>
+                <li>修复了部分聊天栏消息乱码的问题</li>
+                <li>修复了玩家游戏币无法存储的问题</li>
+                <li>移除了"金钱猎手"玩法</li>
+                <li>金苹果派的杂货店限时开放中</li>
+                <li>资源包加入了粘液科技材质</li>
+            </ul>
+
+            <div class="attachment-box">
+                <p><strong>📎 附：</strong> <a href="https://blog.goldenapplepie.xyz/wp-content/uploads/2024/07/mobs.docx" target="_blank">生存服特殊怪物图鉴</a></p>
+            </div>
+
+            <h3 class="section-title">② [活动] 烟花派对</h3>
+            <div class="info-box">
+                <p><strong>📅 开启时间：</strong> 2025.1.28—2025.1.29</p>
+                <p><strong>🎯 玩法简介：</strong> 玩家可以通过选用不同的烟花弩进行射击，利用武器和道具将对手打垮，同时要留意场上出现的特殊事件，因为它很有可能会干扰你。</p>
+            </div>
+
+            <h3 class="section-title">③ 测试服：太空</h3>
+            <p>没错，一个以太空为题材的生存服务器正在开放测试中。在该服务器中，玩家不仅可以进行Minecraft原版生存，还可以通过"特殊方式"获取太空漫游指南，从而开启太空生存之旅。</p>
+            <p>要获取太空漫游指南，玩家只需在夜晚拿着望远镜对着天空观察一段时间，之后会触发太空剧情，解锁指南。指南中包含了新增的物品、合成配方以及星球等信息。玩家可以根据指南，建造自己的飞船与火箭，飞往太空，探索直至太阳系的最外围。</p>
+
+            <h4 style="color: #f5576c; margin: 25px 0 15px; font-size: 1.15rem;">⚠️ 已知bug：</h4>
+            <ul>
+                <li>版本过低会导致模型出错，建议最低游玩版本为1.20.1（最佳版本为1.20.4）</li>
+                <li>请勿在飞船飞行时手贱点左键，这样会直接导致飞船消失</li>
+                <li>一个飞船最好坐一人（火箭最多2人），若超载会导致一些bug</li>
+                <li>使用磁轨炮打月球的野生机器人时，必须瞄准它的下方才能打到</li>
+                <li>袖珍空间运输器在2人进入时，其中1人无法出去</li>
+                <li>有时下飞船会直接把飞船模型卡没，但碰撞箱还存在</li>
+                <li>当进入游戏初次使用冷冻枪时，它会默认为建筑模式</li>
+            </ul>
+
+            <div class="info-box">
+                <p><strong>📋 其它说明：</strong></p>
+                <p>游戏版本：1.8.x～1.20.x [推荐版本：1.18.2 ~ 1.20.1]</p>
+                <p>服务器官网/游戏地址：mc.eqmemory.cn</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚组件 -->
+    <div id="app-footer"></div>
+
+    <script src="../js/main.js?v=3.3"></script>
+
+    <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
+
+
+
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
+    <!-- 音乐播放器 -->
+    <div id="app-sidebar-player"></div>
+    <script src="../js/sidebar-player.js?v=3.0"></script>
+    <script src="../components/loader.js?v=3.0"></script>
+
+</body>
+</html>
