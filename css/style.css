@@ -169,7 +169,7 @@ body {
 
 /* 导航栏 */
 .navbar {
-    background-color: var(--dark-bg);
+    background-color: #34495e;
     color: var(--text-light);
     position: sticky;
     top: 0;
@@ -216,17 +216,17 @@ body {
 
 .nav-menu a:hover,
 .nav-menu a.active {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .btn-login {
-    background-color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.2);
     padding: 8px 20px;
     border-radius: 4px;
 }
 
 .btn-login:hover {
-    background-color: var(--primary-dark);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .mobile-toggle {
@@ -318,6 +318,46 @@ body {
     background-position: 0 0, 25px 25px;
     animation: floatUp 20s linear infinite;
     pointer-events: none;
+}
+
+.danmaku-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.danmaku-item {
+    position: absolute;
+    white-space: nowrap;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: danmakuMove linear forwards;
+    pointer-events: none;
+}
+
+.danmaku-item:hover {
+    background: rgba(0, 0, 0, 0.8);
+    animation-play-state: paused;
+}
+
+@keyframes danmakuMove {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
 }
 
 @keyframes floatUp {
@@ -943,7 +983,7 @@ body {
 }
 
 .section-dark {
-    background-color: var(--dark-bg);
+    background-color: #395372;
     color: var(--text-light);
 }
 
@@ -1552,8 +1592,55 @@ body {
 }
 
 .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.2rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.section-dark .feature-card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+/* 游戏模式图标 */
+.feature-icon.survival {
+    background-image: url('../assets/img/survival.png');
+}
+
+.feature-icon.structure {
+    background-image: url('../assets/img/structure.png');
+}
+
+.feature-icon.party {
+    background-image: url('../assets/img/party.png');
+}
+
+.feature-icon.space {
+    background-image: url('../assets/img/space.png');
+}
+
+.feature-icon.rpg {
+    background-image: url('../assets/img/rpg.png');
+}
+
+.feature-icon.game {
+    background-image: url('../assets/img/game.png');
+}
+
+/* 服务器概况图标 */
+.feature-icon.internet {
+    background-image: url('../assets/img/Internet.png');
+}
+
+.feature-icon.server {
+    background-image: url('../assets/img/server.png');
+}
+
+.feature-icon.system {
+    background-image: url('../assets/img/system.png');
 }
 
 .feature-title {
@@ -1568,15 +1655,24 @@ body {
 }
 
 .section-dark .feature-title {
-    color: var(--text-light);
+    color: var(--text-color);
 }
 
 .section-dark .feature-desc {
-    color: rgba(255, 255, 255, 0.8);
+    color: #666;
 }
 
 .section-dark .feature-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: white;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.section-dark .feature-card:hover {
+    background: white;
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* 服务器规则 */
@@ -1770,7 +1866,7 @@ body {
 }
 
 .footer-section h3 {
-    color: var(--text-light);
+    color: #fff;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -2235,20 +2331,74 @@ tr:hover {
     font-size: 0.9em;
 }
 
-.post-content pre {
-    background-color: #f5f5f5;
-    border: 1px solid var(--border-color);
+.post-content pre,
+.reply-content pre {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
     border-radius: 5px;
     padding: 1em;
     overflow-x: auto;
     margin: 1em 0;
+    position: relative;
 }
 
-.post-content pre code {
+.post-content pre code,
+.reply-content pre code {
     background-color: transparent;
     padding: 0;
     border-radius: 0;
     font-size: 0.9em;
+    color: #e6e6e6;
+}
+
+.post-content pre .copy-btn,
+.reply-content pre .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.post-content pre .copy-btn:hover,
+.reply-content pre .copy-btn:hover {
+    background-color: #555;
+}
+
+.post-content pre .copy-btn.copied,
+.reply-content pre .copy-btn.copied {
+    background-color: #5cb85c;
+}
+
+.post-content pre .copy-btn.copied::after,
+.reply-content pre .copy-btn.copied::after {
+    content: '已复制!';
+    position: absolute;
+    top: -25px;
+    right: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.post-content pre .copy-btn.copied::before,
+.reply-content pre .copy-btn.copied::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
 }
 
 .post-content table {
@@ -2267,6 +2417,7 @@ tr:hover {
 .post-content table th {
     background-color: rgba(92, 184, 92, 0.1);
     font-weight: 600;
+    color: var(--text-color);
 }
 
 .post-content table tr:nth-child(even) {
