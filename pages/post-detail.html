@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <link rel="stylesheet" href="../css/back-to-top.css?v=1.0">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
+<link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
 
     <!-- 导航栏组件 -->
@@ -151,6 +151,11 @@
                             document.getElementById('post-meta').textContent = `作者: ${post.author} | 浏览: ${post.views} | ${post.created_at}`;
                             document.getElementById('post-content').innerHTML = htmlContent;
                             
+                            // 重新初始化代码块复制功能，因为代码块是动态生成的
+                            if (typeof initCodeBlockCopy === 'function') {
+                                initCodeBlockCopy();
+                            }
+                            
                             // 显示操作按钮
                             const currentUser = getCurrentUser();
                             const isAdmin = currentUser && currentUser.role === 'admin';
@@ -264,6 +269,10 @@
                         if (toggleBtn.textContent === '展开详情') {
                             contentElement.innerHTML = replyHtmlContent;
                             toggleBtn.textContent = '收起';
+                            // 展开后初始化代码块复制功能
+                            if (typeof initCodeBlockCopy === 'function') {
+                                initCodeBlockCopy();
+                            }
                         } else {
                             contentElement.innerHTML = truncatedHtml;
                             toggleBtn.textContent = '展开详情';
@@ -292,6 +301,11 @@
                 
                 repliesContainer.appendChild(replyElement);
             });
+            
+            // 初始化回复内容中的代码块复制功能
+            if (typeof initCodeBlockCopy === 'function') {
+                initCodeBlockCopy();
+            }
         }
 
         // 生成回复分页控件
