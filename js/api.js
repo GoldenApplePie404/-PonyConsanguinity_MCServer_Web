@@ -4,6 +4,7 @@
  */
 
 // 根据环境自动设置 API 基础地址
+// 注意：部署环境如果无法使用 PHP，会回退到 mock 模式
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const API_BASE_URL = isLocalhost ? 'http://localhost:8000/api' : '/api';
 

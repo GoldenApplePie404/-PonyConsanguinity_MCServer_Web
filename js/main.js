@@ -291,6 +291,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initForumPage();
     }
 
+    // 初始化弹幕功能（仅主页）
+    if (currentPage.endsWith('index.html') || currentPage.endsWith('/')) {
+        initDanmaku();
+    }
+
     // 初始化滚动触发动画
     initScrollAnimations();
 
@@ -535,6 +540,142 @@ window.createPost = createPost;
 window.submitReply = submitReply;
 window.processPayment = processPayment;
 
+// 初始化代码块复制功能
+function initCodeBlockCopy() {
+    const codeBlocks = document.querySelectorAll('.post-content pre, .reply-content pre');
+    
+    codeBlocks.forEach(block => {
+        // 检查是否已经添加了复制按钮
+        if (!block.querySelector('.copy-btn')) {
+            // 创建复制按钮
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = '复制';
+            
+            // 添加到代码块
+            block.appendChild(copyBtn);
+            
+            // 添加点击事件
+            copyBtn.addEventListener('click', () => {
+                const codeElement = block.querySelector('code');
+                if (codeElement) {
+                    const codeText = codeElement.textContent;
+                    
+                    // 使用现代的 Clipboard API
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(codeText).then(() => {
+                            showCopySuccess(copyBtn);
+                        }).catch(err => {
+                            console.error('Clipboard API 失败:', err);
+                            // 如果现代API失败，使用fallback方法
+                            fallbackCopyCode(codeText, copyBtn);
+                        });
+                    } else {
+                        // 使用fallback方法
+                        fallbackCopyCode(codeText, copyBtn);
+                    }
+                }
+            });
+        }
+    });
+}
+
+// Fallback复制代码方法
+function fallbackCopyCode(text, btn) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showCopySuccess(btn);
+        } else {
+            console.error('复制失败');
+        }
+    } catch (err) {
+        console.error('复制失败:', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+// 显示复制代码成功
+function showCopySuccess(btn) {
+    btn.classList.add('copied');
+    btn.textContent = '已复制!';
+
+    setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = '复制';
+    }, 2000);
+}
+
+// 弹幕功能
+function initDanmaku() {
+    const container = document.getElementById('danmakuContainer');
+    if (!container) return;
+
+    const danmakuList = [
+        '欢迎来到万驹同源服务器！',
+        '服务器地址：mc.eqmemory.cn',
+        '推荐版本：1.20.1',
+        '快来加入我们的QQ群：569208814',
+        '生存游戏等你来挑战！',
+        '自由创造，发挥你的想象力',
+        '太空服测试中，敬请期待',
+        'RPG服即将上线',
+        '小游戏服开发中',
+        '优质网络，稳定运行',
+        '双路志强，超强性能',
+        '安全稳定，放心游玩',
+        '公益服务器，完全免费',
+        '友好社区，和谐氛围',
+        '万驹同源欢迎你！'
+    ];
+
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'];
+    const containerHeight = container.offsetHeight;
+    const containerWidth = container.offsetWidth;
+
+    function createDanmaku() {
+        const text = danmakuList[Math.floor(Math.random() * danmakuList.length)];
+        const danmaku = document.createElement('div');
+        danmaku.className = 'danmaku-item';
+        danmaku.textContent = text;
+
+        const topPosition = Math.random() * (containerHeight - 50);
+        const duration = 8 + Math.random() * 8;
+        const fontSize = 14 + Math.random() * 4;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        danmaku.style.top = `${topPosition}px`;
+        danmaku.style.animationDuration = `${duration}s`;
+        danmaku.style.fontSize = `${fontSize}px`;
+        danmaku.style.color = color;
+
+        container.appendChild(danmaku);
+
+        danmaku.addEventListener('animationend', () => {
+            danmaku.remove();
+        });
+    }
+
+    let danmakuInterval = setInterval(createDanmaku, 1500);
+
+    for (let i = 0; i < 5; i++) {
+        setTimeout(createDanmaku, i * 300);
+    }
+
+    window.addEventListener('resize', () => {
+        containerWidth = container.offsetWidth;
+    });
+}
+
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
     // 隐藏页面加载动画并触发Hero动画
@@ -544,4 +685,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initStatusPage === 'function') {
         initStatusPage();
     }
+    
+    // 初始化代码块复制功能
+    initCodeBlockCopy();
 });
