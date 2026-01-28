@@ -8,13 +8,31 @@ define('MCSTATUS_API_URL', 'http://mcstatus.goldenapplepie.xyz/api');
 define('MC_SERVER_IP', 'mc.eqmemory.cn');
 define('MC_SERVER_PORT', 25565);
 
-// 数据文件路径配置
-define('USERS_FILE', dirname(__DIR__) . '/data/users.json');
-define('SESSIONS_FILE', dirname(__DIR__) . '/data/sessions.json');
-
 // 确保数据目录存在
 if (!file_exists(dirname(__DIR__) . '/data')) {
     mkdir(dirname(__DIR__) . '/data', 0755, true);
+}
+
+// 数据文件路径配置
+define('USERS_FILE', dirname(__DIR__) . '/data/users.json');
+define('SESSIONS_FILE', dirname(__DIR__) . '/data/sessions.json');
+define('POSTS_FILE', dirname(__DIR__) . '/data/posts.json');
+define('CONTENT_DIR', dirname(__DIR__) . '/data/content');
+define('REPLIES_DIR', dirname(__DIR__) . '/data/replies');
+
+// 确保content目录存在
+if (!file_exists(CONTENT_DIR)) {
+    mkdir(CONTENT_DIR, 0755, true);
+}
+
+// 确保replies目录存在
+if (!file_exists(REPLIES_DIR)) {
+    mkdir(REPLIES_DIR, 0755, true);
+}
+
+// 确保帖子文件存在
+if (!file_exists(POSTS_FILE)) {
+    file_put_contents(POSTS_FILE, json_encode(['posts' => []], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 }
 
 // 确保用户文件存在

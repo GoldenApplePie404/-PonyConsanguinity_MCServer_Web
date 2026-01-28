@@ -1,18 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-// 常量定义
-define('POSTS_FILE', __DIR__ . '/../data/posts.json');
-define('CONTENT_DIR', __DIR__ . '/../data/content');
-define('REPLIES_DIR', __DIR__ . '/../data/replies');
-
-// 确保目录存在
-if (!is_dir(CONTENT_DIR)) {
-    mkdir(CONTENT_DIR, 0755, true);
-}
-if (!is_dir(REPLIES_DIR)) {
-    mkdir(REPLIES_DIR, 0755, true);
-}
+// 引入配置文件
+require_once 'config.php';
 
 // 获取请求方法
 $method = $_SERVER['REQUEST_METHOD'];
