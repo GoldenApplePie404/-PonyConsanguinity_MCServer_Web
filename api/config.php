@@ -5,8 +5,8 @@ define('MCSM_API_KEY', 'xxxxxxxxxxxxxxxxxxxxxxx'); // API 密钥
 
 // 服务器状态 API 配置
 define('MCSTATUS_API_URL', 'http://mcstatus.goldenapplepie.xyz/api');
-define('MC_SERVER_IP', 'mc.eqmemory.cn');
-define('MC_SERVER_PORT', 25565);
+define('MC_SERVER_IP', 'xx.xxxxx.xx');
+define('MC_SERVER_PORT', xxxxx);
 
 // 确保数据目录存在
 if (!file_exists(dirname(__DIR__) . '/data')) {
