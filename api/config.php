@@ -1,7 +1,7 @@
 <?php
 // MCSManager API 配置
-define('MCSM_API_URL', 'https://mcpanel.eqmemory.cn/mcs/api'); // MCSManager API 地址
-define('MCSM_API_KEY', '1c02a955c9314814ae1fc0b8419c41fb'); // API 密钥
+define('MCSM_API_URL', 'https://xxx.xxxxx.xx/api'); // MCSManager API 地址
+define('MCSM_API_KEY', 'xxxxxxxxxxxxxxxxxxxxxxx'); // API 密钥
 
 // 服务器状态 API 配置
 define('MCSTATUS_API_URL', 'http://mcstatus.goldenapplepie.xyz/api');
