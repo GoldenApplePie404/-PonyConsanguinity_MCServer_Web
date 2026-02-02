@@ -1,6 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'helper.php';
+require_once 'secure_data.php';
 
 // 只允许 POST 请求
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -22,7 +23,7 @@ if (strlen($password) < 6) {
 }
 
 // 读取用户数据
-$users = read_json(USERS_FILE);
+$users = secureReadData(USERS_FILE);
 
 // 检查用户名是否已存在
 if (isset($users[$username])) {
@@ -41,15 +42,12 @@ $users[$username] = [
 ];
 
 // 保存用户数据
-if (write_json(USERS_FILE, $users)) {
-    json_response(true, '注册成功', [
-        'user' => [
-            'id' => $user_id,
-            'username' => $username,
-            'email' => $email
-        ]
-    ], 201);
-} else {
-    json_response(false, '保存用户失败', null, 500);
-}
+secureWriteData(USERS_FILE, $users);
+json_response(true, '注册成功', [
+    'user' => [
+        'id' => $user_id,
+        'username' => $username,
+        'email' => $email
+    ]
+], 201);
 ?>

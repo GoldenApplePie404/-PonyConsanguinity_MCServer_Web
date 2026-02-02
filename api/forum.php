@@ -3,6 +3,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 // 引入配置文件
 require_once 'config.php';
+require_once 'secure_data.php';
 
 // 获取请求方法
 $method = $_SERVER['REQUEST_METHOD'];
@@ -31,7 +32,7 @@ switch ($method) {
             }
         } else {
             // 获取帖子列表
-            $posts = read_json(POSTS_FILE);
+            $posts = secureReadData(POSTS_FILE);
             echo json_encode([
                 'success' => true,
                 'data' => $posts
@@ -59,7 +60,7 @@ switch ($method) {
             $author = $data['author'];
             
             // 检查帖子是否存在
-            $postsData = read_json(POSTS_FILE);
+            $postsData = secureReadData(POSTS_FILE);
             $posts = $postsData['posts'] ?? [];
             $postExists = false;
             
@@ -80,7 +81,7 @@ switch ($method) {
             }
             
             // 保存更新后的帖子数据
-            write_json(POSTS_FILE, $postsData);
+            secureWriteData(POSTS_FILE, $postsData);
             
             // 加载现有回复
             $repliesFile = REPLIES_DIR . "/${postId}.json";
@@ -126,6 +127,229 @@ switch ($method) {
                 'repliesFile' => $repliesFile,
                 'repliesCount' => count($replies)
             ]);
+        } elseif ($action === 'delete_reply') {
+            // 删除回复
+            if (!isset($data['postId'], $data['replyId'])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '缺少必要参数'
+                ]);
+                exit;
+            }
+            
+            $postId = $data['postId'];
+            $replyId = $data['replyId'];
+            
+            // 获取当前用户
+            $headers = getallheaders();
+            $token = $headers['Authorization'] ?? '';
+            
+            if (strpos($token, 'Bearer ') === 0) {
+                $token = substr($token, 7);
+            }
+            
+            if (empty($token)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '请先登录'
+                ]);
+                exit;
+            }
+            
+            $sessions = secureReadData(SESSIONS_FILE);
+            $currentUser = $sessions[$token] ?? null;
+            
+            if (!$currentUser) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '请先登录'
+                ]);
+                exit;
+            }
+            
+            // 加载回复数据
+            $repliesFile = REPLIES_DIR . "/${postId}.json";
+            
+            if (!file_exists($repliesFile)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '回复不存在'
+                ]);
+                exit;
+            }
+            
+            $repliesData = read_json($repliesFile);
+            $replies = $repliesData['replies'] ?? [];
+            
+            // 查找要删除的回复
+            $replyIndex = -1;
+            $replyAuthor = '';
+            
+            foreach ($replies as $index => $reply) {
+                if ($reply['id'] === $replyId) {
+                    $replyIndex = $index;
+                    $replyAuthor = $reply['author'];
+                    break;
+                }
+            }
+            
+            if ($replyIndex === -1) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '回复不存在'
+                ]);
+                exit;
+            }
+            
+            // 检查权限：管理员可以删除所有回复，普通用户只能删除自己的回复
+            if ($currentUser['role'] !== 'admin' && $currentUser['username'] !== $replyAuthor) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '无权限删除此回复'
+                ]);
+                exit;
+            }
+            
+            // 删除回复
+            array_splice($replies, $replyIndex, 1);
+            $repliesData['replies'] = $replies;
+            
+            // 保存回复数据
+            $success = file_put_contents($repliesFile, json_encode($repliesData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            
+            if ($success === false) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '无法保存回复文件'
+                ]);
+                exit;
+            }
+            
+            // 更新帖子的回复数量
+            $postsData = secureReadData(POSTS_FILE);
+            $posts = $postsData['posts'] ?? [];
+            
+            foreach ($posts as &$post) {
+                if ($post['id'] === $postId) {
+                    $post['replies'] = max(0, ($post['replies'] ?? 0) - 1);
+                    break;
+                }
+            }
+            
+            secureWriteData(POSTS_FILE, $postsData);
+            
+            echo json_encode([
+                'success' => true,
+                'message' => '删除成功'
+            ]);
+        } elseif ($action === 'edit_post') {
+            // 编辑帖子
+            if (!isset($data['postId'], $data['title'], $data['content'])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '缺少必要参数'
+                ]);
+                exit;
+            }
+            
+            $postId = $data['postId'];
+            $title = $data['title'];
+            $content = $data['content'];
+            
+            // 获取当前用户
+            $headers = getallheaders();
+            $token = $headers['Authorization'] ?? '';
+            
+            if (strpos($token, 'Bearer ') === 0) {
+                $token = substr($token, 7);
+            }
+            
+            if (empty($token)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '请先登录'
+                ]);
+                exit;
+            }
+            
+            $sessions = secureReadData(SESSIONS_FILE);
+            $currentUser = $sessions[$token] ?? null;
+            
+            if (!$currentUser) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '请先登录'
+                ]);
+                exit;
+            }
+            
+            // 加载帖子数据
+            $postsData = secureReadData(POSTS_FILE);
+            $posts = $postsData['posts'] ?? [];
+            
+            // 查找要编辑的帖子
+            $postIndex = -1;
+            $postAuthor = '';
+            $contentFile = '';
+            
+            foreach ($posts as $index => $post) {
+                if ($post['id'] === $postId) {
+                    $postIndex = $index;
+                    $postAuthor = $post['author'];
+                    $contentFile = $post['content_file'];
+                    break;
+                }
+            }
+            
+            if ($postIndex === -1) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '帖子不存在'
+                ]);
+                exit;
+            }
+            
+            // 检查权限：只有作者可以编辑自己的帖子
+            if ($currentUser['username'] !== $postAuthor) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '无权限编辑此帖子'
+                ]);
+                exit;
+            }
+            
+            // 更新帖子标题和更新时间
+            $posts[$postIndex]['title'] = $title;
+            $posts[$postIndex]['updated_at'] = date('Y-m-d H:i:s');
+            $postsData['posts'] = $posts;
+            
+            // 保存帖子数据
+            $success = secureWriteData(POSTS_FILE, $postsData);
+            
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '无法保存帖子数据'
+                ]);
+                exit;
+            }
+            
+            // 更新帖子内容文件
+            $contentFilePath = CONTENT_DIR . "/${contentFile}";
+            $success = file_put_contents($contentFilePath, $content);
+            
+            if ($success === false) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => '无法保存帖子内容'
+                ]);
+                exit;
+            }
+            
+            echo json_encode([
+                'success' => true,
+                'message' => '修改成功'
+            ]);
         } else {
             // 创建新帖子
             if (!isset($data['title'], $data['content'], $data['author'], $data['forum'])) {
@@ -144,7 +368,7 @@ switch ($method) {
             file_put_contents(CONTENT_DIR . "/$contentFile", $data['content']);
             
             // 加载现有帖子
-            $postsData = read_json(POSTS_FILE);
+            $postsData = secureReadData(POSTS_FILE);
             $posts = $postsData['posts'] ?? [];
             
             // 创建新帖子
@@ -165,7 +389,7 @@ switch ($method) {
             $postsData['posts'] = $posts;
             
             // 保存帖子数据
-            write_json(POSTS_FILE, $postsData);
+            secureWriteData(POSTS_FILE, $postsData);
             
             echo json_encode([
                 'success' => true,
@@ -189,7 +413,7 @@ switch ($method) {
         $postId = $data['postId'];
         
         // 加载现有帖子
-        $postsData = read_json(POSTS_FILE);
+        $postsData = secureReadData(POSTS_FILE);
         $posts = $postsData['posts'] ?? [];
         
         // 查找要删除的帖子
@@ -228,7 +452,7 @@ switch ($method) {
         $postsData['posts'] = $posts;
         
         // 保存帖子数据
-        write_json(POSTS_FILE, $postsData);
+        secureWriteData(POSTS_FILE, $postsData);
         
         echo json_encode([
             'success' => true,

@@ -1,6 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'helper.php';
+require_once 'secure_data.php';
 
 // 只允许 GET 请求
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -16,7 +17,7 @@ if (!$session) {
 }
 
 // 查找用户
-$users = read_json(USERS_FILE);
+$users = secureReadData(USERS_FILE);
 $user = null;
 
 foreach ($users as $username => $user_data) {

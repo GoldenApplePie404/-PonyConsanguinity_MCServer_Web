@@ -37,6 +37,12 @@ function read_json($filePath) {
  * @return bool 是否写入成功
  */
 function write_json($filePath, $data) {
+    // 确保目录存在
+    $dir = dirname($filePath);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+    
     $content = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     return file_put_contents($filePath, $content) !== false;
 }

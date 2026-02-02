@@ -1,6 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'helper.php';
+require_once 'secure_data.php';
 
 // 只允许 POST 请求
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -15,10 +16,10 @@ if (empty($token)) {
 }
 
 // 删除会话
-$sessions = read_json(SESSIONS_FILE);
+$sessions = secureReadData(SESSIONS_FILE);
 if (isset($sessions[$token])) {
     unset($sessions[$token]);
-    write_json(SESSIONS_FILE, $sessions);
+    secureWriteData(SESSIONS_FILE, $sessions);
 }
 
 json_response(true, '登出成功', null, 200);

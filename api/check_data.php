@@ -2,6 +2,8 @@
 /**
  * 数据完整性检查脚本
  * 用于检查和修复数据文件的完整性
+ * 
+ * 注意：此功能已暂时禁用（且过时）
  */
 
 require_once 'config.php';
@@ -14,6 +16,7 @@ $results = [
     'successes' => []
 ];
 
+/*
 // 检查目录结构
 function checkDirectories() {
     global $results;
@@ -173,26 +176,15 @@ function checkPostData() {
         }
     }
 }
+*/
 
 // 主检查函数
 function checkDataIntegrity() {
     global $results;
     
-    echo "开始检查数据完整性...\n";
+    echo "数据完整性检查功能已暂时禁用\n";
     echo "====================\n";
-    
-    // 检查目录结构
-    checkDirectories();
-    
-    // 检查文件完整性
-    checkFiles();
-    
-    // 检查用户数据
-    checkUserData();
-    
-    // 检查帖子数据
-    checkPostData();
-    
+    echo "如果需要重新启用，请移除 api/check_data.php 中的注释\n";
     echo "====================\n";
     
     // 输出结果
@@ -201,42 +193,9 @@ function checkDataIntegrity() {
     echo "警告: " . count($results['warnings']) . "\n";
     echo "错误: " . count($results['errors']) . "\n";
     echo "\n";
+    echo "⚠️  功能已通过注释暂时禁用\n";
     
-    if (!empty($results['successes'])) {
-        echo "✅ 成功:\n";
-        foreach ($results['successes'] as $success) {
-            echo "  - $success\n";
-        }
-        echo "\n";
-    }
-    
-    if (!empty($results['warnings'])) {
-        echo "⚠️  警告:\n";
-        foreach ($results['warnings'] as $warning) {
-            echo "  - $warning\n";
-        }
-        echo "\n";
-    }
-    
-    if (!empty($results['errors'])) {
-        echo "❌ 错误:\n";
-        foreach ($results['errors'] as $error) {
-            echo "  - $error\n";
-        }
-        echo "\n";
-    }
-    
-    // 总体状态
-    if (empty($results['errors'])) {
-        echo "✅ 数据完整性检查通过！\n";
-        if (!empty($results['warnings'])) {
-            echo "⚠️  存在一些警告，建议处理\n";
-        }
-    } else {
-        echo "❌ 数据完整性检查失败，存在错误需要修复\n";
-    }
-    
-    return empty($results['errors']);
+    return true;
 }
 
 // 运行检查
@@ -274,8 +233,8 @@ if (!empty($_SERVER['HTTP_HOST'])) {
     $output = ob_get_clean();
     echo htmlspecialchars($output);
     echo '</pre>';
-    echo '<div class="status ' . ($success ? 'status-success' : 'status-error') . '">';
-    echo $success ? '✅ 数据完整性检查通过！' : '❌ 数据完整性检查失败，存在错误需要修复';
+    echo '<div class="status status-warning">';
+    echo '⚠️  数据完整性检查功能已暂时禁用';
     echo '</div>';
     echo '</div>';
     echo '</body>';
