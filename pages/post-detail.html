@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <link rel="stylesheet" href="../css/back-to-top.css?v=1.0">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* 覆盖全局表格行悬停效果，禁用右移动画 */
+        .post-content table tr:hover {
+            transform: none !important;
+        }
+        
+        .post-content table tr {
+            transition: background-color 0.3s ease;
+        }
+    </style>
 <link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
 
@@ -60,6 +70,36 @@
                         <!-- 分页按钮将在这里动态生成 -->
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑帖子模态框 -->
+    <div class="modal" id="edit-post-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>编辑帖子</h2>
+                <button class="modal-close" onclick="closeModal('edit-post-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" id="edit-post-title" placeholder="请输入帖子标题（最多50字）" maxlength="50">
+                    <div style="text-align: right; margin-top: 5px; color: #666; font-size: 0.9rem;">
+                        <span id="edit-title-char-count">0</span>/50
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>内容</label>
+                    <textarea id="edit-post-content" rows="10" placeholder="请输入帖子内容（支持Markdown格式）"></textarea>
+                    <div style="text-align: right; margin-top: 5px; color: #666; font-size: 0.9rem;">
+                        <span id="edit-content-char-count">0</span>/5000
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('edit-post-modal')">取消</button>
+                <button class="btn btn-primary" onclick="submitEditPost()">保存修改</button>
             </div>
         </div>
     </div>
@@ -162,6 +202,9 @@
                             const isAuthor = currentUser && currentUser.username === post.author;
                             
                             let actionsHtml = '<button class="btn btn-sm btn-outline" onclick="window.location.href=\'forum.html\'">返回论坛</button>';
+                            if (isAuthor) {
+                                actionsHtml += `<button class="btn btn-sm btn-outline" style="color: #3498db; margin-left: 10px;" onclick="openEditPostModal('${post.id}', '${post.title}')">编辑</button>`;
+                            }
                             if (isAdmin || isAuthor) {
                                 actionsHtml += `<button class="btn btn-sm btn-outline" style="color: #e74c3c; margin-left: 10px;" onclick="deletePost('${post.id}', '${post.author}')">删除</button>`;
                             }
@@ -199,7 +242,7 @@
                     currentReplyPage = 1;
                     
                     // 显示当前页回复
-                    displayReplies();
+                    displayReplies(postId);
                     // 生成分页控件
                     generateRepliesPagination();
                 } else {
@@ -215,7 +258,7 @@
         }
 
         // 显示回复列表
-        function displayReplies() {
+        function displayReplies(postId) {
             const repliesContainer = document.getElementById('replies-list');
             if (!repliesContainer) return;
 
@@ -240,6 +283,17 @@
                 replyElement.className = 'reply-item';
                 replyElement.style = 'padding: 15px; border-bottom: 1px solid #f0f0f0; background-color: #f9f9f9; border-radius: 5px; margin-bottom: 10px;';
                 const replyHtmlContent = marked.parse(reply.content);
+                
+                // 检查是否显示删除按钮
+                const currentUser = getCurrentUser();
+                const userRole = currentUser ? (currentUser.role || 'user') : 'user';
+                const canDelete = currentUser && (userRole === 'admin' || currentUser.username === reply.author);
+                const deleteButton = canDelete ? 
+                    `<button onclick="deleteReply('${postId}', '${reply.id}', '${reply.author}')" 
+                            style="margin-left: 10px; padding: 4px 8px; font-size: 12px; 
+                                   background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        删除
+                    </button>` : '';
                 
                 // 创建临时元素获取纯文本内容长度
                 const tempDiv = document.createElement('div');
@@ -281,8 +335,11 @@
                     
                     replyElement.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <strong style="color: var(--primary-color);">${reply.author}</strong>
-                            <span style="font-size: 0.9em; color: #999;">${reply.created_at}</span>
+                            <div>
+                                <strong style="color: var(--primary-color);">${reply.author}</strong>
+                                <span style="font-size: 0.9em; color: #999;">${reply.created_at}</span>
+                                ${deleteButton}
+                            </div>
                         </div>
                     `;
                     replyElement.appendChild(contentElement);
@@ -292,8 +349,11 @@
                     contentElement.innerHTML = replyHtmlContent;
                     replyElement.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <strong style="color: var(--primary-color);">${reply.author}</strong>
-                            <span style="font-size: 0.9em; color: #999;">${reply.created_at}</span>
+                            <div>
+                                <strong style="color: var(--primary-color);">${reply.author}</strong>
+                                <span style="font-size: 0.9em; color: #999;">${reply.created_at}</span>
+                                ${deleteButton}
+                            </div>
                         </div>
                     `;
                     replyElement.appendChild(contentElement);
@@ -411,6 +471,165 @@
             }
         }
 
+        // 删除回复
+        async function deleteReply(postId, replyId, replyAuthor) {
+            const currentUser = getCurrentUser();
+            
+            if (!currentUser) {
+                showToast('请先登录', 'error');
+                return;
+            }
+            
+            // 检查权限
+            const userRole = currentUser.role || 'user';
+            if (userRole !== 'admin' && currentUser.username !== replyAuthor) {
+                showToast('无权限删除此回复', 'error');
+                return;
+            }
+            
+            // 确认删除
+            if (!confirm('确定要删除这条回复吗？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('../api/forum.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        action: 'delete_reply',
+                        postId: postId,
+                        replyId: replyId
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('删除成功', 'success');
+                    // 重新加载回复
+                    loadReplies(postId);
+                } else {
+                    showToast(result.message || '删除失败', 'error');
+                }
+            } catch (error) {
+                console.error('删除回复失败:', error);
+                showToast('删除失败，请重试', 'error');
+            }
+        }
+
+        let currentEditingPostId = null;
+
+        async function openEditPostModal(postId, currentTitle) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) {
+                showToast('请先登录', 'error');
+                return;
+            }
+
+            currentEditingPostId = postId;
+
+            try {
+                const response = await fetch(`../data/content/${postId}.md`);
+                const markdownContent = await response.text();
+
+                document.getElementById('edit-post-title').value = currentTitle;
+                document.getElementById('edit-post-content').value = markdownContent;
+
+                updateEditCharCount();
+
+                openModal('edit-post-modal');
+            } catch (error) {
+                console.error('加载帖子内容失败:', error);
+                showToast('加载帖子内容失败', 'error');
+            }
+        }
+
+        function updateEditCharCount() {
+            const titleInput = document.getElementById('edit-post-title');
+            const contentInput = document.getElementById('edit-post-content');
+            const titleCharCount = document.getElementById('edit-title-char-count');
+            const contentCharCount = document.getElementById('edit-content-char-count');
+
+            if (titleInput && titleCharCount) {
+                titleCharCount.textContent = titleInput.value.length;
+                if (titleInput.value.length >= 50) {
+                    titleCharCount.style.color = '#e74c3c';
+                } else {
+                    titleCharCount.style.color = '#666';
+                }
+            }
+
+            if (contentInput && contentCharCount) {
+                contentCharCount.textContent = contentInput.value.length;
+                if (contentInput.value.length >= 5000) {
+                    contentCharCount.style.color = '#e74c3c';
+                } else {
+                    contentCharCount.style.color = '#666';
+                }
+            }
+        }
+
+        async function submitEditPost() {
+            const title = document.getElementById('edit-post-title').value.trim();
+            const content = document.getElementById('edit-post-content').value.trim();
+
+            if (!title) {
+                showToast('请输入帖子标题', 'error');
+                return;
+            }
+
+            if (!content) {
+                showToast('请输入帖子内容', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('../api/forum.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        action: 'edit_post',
+                        postId: currentEditingPostId,
+                        title: title,
+                        content: content
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('修改成功！', 'success');
+                    closeModal('edit-post-modal');
+                    loadPostDetail(currentEditingPostId);
+                } else {
+                    showToast(result.message || '修改失败', 'error');
+                }
+            } catch (error) {
+                console.error('修改帖子失败:', error);
+                showToast('修改失败，请重试', 'error');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const titleInput = document.getElementById('edit-post-title');
+            const contentInput = document.getElementById('edit-post-content');
+
+            if (titleInput) {
+                titleInput.addEventListener('input', updateEditCharCount);
+            }
+
+            if (contentInput) {
+                contentInput.addEventListener('input', updateEditCharCount);
+            }
+        });
+
         // 删除帖子
         async function deletePost(postId, postAuthor) {
             try {
@@ -455,22 +674,8 @@
                 showToast('删除失败，请重试', 'error');
             }
         }
-
-        // 更新登录按钮状态
-        function updateLoginButton() {
-            const loginBtn = document.querySelector('.btn-login');
-            const currentUser = getCurrentUser();
-
-            if (currentUser) {
-                loginBtn.textContent = currentUser.username;
-                loginBtn.onclick = () => {
-                    if (confirm('确定要登出吗？')) {
-                        logout();
-                    }
-                };
-            }
-        }
     </script>
 
 </body>
+
 </html>

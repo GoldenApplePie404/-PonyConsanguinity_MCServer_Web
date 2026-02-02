@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,7 @@
     <style>
         .announcement-page {
             padding: 40px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
         }
 
         .announcement-list {
@@ -18,12 +19,12 @@
 
         .announcement-item {
             background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+            margin-bottom: 28px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -41,28 +42,29 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 5px;
-            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            width: 6px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
             z-index: 1;
         }
 
         .announcement-item::after {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            top: -100%;
+            right: -100%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 50%);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
             z-index: 0;
             pointer-events: none;
         }
 
         .announcement-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.2);
         }
 
         .announcement-item:hover::after {
@@ -73,67 +75,85 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             position: relative;
             z-index: 1;
         }
 
         .announcement-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-color);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50;
             margin: 0;
             flex: 1;
             min-width: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .announcement-meta {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .announcement-type {
-            padding: 5px 15px;
-            border-radius: 15px;
+            padding: 6px 18px;
+            border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .announcement-type.update {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .announcement-type.event {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
         }
 
         .announcement-type.notice {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
         }
 
         .announcement-date {
-            color: #666;
+            color: #7f8c8d;
             font-size: 0.9rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 12px;
         }
 
         .announcement-content {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+            color: #5a6c7d;
+            line-height: 1.9;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
+            font-size: 1.05rem;
+        }
+
+        .announcement-content p {
+            margin: 0;
         }
 
         .announcement-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             position: relative;
             z-index: 1;
         }
@@ -141,19 +161,27 @@
         .announcement-link {
             display: inline-flex;
             align-items: center;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            border-radius: 28px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+            letter-spacing: 0.5px;
+            position: relative;
         }
 
         .announcement-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white !important;
+        }
+
+        .announcement-link::after {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -163,7 +191,7 @@
             }
 
             .announcement-title {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
 
             .announcement-meta {
@@ -174,6 +202,11 @@
             .announcement-actions {
                 width: 100%;
                 justify-content: flex-start;
+            }
+
+            .announcement-link {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -200,7 +233,39 @@
     <div class="section announcement-page">
         <div class="container">
             <div class="announcement-list">
-                <div class="announcement-item fade-in">
+                <!--<div class="announcement-item fade-in">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">万"马"奔腾——新年庆典活动</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type event">活动</span>
+                            <span class="announcement-date">2026年2月1日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>新年新气象！万驹同源服务器推出"万'马'奔腾"新年庆典活动，包含40+条赛道类型、20+种道具，分为竞速模式与对抗模式，参与活动赢取限定新年称号和稀有奖励...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-wmbt.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>-->
+
+                <div class="announcement-item fade-in-delay-1">
+                    <div class="announcement-header">
+                        <h2 class="announcement-title">服务器v3.5版本更新公告</h2>
+                        <div class="announcement-meta">
+                            <span class="announcement-type update">版本更新</span>
+                            <span class="announcement-date">2026年2月1日</span>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>万驹同源服务器现已重新上线并更新至v3.5版本！本次更新保留了v3.4版本的所有功能，修复了所有bug，并带来了下界合金装备装饰套装效果、版本兼容扩展至1.21.1等全新内容...</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <a href="announcement-v3.5.html" class="announcement-link">查看详情 →</a>
+                    </div>
+                </div>
+
+                <div class="announcement-item fade-in-delay-2">
                     <div class="announcement-header">
                         <h2 class="announcement-title">烟火璀璨映新春 —— "烟火派对"除夕夜特别活动</h2>
                         <div class="announcement-meta">
@@ -216,7 +281,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-1">
+                <div class="announcement-item fade-in-delay-2">
                     <div class="announcement-header">
                         <h2 class="announcement-title">服务器v3.4版本更新公告</h2>
                         <div class="announcement-meta">
@@ -232,7 +297,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-2">
+                <div class="announcement-item fade-in-delay-4">
                     <div class="announcement-header">
                         <h2 class="announcement-title">城堡躲猫猫活动开启！</h2>
                         <div class="announcement-meta">
@@ -248,7 +313,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-3">
+                <div class="announcement-item fade-in-delay-5">
                     <div class="announcement-header">
                         <h2 class="announcement-title">服务器v3.3版本更新</h2>
                         <div class="announcement-meta">
@@ -264,7 +329,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-4">
+                <div class="announcement-item fade-in-delay-6">
                     <div class="announcement-header">
                         <h2 class="announcement-title">服务器v3.2版本更新</h2>
                         <div class="announcement-meta">
@@ -280,7 +345,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-5">
+                <div class="announcement-item fade-in-delay-7">
                     <div class="announcement-header">
                         <h2 class="announcement-title">服务器v3.1版本更新</h2>
                         <div class="announcement-meta">
@@ -296,7 +361,7 @@
                     </div>
                 </div>
 
-                <div class="announcement-item fade-in-delay-6">
+                <div class="announcement-item fade-in-delay-8">
                     <div class="announcement-header">
                         <h2 class="announcement-title">服务器v3.0大版本更新公告</h2>
                         <div class="announcement-meta">

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -67,10 +67,16 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background 0.3s;
+            position: relative;
         }
 
         .back-btn:hover {
             background: var(--primary-dark);
+            color: white !important;
+        }
+
+        .back-btn::after {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -183,12 +189,15 @@
 
 
 
-    <!-- 导航栏 -->
-    <script src="../js/navbar.js?v=1.0"></script>
     <!-- 音乐播放器 -->
     <div id="app-sidebar-player"></div>
     <script src="../js/sidebar-player.js?v=3.0"></script>
+    
+    <!-- 组件加载器 -->
     <script src="../components/loader.js?v=3.0"></script>
+    
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
 
 </body>
 </html>

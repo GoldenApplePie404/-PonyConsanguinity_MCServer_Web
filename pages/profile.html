@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="../css/style.css?v=3.18">
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+
         .profile-container {
             padding: 40px 0;
         }
@@ -97,6 +102,7 @@
 
         .menu-list li:last-child {
             border-bottom: none;
+            text-decoration: none;
         }
 
         .menu-list a {
@@ -110,6 +116,7 @@
 
         .menu-list a:hover {
             color: var(--primary-color);
+            text-decoration: none;
         }
 
         .profile-main {
@@ -153,10 +160,15 @@
 
         .tab-content {
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .info-grid {
@@ -196,37 +208,104 @@
         }
 
         .admin-panel {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         }
 
         .admin-panel h3 {
-            color: #856404;
+            color: #343a40;
             margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-panel h3::before {
+            content: '🛠️';
+            font-size: 1.4rem;
+        }
+
+        .admin-panel p {
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .admin-actions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
         }
 
         .admin-btn {
-            padding: 12px 20px;
-            background: var(--secondary-color);
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95rem;
-            transition: background-color 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .admin-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
         }
 
         .admin-btn:hover {
-            background: #286090;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .admin-btn:hover::before {
+            left: 100%;
+        }
+
+        .admin-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .admin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .achievement-grid {
@@ -290,23 +369,208 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 16px;
-            background-color: #ea6051;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
             color: #fff;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.25);
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
         .logout-btn:hover {
-            background-color: #f73f2b;
-            transform: translateY(-1px);
+            text-decoration: none;
+            background: linear-gradient(135deg, #ff5252 0%, #e04848 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        .logout-btn:hover::before {
+            left: 100%;
         }
 
         .logout-btn:active {
             transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(255, 107, 107, 0.3);
+        }
+
+        .delete-account-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.25);
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delete-account-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .delete-account-btn:hover {
+            background: linear-gradient(135deg, #c82333 0%, #a71d2a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+            text-decoration: none;
+        }
+
+        .delete-account-btn:hover::before {
+            left: 100%;
+        }
+
+        .delete-account-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+        }
+
+        .notification-item {
+            background: #f8f8f8;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .notification-item.unread {
+            background: #f0f4ff;
+            border-left-color: var(--primary-color);
+        }
+
+        .notification-item.read {
+            background: #f9f9f9;
+            border-left-color: #ccc;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .notification-header h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .notification-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .notification-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform: translateY(0);
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .pagination button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination button:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #notification-message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        #notification-message.error {
+            background: #fee;
+            color: #c33;
+        }
+
+        #notification-message.success {
+            background: #efe;
+            color: #3c3;
         }
 
         @media (max-width: 768px) {
@@ -320,7 +584,9 @@
         }
     </style>
 
-<link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
+    <link rel="icon" type="image/png" href="assets/img/m.png">
+    <link rel="shortcut icon" href="assets/img/m.png">
+</head>
 
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
 
@@ -328,6 +594,7 @@
     <div id="app-navbar"></div>
 
     <div class="container profile-container">
+        <div style="height: 80px;"></div>
         <div class="profile-layout">
             <aside class="profile-sidebar">
                 <div class="user-card">
@@ -347,12 +614,8 @@
                 </div>
 
                 <ul class="menu-list">
-                    <!--<li><a href="#">📋 个人资料</a></li>
-                    <li><a href="#">💎 我的充值</a></li>
-                    <li><a href="#">⭐ 我的收藏</a></li>
-                    <li><a href="#">🏆 我的成就</a></li>
-                    <li><a href="#">⚙️ 账户设置</a></li>-->
                     <li><a href="#" onclick="logout()" class="logout-btn">退出登录</a></li>
+                    <li><a href="#" onclick="confirmDeleteAccount()" class="delete-account-btn">注销账户</a></li>
 
                 </ul>
             </aside>
@@ -362,8 +625,7 @@
 
                 <div class="profile-tabs">
                     <button class="profile-tab active" onclick="switchProfileTab('overview')">概览</button>
-                    <!--<button class="profile-tab" onclick="switchProfileTab('achievements')">成就</button>
-                    <button class="profile-tab" onclick="switchProfileTab('ranking')">排行榜</button>-->
+                    <button class="profile-tab" onclick="switchProfileTab('notifications')">通知</button>
                 </div>
 
                 <!-- 概览 -->
@@ -375,11 +637,12 @@
                             <button class="admin-btn"
                                 onclick="window.open('https://mcpanel.eqmemory.cn/mcs/', '_blank')">🖥️
                                 MCSManager</button>
-                            
+
                             <button class="admin-btn"
                                 onclick="window.open('http://localhost:8000/pages/db_test.html', '_blank')">📊
                                 数据库查询</button>
-                            <button class="admin-btn" onclick="alert('此功能开发中')">🤖 QQ机器人管理</button>
+                            <!--<button class="admin-btn" onclick="alert('此功能开发中')">🤖 QQ机器人管理</button>-->
+                            <button class="admin-btn" onclick="openSendNotificationModal()">📢 发送通知</button>
                             <!--<button class="admin-btn" onclick="alert('此功能开发中')">⚙️ 网站后台</button>
                             <button class="admin-btn" onclick="alert('此功能开发中')">👥 用户管理</button>-->
                         </div>
@@ -391,165 +654,15 @@
 
                         </div>
                     </div>
+                </div>
 
-                    <!--<div class="info-grid">
-                        <div class="info-card">
-                            <h3>游戏数据</h3>
-                            <div class="info-item">
-                                <span class="info-label">游戏时长</span>
-                                <span class="info-value">156 小时</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">游戏币</span>
-                                <span class="info-value">52,380</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">击杀数</span>
-                                <span class="info-value">1,284</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">死亡次数</span>
-                                <span class="info-value">89</span>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <h3>账户信息</h3>
-                            <div class="info-item">
-                                <span class="info-label">注册时间</span>
-                                <span class="info-value">2024-06-15</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">最后登录</span>
-                                <span class="info-value">2025-01-20</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">会员状态</span>
-                                <span class="info-value">季卡会员</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">会员到期</span>
-                                <span class="info-value">2025-04-20</span>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <h3>社区数据</h3>
-                            <div class="info-item">
-                                <span class="info-label">发帖数</span>
-                                <span class="info-value">23</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">回复数</span>
-                                <span class="info-value">156</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">获赞数</span>
-                                <span class="info-value">89</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">论坛等级</span>
-                                <span class="info-value">Lv.8</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
-                    <!-- 成就 -->
-                    <!--<div id="tab-achievements" class="tab-content">
-                    <h3 style="margin-bottom: 20px;">我的成就</h3>
-                    <div class="achievement-grid">
-                        <div class="achievement-item">
-                            <div class="achievement-icon">🏆</div>
-                            <div class="achievement-name">首杀</div>
-                            <div class="achievement-date">2024-06-20</div>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">🏠</div>
-                            <div class="achievement-name">家园</div>
-                            <div class="achievement-date">2024-06-25</div>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">⚔️</div>
-                            <div class="achievement-name">战士</div>
-                            <div class="achievement-date">2024-07-10</div>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">💰</div>
-                            <div class="achievement-name">富豪</div>
-                            <div class="achievement-date">2024-08-05</div>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">⭐</div>
-                            <div class="achievement-name">人气王</div>
-                            <div class="achievement-date">2024-09-15</div>
-                        </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">🎨</div>
-                            <div class="achievement-name">建筑师</div>
-                            <div class="achievement-date">2024-10-20</div>
-                        </div>
-                    </div>
-                </div>-->
-
-                    <!-- 排行榜 -->
-                    <!--<div id="tab-ranking" class="tab-content">
-                    <h3 style="margin-bottom: 20px;">服务器排行榜</h3>
-                    <div class="tabs">
-                        <button class="tab active" data-tab="level">等级榜</button>
-                        <button class="tab" data-tab="wealth">财富榜</button>
-                        <button class="tab" data-tab="online">在线时长榜</button>
-                    </div>
-
-                    <table class="ranking-table">
-                        <thead>
-                            <tr>
-                                <th>排名</th>
-                                <th>玩家</th>
-                                <th>等级</th>
-                                <th>游戏币</th>
-                                <th>在线时长</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="rank-1">
-                                <td>🥇</td>
-                                <td>土豪玩家</td>
-                                <td>58</td>
-                                <td>999,999</td>
-                                <td>520h</td>
-                            </tr>
-                            <tr class="rank-2">
-                                <td>🥈</td>
-                                <td>建筑师小明</td>
-                                <td>52</td>
-                                <td>456,789</td>
-                                <td>485h</td>
-                            </tr>
-                            <tr class="rank-3">
-                                <td>🥉</td>
-                                <td>冒险家老王</td>
-                                <td>48</td>
-                                <td>321,456</td>
-                                <td>420h</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>新手小白</td>
-                                <td>42</td>
-                                <td>258,963</td>
-                                <td>380h</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>PVP高手</td>
-                                <td>40</td>
-                                <td>198,456</td>
-                                <td>350h</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>-->
+                <!-- 通知 -->
+                <div id="tab-notifications" class="tab-content">
+                    <h3 style="margin-bottom: 20px;">我的通知</h3>
+                    <div id="notification-list"></div>
+                    <div id="notification-pagination" class="pagination"></div>
+                    <div id="notification-message"></div>
+                </div>
             </main>
         </div>
     </div>
@@ -558,13 +671,45 @@
     <div id="app-footer"></div>
 
     <script src="../js/main.js?v=3.3"></script>
+    <script src="../js/api.js?v=1.0"></script>
     <script>
         function switchProfileTab(tab) {
+            // 移除所有标签的active类
             document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            // 获取所有内容标签
+            const allTabs = document.querySelectorAll('.tab-content');
+            
+            // 先隐藏所有标签页
+            allTabs.forEach(c => {
+                c.style.opacity = '0';
+                c.style.transform = 'translateY(20px)';
+                c.style.display = 'none';
+                c.classList.remove('active');
+            });
 
+            // 激活当前标签
             event.target.classList.add('active');
-            document.getElementById('tab-' + tab).classList.add('active');
+            const tabElement = document.getElementById('tab-' + tab);
+            
+            // 等待一小段时间后显示新标签页，触发动画
+            setTimeout(() => {
+                // 显示新标签页
+                tabElement.style.display = 'block';
+                
+                // 触发重排
+                tabElement.offsetHeight;
+                
+                // 添加active类和动画
+                tabElement.classList.add('active');
+                tabElement.style.opacity = '1';
+                tabElement.style.transform = 'translateY(0)';
+                
+                // 加载通知
+                if (tab === 'notifications') {
+                    loadNotifications();
+                }
+            }, 50);
         }
 
         function logout() {
@@ -575,6 +720,397 @@
             setTimeout(() => {
                 window.location.href = '../index.html';
             }, 1000);
+        }
+
+        let allNotifications = [];
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        async function loadNotifications(resetPage = true) {
+            try {
+                const result = await getNotifications();
+
+                if (result.success) {
+                    allNotifications = result.data.notifications;
+                    if (resetPage) {
+                        currentPage = 1;
+                    }
+                    displayNotifications();
+                } else {
+                    showNotificationMessage(result.message, 'error');
+                }
+            } catch (error) {
+                showNotificationMessage('加载通知失败: ' + error.message, 'error');
+            }
+        }
+
+        function displayNotifications() {
+            const container = document.getElementById('notification-list');
+
+            if (!allNotifications || allNotifications.length === 0) {
+                container.innerHTML = '<p>暂无通知</p>';
+                document.getElementById('notification-pagination').innerHTML = '';
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageNotifications = allNotifications.slice(startIndex, endIndex);
+
+            container.innerHTML = '';
+
+            pageNotifications.forEach(notification => {
+                const item = document.createElement('div');
+                item.className = 'notification-item ' + (notification.read ? 'read' : 'unread');
+                
+                const bgColor = notification.read ? '#f9f9f9' : '#f0f4ff';
+                const borderColor = notification.read ? '#ccc' : '#667eea';
+                
+                item.style.cssText = `
+                    background: ${bgColor};
+                    padding: 20px;
+                    margin-bottom: 15px;
+                    border-radius: 8px;
+                    border-left: 4px solid ${borderColor};
+                `;
+                
+                const header = document.createElement('div');
+                header.className = 'notification-header';
+                header.style.cssText = `
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                `;
+                
+                const title = document.createElement('div');
+                title.className = 'notification-title';
+                title.textContent = notification.title;
+                title.style.cssText = `
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin: 0;
+                `;
+                
+                const time = document.createElement('span');
+                time.className = 'notification-time';
+                
+                // 直接处理时间格式化
+                const timestamp = notification.created_at;
+                
+                // 手动解析时间
+                const parts = timestamp.split(/[- :]/);
+                
+                // 检查是否有足够的部分
+                if (parts.length >= 6) {
+                    const year = parseInt(parts[0]);
+                    const month = parseInt(parts[1]) - 1; // 月份从0开始
+                    const day = parseInt(parts[2]);
+                    const hour = parseInt(parts[3]);
+                    const minute = parseInt(parts[4]);
+                    const second = parseInt(parts[5]);
+                    
+                    // 手动格式化
+                    const formatted = `${year}/${String(month + 1).padStart(2, '0')}/${String(day).padStart(2, '0')} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`;
+                    
+                    time.textContent = formatted;
+                } else {
+                    time.textContent = timestamp;
+                }
+                
+                time.style.cssText = `
+                    color: #999;
+                    font-size: 12px;
+                `;
+                
+                header.appendChild(title);
+                header.appendChild(time);
+
+                const content = document.createElement('div');
+                content.className = 'notification-content';
+                content.textContent = notification.content;
+                content.style.cssText = `
+                    color: #666;
+                    line-height: 1.6;
+                    margin-bottom: 15px;
+                `;
+
+                item.appendChild(header);
+                item.appendChild(content);
+
+                if (!notification.read) {
+                    const button = document.createElement('button');
+                    button.className = 'btn-primary';
+                    button.style.cssText = `
+                        margin-top: 15px;
+                        padding: 8px 16px;
+                        background: var(--primary-color);
+                        color: white;
+                        border: none;
+                        border-radius: 6px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+                    `;
+                    button.textContent = '标记为已读';
+                    button.onclick = function() {
+                        // 添加点击动画
+                        button.style.opacity = '0.7';
+                        button.style.transform = 'scale(0.95)';
+                        button.style.boxShadow = '0 1px 2px rgba(102, 126, 234, 0.2)';
+                        button.disabled = true;
+                        
+                        setTimeout(() => {
+                            markAsRead(notification.id);
+                        }, 200);
+                    };
+                    item.appendChild(button);
+                }
+
+                container.appendChild(item);
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('notification-pagination');
+            const totalPages = Math.ceil(allNotifications.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            html += `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button onclick="changePage(${i})" ${i === currentPage ? 'class="active"' : ''}>${i}</button>`;
+            }
+
+            html += `<button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>下一页</button>`;
+
+            html += `<span class="page-info">共 ${allNotifications.length} 条通知，第 ${currentPage}/${totalPages} 页</span>`;
+
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(allNotifications.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            const container = document.getElementById('notification-list');
+            
+            // 添加淡出动画
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(10px)';
+            container.style.transition = 'all 0.3s ease';
+            
+            // 等待动画结束后更新内容
+            setTimeout(() => {
+                currentPage = page;
+                displayNotifications();
+                
+                // 添加淡入动画
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        async function markAsRead(notificationId) {
+            try {
+                const result = await markNotificationAsRead(notificationId);
+
+                if (result.success) {
+                    showNotificationMessage('标记成功', 'success');
+                    loadNotifications(false);
+                } else {
+                    showNotificationMessage(result.message, 'error');
+                }
+            } catch (error) {
+                showNotificationMessage('标记失败', 'error');
+            }
+        }
+
+        function showNotificationMessage(text, type) {
+            const messageEl = document.getElementById('notification-message');
+            messageEl.textContent = text;
+            messageEl.className = type === 'error' ? 'error' : 'success';
+        }
+
+        // 注销账户相关函数
+        function confirmDeleteAccount() {
+            // 创建注销确认对话框
+            const dialog = document.createElement('div');
+            dialog.className = 'delete-account-dialog';
+            dialog.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            `;
+            
+            const dialogContent = document.createElement('div');
+            dialogContent.style.cssText = `
+                background-color: white;
+                padding: 30px;
+                border-radius: 8px;
+                width: 90%;
+                max-width: 400px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            `;
+            
+            dialogContent.innerHTML = `
+                <h3 style="margin-top: 0; color: #333;">注销账户</h3>
+                <p style="margin-bottom: 20px; color: #666;">您确定要注销您的账户吗？此操作不可恢复，所有数据将被永久删除。</p>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">请输入密码确认：</label>
+                    <input type="password" id="delete-account-password" style="
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        font-size: 14px;
+                    " placeholder="请输入您的密码">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button onclick="closeDeleteAccountDialog()" style="
+                        padding: 10px 20px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        background-color: #f8f9fa;
+                        color: #333;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">取消</button>
+                    <button onclick="submitDeleteAccount()" style="
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 4px;
+                        background-color: #dc3545;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">确认注销</button>
+                </div>
+            `;
+            
+            dialog.appendChild(dialogContent);
+            document.body.appendChild(dialog);
+            
+            // 存储对话框引用
+            window.deleteAccountDialog = dialog;
+        }
+
+        function closeDeleteAccountDialog() {
+            if (window.deleteAccountDialog) {
+                window.deleteAccountDialog.remove();
+                window.deleteAccountDialog = null;
+            }
+        }
+
+        async function submitDeleteAccount() {
+            const passwordInput = document.getElementById('delete-account-password');
+            const password = passwordInput.value.trim();
+            
+            if (!password) {
+                alert('请输入密码');
+                return;
+            }
+            
+            try {
+                const result = await deleteAccount(password);
+                
+                if (result.success) {
+                    closeDeleteAccountDialog();
+                    
+                    // 创建假刷新对话框
+                    const loadingDialog = document.createElement('div');
+                    loadingDialog.className = 'loading-dialog';
+                    loadingDialog.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.7);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 9999;
+                    `;
+                    
+                    const loadingContent = document.createElement('div');
+                    loadingContent.style.cssText = `
+                        background-color: white;
+                        padding: 40px;
+                        border-radius: 8px;
+                        width: 90%;
+                        max-width: 350px;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                        text-align: center;
+                    `;
+                    
+                    loadingContent.innerHTML = `
+                        <div style="font-size: 3rem; margin-bottom: 20px;">🔄</div>
+                        <h3 style="margin-top: 0; color: #333; margin-bottom: 15px;">正在注销账户</h3>
+                        <p style="color: #666; margin-bottom: 25px;">服务器正在处理您的请求，请稍候...</p>
+                        <div style="width: 100%; height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden;">
+                            <div class="loading-bar" style="width: 0%; height: 100%; background: #dc3545; border-radius: 2px; transition: width 0.3s ease;"></div>
+                        </div>
+                        <p class="loading-text" style="color: #999; margin-top: 10px; font-size: 0.9rem;">正在清理数据...</p>
+                    `;
+                    
+                    loadingDialog.appendChild(loadingContent);
+                    document.body.appendChild(loadingDialog);
+                    
+                    // 模拟加载过程
+                    let progress = 0;
+                    const loadingBar = loadingContent.querySelector('.loading-bar');
+                    const loadingText = loadingContent.querySelector('.loading-text');
+                    const loadingSteps = [
+                        '正在清理数据...',
+                        '正在删除账户信息...',
+                        '正在清除会话...',
+                        '注销成功，正在跳转...'
+                    ];
+                    
+                    const interval = setInterval(() => {
+                        progress += 10;
+                        if (progress <= 100) {
+                            loadingBar.style.width = progress + '%';
+                            const stepIndex = Math.min(Math.floor(progress / 25), loadingSteps.length - 1);
+                            loadingText.textContent = loadingSteps[stepIndex];
+                        } else {
+                            clearInterval(interval);
+                        }
+                    }, 300);
+                    
+                    // 3秒后完成注销
+                    setTimeout(() => {
+                        // 清除本地存储
+                        localStorage.removeItem('currentUser');
+                        localStorage.removeItem('authToken');
+                        // 跳转到登录页面
+                        window.location.href = 'login.html';
+                    }, 3000);
+                } else {
+                    alert('注销失败: ' + result.message);
+                }
+            } catch (error) {
+                console.error('注销账户失败:', error);
+                alert('注销失败: 网络错误，请稍后重试');
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -590,6 +1126,9 @@
                     roleEl.classList.add('admin');
                     document.getElementById('admin-section').style.display = 'block';
                 }
+                
+                // 预加载通知数据，确保切换标签时能立即显示
+                loadNotifications();
             } else {
                 showMessage('请先登录', 'error');
                 setTimeout(() => {
@@ -597,6 +1136,89 @@
                 }, 1000);
             }
         });
+
+        // 发送通知功能
+        function openSendNotificationModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style = 'display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;';
+            modal.innerHTML = `
+                <div class="modal-content" style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="margin: 0; color: #333;">发送通知</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">通知标题</label>
+                            <input type="text" id="notification-title" placeholder="请输入通知标题" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">通知类型</label>
+                            <select id="notification-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                                <option value="system">系统通知</option>
+                                <option value="event">活动通知</option>
+                                <option value="update">更新通知</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">通知内容</label>
+                            <textarea id="notification-content" placeholder="请输入通知内容" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="padding: 10px 20px; border: 1px solid #ddd; border-radius: 6px; background: #f5f5f5; cursor: pointer;">取消</button>
+                        <button onclick="sendNotification()" style="padding: 10px 20px; border: none; border-radius: 6px; background: #3498db; color: white; cursor: pointer;">发送</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        async function sendNotification() {
+            const title = document.getElementById('notification-title').value.trim();
+            const type = document.getElementById('notification-type').value;
+            const content = document.getElementById('notification-content').value.trim();
+
+            if (!title) {
+                showMessage('请输入通知标题', 'error');
+                return;
+            }
+
+            if (!content) {
+                showMessage('请输入通知内容', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('../api/send_notification.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        type: type,
+                        content: content
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('通知发送成功', 'success');
+                    document.querySelector('.modal').remove();
+                    // 重新加载通知列表
+                    loadNotifications();
+                } else {
+                    showMessage(result.message || '通知发送失败', 'error');
+                }
+            } catch (error) {
+                console.error('发送通知失败:', error);
+                showMessage('发送失败，请重试', 'error');
+            }
+        }
     </script>
 
     <!-- ========== Sidebar音乐播放器（模块化版本）========== -->
@@ -608,6 +1230,8 @@
     <!-- 音乐播放器 -->
     <div id="app-sidebar-player"></div>
     <script src="../js/sidebar-player.js?v=3.0"></script>
+    
+    <!-- 组件加载器 -->
     <script src="../components/loader.js?v=3.0"></script>
 
 </body>

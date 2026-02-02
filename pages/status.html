@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/style.css?v=3.21">
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <link rel="stylesheet" href="../css/back-to-top.css?v=1.0">
+    <link rel="preload" href="../assets/img/1.png" as="image">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .status-page {
             padding: 60px 0;
@@ -14,7 +16,7 @@
 
         .status-main {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 30px;
             margin-bottom: 40px;
         }
@@ -33,112 +35,92 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        .server-status-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+        /* 状态文本动画 */
+        @keyframes textPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 80px;
-            height: 80px;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .status-indicator.loading::before {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 4px solid #ffc107;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .status-indicator.loading::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #ffc107;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite reverse;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .status-indicator.online {
-            color: #28a745;
-            animation: successPulse 2s ease-in-out infinite;
-        }
-
-        .status-indicator.online::before {
-            content: '✓';
-            font-size: 80px;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
-        }
-
+        /* 成功脉冲动画 */
         @keyframes successPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.05); opacity: 0.9; }
         }
 
-        .status-indicator.offline {
-            color: #dc3545;
-            animation: errorShake 0.5s ease-in-out;
-        }
-
-        .status-indicator.offline::before {
-            content: '✕';
-            font-size: 80px;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(220, 53, 69, 0.5);
-        }
-
-        @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .status-text {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            writing-mode: horizontal-tb;
-            text-orientation: mixed;
+        /* 状态徽章容器 */
+        .status-card .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
+            justify-content: center;
             white-space: nowrap;
-            text-align: center;
+            flex-shrink: 0;
         }
 
-        .status-text.online {
+        .status-card .status-badge.loading {
+            background-color: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .status-card .status-badge.online {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-card .status-badge.offline {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        /* 小型状态指示器 */
+        .status-card .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-card .status-badge.loading .status-dot {
+            background-color: #ffc107;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .status-card .status-badge.online .status-dot {
+            background-color: #28a745;
+            animation: successPulse 2s ease-in-out infinite;
+        }
+
+        .status-card .status-badge.offline .status-dot {
+            background-color: #dc3545;
+        }
+
+        .status-card .status-text-small {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-card .status-badge.loading .status-text-small {
+            color: #ffc107;
+        }
+
+        .status-card .status-badge.online .status-text-small {
             color: #28a745;
         }
 
-        .status-text.offline {
+        .status-card .status-badge.offline .status-text-small {
             color: #dc3545;
         }
 
-        .status-text.loading {
-            color: #ffc107;
-            animation: textPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes textPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
         }
 
         #status-message {
@@ -173,6 +155,36 @@
             font-size: 1.3rem;
             font-weight: bold;
             color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* 进度条样式 */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-bar.players {
+            background-color: #28a745;
+        }
+
+        .progress-bar.cpu {
+            background-color: #28a745;
+        }
+
+        .progress-bar.memory {
+            background-color: #28a745;
         }
 
         @media (max-width: 768px) {
@@ -218,6 +230,11 @@
         }
         .ranking-table tr:hover {
             background-color: #f5f5f5;
+            transform: none !important;
+        }
+
+        .ranking-table tr {
+            transition: background-color 0.3s ease;
         }
         .rank-number {
             font-weight: bold;
@@ -294,13 +311,31 @@
     </style>
 
 <link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
-<body data-components="sidebarPlayer,backToTop,navbar,footer">
+<body data-components="sidebarPlayer,backToTop,footer">
 
     <!-- 导航栏组件 -->
-    <div id="app-navbar"></div>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="nav-brand">
+                <span class="server-name">万驹同源</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link" data-page="home">首页</a></li>
+                <li><a href="forum.html" class="nav-link" data-page="forum">论坛</a></li>
+                <li><a href="status.html" class="nav-link" data-page="status">状态</a></li>
+                <li><a href="skin.html" class="nav-link" data-page="skin">皮肤站</a></li>
+                <li><a href="login.html" class="nav-link btn-login" data-page="login">登录</a></li>
+            </ul>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
     <!-- 状态页面Banner区域 -->
-    <section class="status-banner">
+    <section class="status-banner common-banner">
         <div class="status-banner-bg"></div>
         <div class="status-banner-particles"></div>
         <div class="container">
@@ -315,20 +350,16 @@
     <div class="section status-page">
         <div class="container">
             <div class="status-main">
-                <!-- 服务器状态 -->
-                <div class="status-card fade-in">
-                    <h2>服务器状态</h2>
-                    <div class="server-status-display">
-                        <div class="status-indicator loading" id="status-indicator"></div>
-                        <div class="status-text loading" id="status-text">加载中...</div>
-                        <div id="status-message">正在获取服务器状态信息...</div>
-                    </div>
-                </div>
-
                 <!-- 服务器信息 -->
-                <div class="status-card fade-in-delay-1">
+                <div class="status-card fade-in">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
-                        <h2 style="margin: 0;">服务器信息</h2>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h2 style="margin: 0;">服务器信息</h2>
+                            <div class="status-badge loading">
+                                <span class="status-dot" id="status-indicator"></span>
+                                <span class="status-text-small" id="status-text">加载中</span>
+                            </div>
+                        </div>
                         <button id="refresh-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
                             刷新数据
                         </button>
@@ -340,11 +371,14 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">CPU信息</span>
-                            <span class="info-value">------</span>
+                            <span class="info-value">Intel Xeon Platinum 8280</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">玩家数量</span>
                             <span class="info-value" id="players-count">--/--</span>
+                            <div class="progress-container">
+                                <div class="progress-bar players" id="players-progress" style="width: 0%"></div>
+                            </div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">服务器版本</span>
@@ -353,10 +387,16 @@
                         <div class="info-item">
                             <span class="info-label">CPU使用率</span>
                             <span class="info-value" id="cpu-usage">--%</span>
+                            <div class="progress-container">
+                                <div class="progress-bar cpu" id="cpu-progress" style="width: 0%"></div>
+                            </div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">内存使用率</span>
                             <span class="info-value" id="memory-usage">--%</span>
+                            <div class="progress-container">
+                                <div class="progress-bar memory" id="memory-progress" style="width: 0%"></div>
+                            </div>
                         </div>
                     </div>
                     <div style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9rem;">
@@ -365,6 +405,36 @@
                 </div>
             </div>
 
+            
+            <!-- 服务器性能监控图表 -->
+            <div class="status-card fade-in-delay-2" style="margin-top: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                    <h2 style="margin: 0;">服务器性能监控</h2>
+                    <button id="refresh-chart-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
+                        刷新数据
+                    </button>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <!-- 左侧：CPU和内存监控 -->
+                    <div style="flex: 1; height: 400px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.1rem;">CPU & 内存使用率</h3>
+                        <div style="height: 360px;">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                    </div>
+                    <!-- 右侧：玩家人数监控 -->
+                    <div style="flex: 1; height: 400px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.1rem;">玩家人数统计</h3>
+                        <div style="height: 360px;">
+                            <canvas id="players-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; text-align: center; color: #666; font-size: 0.9rem;">
+                    <p>* 数据每5分钟自动更新一次，显示最近30分钟的趋势，且保留50个数据点</p>
+                </div>
+            </div>
+            
             <!-- 黄金券排行榜 -->
             <div class="status-card fade-in-delay-2" style="margin-top: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
@@ -401,6 +471,7 @@
 
         // 初始化状态页
         document.addEventListener('DOMContentLoaded', () => {
+            initNavbar();
             initStatusPage();
         });
 
@@ -409,6 +480,9 @@
             loadServerStatus();
             loadSystemResources();
             initRanking();
+            initPerformanceChart();
+            initPlayersChart();
+            updatePerformanceData();
 
             // 为刷新按钮添加点击事件处理
             const refreshBtn = document.getElementById('refresh-btn');
@@ -419,10 +493,11 @@
                     refreshBtn.disabled = true;
 
                     try {
-                        // 刷新服务器状态和系统资源
+                        // 刷新服务器状态、系统资源和性能数据
                         await Promise.all([
                             loadServerStatus(),
-                            loadSystemResources()
+                            loadSystemResources(),
+                            updatePerformanceData()
                         ]);
                     } finally {
                         // 恢复按钮状态
@@ -434,48 +509,298 @@
                 });
             }
 
-            // 每30秒自动刷新
+            // 为图表刷新按钮添加点击事件处理
+            const refreshChartBtn = document.getElementById('refresh-chart-btn');
+            if (refreshChartBtn) {
+                refreshChartBtn.addEventListener('click', async () => {
+                    // 显示刷新中状态
+                    refreshChartBtn.textContent = '刷新中...';
+                    refreshChartBtn.disabled = true;
+
+                    try {
+                        // 刷新性能监控数据
+                        await updatePerformanceData();
+                    } finally {
+                        // 恢复按钮状态
+                        setTimeout(() => {
+                            refreshChartBtn.textContent = '刷新数据';
+                            refreshChartBtn.disabled = false;
+                        }, 1000);
+                    }
+                });
+            }
+
+            // 每30秒自动刷新基本数据和性能数据
             setInterval(() => {
-                loadServerStatus();
-                loadSystemResources();
+                Promise.all([
+                    loadServerStatus(),
+                    loadSystemResources(),
+                    updatePerformanceData()
+                ]);
             }, 30000);
+
+            // 每5分钟额外更新一次图表数据（冗余保险）
+            setInterval(() => {
+                updatePerformanceData();
+            }, 300000); // 5分钟
         }
 
         // 加载服务器状态
         async function loadServerStatus() {
             const indicator = document.getElementById('status-indicator');
             const statusText = document.getElementById('status-text');
-            const message = document.getElementById('status-message');
-
-            indicator.className = 'status-indicator loading';
-            statusText.className = 'status-text loading';
-            statusText.textContent = '加载中...';
-            message.textContent = '正在获取服务器状态信息...';
-
+            const statusBadge = indicator.parentElement;
+            
+            statusBadge.className = 'status-badge loading';
+            statusText.textContent = '加载中';
+            
             try {
                 const response = await fetch(API_BASE_URL + 'mcstatus.php');
                 const data = await response.json();
 
                 if (data.online) {
-                    indicator.className = 'status-indicator online';
-                    statusText.className = 'status-text online';
+                    statusBadge.className = 'status-badge online';
                     statusText.textContent = '在线';
-                    message.textContent = '服务器运行正常';
 
-                    document.getElementById('players-count').textContent = (data.players?.online || 0) + '/' + (data.players?.max || 0);
+                    const playersOnline = data.players?.online || 0;
+                    const playersMax = data.players?.max || 0;
+                    document.getElementById('players-count').textContent = playersOnline + '/' + playersMax;
                     document.getElementById('server-version').textContent = data.version?.name || 'Unknown';
+
+                    // 更新玩家数量进度条
+                    if (playersMax > 0) {
+                        const progressPercentage = Math.min((playersOnline / playersMax) * 100, 100);
+                        document.getElementById('players-progress').style.width = progressPercentage + '%';
+                    } else {
+                        document.getElementById('players-progress').style.width = '0%';
+                    }
                 } else {
-                    indicator.className = 'status-indicator offline';
-                    statusText.className = 'status-text offline';
+                    statusBadge.className = 'status-badge offline';
                     statusText.textContent = '离线';
-                    message.textContent = '服务器暂时离线，请稍后再试';
+                    document.getElementById('players-progress').style.width = '0%';
                 }
             } catch (error) {
                 console.error('获取服务器状态失败:', error);
-                indicator.className = 'status-indicator offline';
-                statusText.className = 'status-text offline';
+                statusBadge.className = 'status-badge offline';
                 statusText.textContent = '无法获取';
-                message.textContent = '获取服务器状态失败，请检查网络连接';
+                document.getElementById('players-progress').style.width = '0%';
+            }
+        }
+
+        // 性能监控数据 - CPU和内存
+        let performanceData = {
+            labels: [],
+            datasets: [
+                {
+                    label: 'CPU使用率 (%)',
+                    data: [],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: '内存使用率 (%)',
+                    data: [],
+                    borderColor: '#ffc107',
+                    backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        };
+
+        // 玩家人数数据
+        let playersData = {
+            labels: [],
+            datasets: [
+                {
+                    label: '玩家人数',
+                    data: [],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        };
+
+        let performanceChart;
+        let playersChart;
+
+        // 初始化性能监控图表
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performance-chart').getContext('2d');
+            
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: performanceData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    stacked: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: '时间'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '使用率 (%)'
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // 初始化玩家人数图表
+        function initPlayersChart() {
+            const ctx = document.getElementById('players-chart').getContext('2d');
+            
+            playersChart = new Chart(ctx, {
+                type: 'line',
+                data: playersData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    stacked: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: '时间'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '玩家人数'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 记录新的性能数据
+        async function recordPerformanceData() {
+            try {
+                await fetch(API_BASE_URL + 'performance.php');
+            } catch (error) {
+                console.error('记录性能数据失败:', error);
+            }
+        }
+
+        // 更新性能监控数据
+        async function updatePerformanceData() {
+            try {
+                console.log('开始更新性能监控数据...');
+                
+                // 首先记录新的数据
+                console.log('记录新的性能数据...');
+                await recordPerformanceData();
+                
+                // 然后获取最新的数据
+                console.log('获取性能数据...');
+                const response = await fetch(API_BASE_URL + 'get_performance.php');
+                
+                if (!response.ok) {
+                    throw new Error('网络响应错误: ' + response.status);
+                }
+                
+                const result = await response.json();
+                console.log('获取到的性能数据:', result);
+                
+                if (result.success) {
+                    const chartData = result.data;
+                    
+                    // 更新CPU和内存图表
+                    performanceData.labels = chartData.labels || [];
+                    performanceData.datasets[0].data = chartData.cpu || [];
+                    performanceData.datasets[1].data = chartData.memory || [];
+                    
+                    // 更新玩家人数图表
+                    playersData.labels = chartData.labels || [];
+                    playersData.datasets[0].data = chartData.players || [];
+                    
+                    // 如果没有数据，添加默认数据点
+                    if (performanceData.labels.length === 0) {
+                        const now = new Date();
+                        const timeLabel = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+                        performanceData.labels = [timeLabel];
+                        performanceData.datasets[0].data = [0];
+                        performanceData.datasets[1].data = [0];
+                        
+                        playersData.labels = [timeLabel];
+                        playersData.datasets[0].data = [0];
+                    }
+                    
+                    // 更新两个图表
+                    performanceChart.update();
+                    playersChart.update();
+                    console.log('图表更新成功');
+                    
+                    return true;
+                } else {
+                    console.error('API返回失败:', result.message);
+                    return false;
+                }
+            } catch (error) {
+                console.error('更新性能监控数据失败:', error);
+                
+                // 出错时显示默认数据
+                if (performanceData.labels.length === 0) {
+                    const now = new Date();
+                    const timeLabel = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+                    performanceData.labels = [timeLabel];
+                    performanceData.datasets[0].data = [0];
+                    performanceData.datasets[1].data = [0];
+                    
+                    playersData.labels = [timeLabel];
+                    playersData.datasets[0].data = [0];
+                    
+                    performanceChart.update();
+                    playersChart.update();
+                }
+                
+                return false;
             }
         }
 
@@ -489,23 +814,35 @@
                     if (typeof data.cpu === 'number' && !isNaN(data.cpu)) {
                         const cpuText = data.cpu.toFixed(1) + '%';
                         document.getElementById('cpu-usage').textContent = cpuText;
+                        // 更新CPU使用率进度条
+                        const cpuPercentage = Math.min(data.cpu, 100);
+                        document.getElementById('cpu-progress').style.width = cpuPercentage + '%';
                     } else {
                         document.getElementById('cpu-usage').textContent = '--%';
+                        document.getElementById('cpu-progress').style.width = '0%';
                     }
 
                     if (typeof data.memory === 'number' && !isNaN(data.memory)) {
                         const memoryText = data.memory.toFixed(1) + '%';
                         document.getElementById('memory-usage').textContent = memoryText;
+                        // 更新内存使用率进度条
+                        const memoryPercentage = Math.min(data.memory, 100);
+                        document.getElementById('memory-progress').style.width = memoryPercentage + '%';
                     } else {
                         document.getElementById('memory-usage').textContent = '--%';
+                        document.getElementById('memory-progress').style.width = '0%';
                     }
                 } else {
                     document.getElementById('cpu-usage').textContent = '--%';
                     document.getElementById('memory-usage').textContent = '--%';
+                    document.getElementById('cpu-progress').style.width = '0%';
+                    document.getElementById('memory-progress').style.width = '0%';
                 }
             } catch (error) {
                 document.getElementById('cpu-usage').textContent = '--%';
                 document.getElementById('memory-usage').textContent = '--%';
+                document.getElementById('cpu-progress').style.width = '0%';
+                document.getElementById('memory-progress').style.width = '0%';
             }
         }
 
@@ -522,22 +859,32 @@
                 const response = await fetch(API_BASE_URL + 'golden-ticket.php?action=get_ranking&page=' + page + '&limit=' + rankingItemsPerPage);
                 const result = await response.json();
                 
+                const container = document.getElementById('ranking-container');
+                // 移除loading类，停止旋转动画
+                container.classList.remove('loading');
+                
                 if (result.success) {
                     displayRankingData(result.data);
                     generateRankingPagination(result.data.total);
                     updateLastUpdated();
                 } else {
-                    document.getElementById('ranking-container').innerHTML = '<div class="error">' + result.message + '</div>';
+                    container.innerHTML = '<div class="error">' + result.message + '</div>';
                 }
             } catch (error) {
                 console.error('加载排行榜数据失败:', error);
-                document.getElementById('ranking-container').innerHTML = '<div class="error">加载失败: ' + error.message + '</div>';
+                const container = document.getElementById('ranking-container');
+                // 移除loading类，停止旋转动画
+                container.classList.remove('loading');
+                container.innerHTML = '<div class="error">加载失败: ' + error.message + '</div>';
             }
         }
 
         // 显示排行榜数据
         function displayRankingData(data) {
             const container = document.getElementById('ranking-container');
+            
+            // 移除loading类，停止旋转动画
+            container.classList.remove('loading');
             
             if (data.data.length === 0) {
                 container.innerHTML = '<div class="no-data">暂无黄金券数据</div>';

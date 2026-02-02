@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -15,13 +15,26 @@
     <div id="app-navbar"></div>
 
     <!-- 论坛Banner区域 -->
-    <section class="forum-banner">
+    <section class="forum-banner common-banner">
         <div class="forum-banner-bg"></div>
         <div class="forum-banner-particles"></div>
         <div class="container">
             <div class="forum-banner-content">
                 <h1 class="forum-banner-title">玩家论坛</h1>
                 <p class="forum-banner-subtitle">分享经验 · 交流心得 · 共同成长</p>
+            </div>
+        </div>
+        
+        <!-- 滚动公告栏 -->
+        <div class="announcement-bar" id="announcementBar">
+            <div class="announcement-content">
+                <div class="announcement-icon"></div>
+                <div class="announcement-text-container">
+                    <div class="announcement-text" id="announcementText">
+                        公告：欢迎来到万驹同源服务器论坛 | 请遵守服务器规则，文明发言 | 新玩家请先阅读<a href="rules.html" class="announcement-link">服务器规则</a>
+                    </div>
+                </div>
+                <button class="announcement-toggle" id="announcementToggle" title="关闭公告栏">✕</button>
             </div>
         </div>
     </section>
@@ -139,7 +152,29 @@
             loadPosts();
             updateLoginButton();
             initPostCharCount();
+            initAnnouncementBar();
         });
+
+        // 初始化公告栏
+        function initAnnouncementBar() {
+            const announcementBar = document.getElementById('announcementBar');
+            const announcementToggle = document.getElementById('announcementToggle');
+            const announcementText = document.getElementById('announcementText');
+            
+            if (!announcementBar || !announcementToggle || !announcementText) return;
+
+            announcementToggle.addEventListener('click', () => {
+                announcementBar.classList.add('hidden');
+            });
+
+            announcementText.addEventListener('mouseenter', () => {
+                announcementText.style.animationPlayState = 'paused';
+            });
+
+            announcementText.addEventListener('mouseleave', () => {
+                announcementText.style.animationPlayState = 'running';
+            });
+        }
 
         // 初始化发帖字数统计
         function initPostCharCount() {
@@ -222,23 +257,6 @@
             } catch (error) {
                 console.error('删除帖子失败:', error);
                 showToast('删除失败，请重试', 'error');
-            }
-        }
-
-
-
-        // 更新登录按钮状态
-        function updateLoginButton() {
-            const loginBtn = document.querySelector('.btn-login');
-            const currentUser = getCurrentUser();
-
-            if (currentUser) {
-                loginBtn.textContent = currentUser.username;
-                loginBtn.onclick = () => {
-                    if (confirm('确定要登出吗？')) {
-                        logout();
-                    }
-                };
             }
         }
 
@@ -444,8 +462,24 @@
                                 const replyElement = document.createElement('div');
                                 replyElement.className = 'reply-item';
                                 replyElement.style = 'padding: 10px; border-bottom: 1px solid #eee;';
+                                
+                                // 检查是否显示删除按钮
+                                const currentUser = getCurrentUser();
+                                const userRole = currentUser ? (currentUser.role || 'user') : 'user';
+                                const canDelete = currentUser && (userRole === 'admin' || currentUser.username === reply.author);
+                                const deleteButton = canDelete ? 
+                                    `<button onclick="deleteReply('${postId}', '${reply.id}', '${reply.author}')" 
+                                            style="margin-left: 10px; padding: 4px 8px; font-size: 12px; 
+                                                   background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                        删除
+                                    </button>` : '';
+                                
                                 replyElement.innerHTML = `
-                                    <p style="margin: 0 0 5px 0;"><strong>${reply.author}</strong> <span style="color: #666; font-size: 0.9em;">${reply.created_at}</span></p>
+                                    <p style="margin: 0 0 5px 0;">
+                                        <strong>${reply.author}</strong> 
+                                        <span style="color: #666; font-size: 0.9em;">${reply.created_at}</span>
+                                        ${deleteButton}
+                                    </p>
                                     <p style="margin: 0;">${reply.content}</p>
                                 `;
                                 repliesContainer.appendChild(replyElement);
@@ -499,8 +533,24 @@
                         const replyElement = document.createElement('div');
                         replyElement.className = 'reply-item';
                         replyElement.style = 'padding: 10px; border-bottom: 1px solid #eee;';
+                        
+                        // 检查是否显示删除按钮
+                        const currentUser = getCurrentUser();
+                        const userRole = currentUser ? (currentUser.role || 'user') : 'user';
+                        const canDelete = currentUser && (userRole === 'admin' || currentUser.username === reply.author);
+                        const deleteButton = canDelete ? 
+                            `<button onclick="deleteReply('${postId}', '${reply.id}', '${reply.author}')" 
+                                    style="margin-left: 10px; padding: 4px 8px; font-size: 12px; 
+                                           background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                删除
+                            </button>` : '';
+                        
                         replyElement.innerHTML = `
-                            <p style="margin: 0 0 5px 0;"><strong>${reply.author}</strong> <span style="color: #666; font-size: 0.9em;">${reply.created_at}</span></p>
+                            <p style="margin: 0 0 5px 0;">
+                                <strong>${reply.author}</strong> 
+                                <span style="color: #666; font-size: 0.9em;">${reply.created_at}</span>
+                                ${deleteButton}
+                            </p>
                             <p style="margin: 0;">${reply.content}</p>
                         `;
                         hiddenContainer.appendChild(replyElement);
@@ -516,6 +566,55 @@
             }
         }
 
+        // 删除回复
+        async function deleteReply(postId, replyId, replyAuthor) {
+            const currentUser = getCurrentUser();
+            
+            if (!currentUser) {
+                showToast('请先登录', 'error');
+                return;
+            }
+            
+            // 检查权限
+            const userRole = currentUser.role || 'user';
+            if (userRole !== 'admin' && currentUser.username !== replyAuthor) {
+                showToast('无权限删除此回复', 'error');
+                return;
+            }
+            
+            // 确认删除
+            if (!confirm('确定要删除这条回复吗？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('../api/forum.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        action: 'delete_reply',
+                        postId: postId,
+                        replyId: replyId
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('删除成功', 'success');
+                    // 重新加载回复
+                    loadReplies(postId);
+                } else {
+                    showToast(result.message || '删除失败', 'error');
+                }
+            } catch (error) {
+                console.error('删除回复失败:', error);
+                showToast('删除失败，请重试', 'error');
+            }
+        }
 
 
         // 提交新帖
@@ -581,13 +680,15 @@
     <div id="app-back-to-top"></div>
     <script src="../js/back-to-top.js?v=1.0"></script>
 
-    <!-- 导航栏 -->
-    <script src="../js/navbar.js?v=1.0"></script>
-
     <!-- 音乐播放器 -->
     <div id="app-sidebar-player"></div>
     <script src="../js/sidebar-player.js?v=3.0"></script>
+    
+    <!-- 组件加载器 -->
     <script src="../components/loader.js?v=3.0"></script>
+    
+    <!-- 导航栏 -->
+    <script src="../js/navbar.js?v=1.0"></script>
 
 </body>
 </html>
