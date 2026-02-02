@@ -620,30 +620,51 @@ function initDanmaku() {
     const container = document.getElementById('danmakuContainer');
     if (!container) return;
 
-    const danmakuList = [
-        '欢迎来到万驹同源服务器！',
-        '服务器地址：mc.eqmemory.cn',
-        '推荐版本：1.20.1',
-        '快来加入我们的QQ群：569208814',
-        '生存游戏等你来挑战！',
-        '自由创造，发挥你的想象力',
-        '太空服测试中，敬请期待',
-        'RPG服即将上线',
-        '小游戏服开发中',
-        '优质网络，稳定运行',
-        '双路志强，超强性能',
-        '安全稳定，放心游玩',
-        '公益服务器，完全免费',
-        '友好社区，和谐氛围',
-        '万驹同源欢迎你！'
-    ];
+    // 弹幕配置
+    const config = {
+        // 开关控制：true = 开启，false = 关闭
+        enabled: false,
+        // 弹幕文本列表
+        messages: [
+            '欢迎来到万驹同源服务器！',
+            '服务器地址：mc.eqmemory.cn',
+            '推荐版本：1.20.1',
+            '快来加入我们的QQ群：569208814',
+            '生存游戏等你来挑战！',
+            '自由创造，发挥你的想象力',
+            '太空服测试中，敬请期待',
+            'RPG服即将上线',
+            '小游戏服开发中',
+            '优质网络，稳定运行',
+            '双路志强，超强性能',
+            '安全稳定，放心游玩',
+            '公益服务器，完全免费',
+            '友好社区，和谐氛围',
+            '万驹同源欢迎你！'
+        ],
+        // 弹幕颜色列表
+        colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'],
+        // 弹幕生成间隔（毫秒）
+        interval: 1500,
+        // 初始弹幕数量
+        initialCount: 5,
+        // 启动延迟（毫秒）
+        startDelay: 5500
+    };
 
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'];
-    const containerHeight = container.offsetHeight;
-    const containerWidth = container.offsetWidth;
+    // 如果弹幕被禁用，直接返回
+    if (!config.enabled) {
+        container.classList.add('hidden');
+        return;
+    }
+
+    let danmakuInterval;
 
     function createDanmaku() {
-        const text = danmakuList[Math.floor(Math.random() * danmakuList.length)];
+        const containerHeight = container.offsetHeight;
+        const containerWidth = container.offsetWidth;
+        
+        const text = config.messages[Math.floor(Math.random() * config.messages.length)];
         const danmaku = document.createElement('div');
         danmaku.className = 'danmaku-item';
         danmaku.textContent = text;
@@ -651,7 +672,7 @@ function initDanmaku() {
         const topPosition = Math.random() * (containerHeight - 50);
         const duration = 8 + Math.random() * 8;
         const fontSize = 14 + Math.random() * 4;
-        const color = colors[Math.floor(Math.random() * colors.length)];
+        const color = config.colors[Math.floor(Math.random() * config.colors.length)];
 
         danmaku.style.top = `${topPosition}px`;
         danmaku.style.animationDuration = `${duration}s`;
@@ -665,22 +686,26 @@ function initDanmaku() {
         });
     }
 
-    let danmakuInterval = setInterval(createDanmaku, 1500);
-
-    for (let i = 0; i < 5; i++) {
-        setTimeout(createDanmaku, i * 300);
+    function startDanmaku() {
+        if (danmakuInterval) return;
+        
+        for (let i = 0; i < config.initialCount; i++) {
+            setTimeout(createDanmaku, i * 300);
+        }
+        
+        danmakuInterval = setInterval(createDanmaku, config.interval);
     }
 
+    // 启动弹幕
+    setTimeout(startDanmaku, config.startDelay);
+
     window.addEventListener('resize', () => {
-        containerWidth = container.offsetWidth;
+        const containerWidth = container.offsetWidth;
     });
 }
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
-    // 隐藏页面加载动画并触发Hero动画
-    hidePageLoader();
-
     // 初始化状态页（如果存在）
     if (typeof initStatusPage === 'function') {
         initStatusPage();

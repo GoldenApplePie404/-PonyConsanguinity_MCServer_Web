@@ -28,7 +28,7 @@ async function checkApiAvailability() {
 
 // 强制使用 mock 模式
 USE_MOCK_MODE = false;
-console.log('强制启用 mock 模式，因为系统中没有安装 PHP');
+console.log('使用真实 API 模式，因为系统中已安装 PHP');
 
 
 // 初始化时检查 API 可用性
@@ -242,6 +242,34 @@ function getMockResponse(url, method, data) {
         };
     }
     
+    // 通知列表
+    if (url.includes('notification.php') && url.includes('action=list')) {
+        return {
+            success: true,
+            message: '获取成功',
+            data: {
+                notifications: [
+                    {
+                        id: 1,
+                        title: '欢迎加入服务器',
+                        type: 'system',
+                        content: '亲爱的玩家，欢迎加入我们的服务器！在这里你可以体验到最棒的游戏乐趣，结交更多朋友。',
+                        created_at: '2026-01-30 10:00:00',
+                        read: false
+                    }
+                ]
+            }
+        };
+    }
+    
+    // 标记通知为已读
+    if (url.includes('notification.php') && url.includes('action=mark_read')) {
+        return {
+            success: true,
+            message: '标记成功'
+        };
+    }
+    
     // 默认响应
     return {
         success: true,
@@ -357,6 +385,35 @@ function isPostAuthor(postAuthor) {
     return currentUser && currentUser.username === postAuthor;
 }
 
+// ==================== 通知系统 API ====================
+
+/**
+ * 获取通知列表
+ */
+async function getNotifications() {
+    return await apiRequest('/notification.php?action=list', 'GET', null, true);
+}
+
+/**
+ * 标记通知为已读
+ */
+async function markNotificationAsRead(notificationId) {
+    return await apiRequest('/notification.php?action=mark_read', 'POST', {
+        notification_id: notificationId
+    }, true);
+}
+
+// ==================== 账户管理 API ====================
+
+/**
+ * 注销账户
+ */
+async function deleteAccount(password) {
+    return await apiRequest('/delete_account.php', 'POST', {
+        password: password
+    }, true);
+}
+
 // 暴露为全局函数供HTML页面使用
 if (typeof window !== 'undefined') {
     window.registerUser = registerUser;
@@ -368,4 +425,7 @@ if (typeof window !== 'undefined') {
     window.setToken = setToken;
     window.getCurrentUser = getCurrentUser;
     window.setCurrentUser = setCurrentUser;
+    window.getNotifications = getNotifications;
+    window.markNotificationAsRead = markNotificationAsRead;
+    window.deleteAccount = deleteAccount;
 }

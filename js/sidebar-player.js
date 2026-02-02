@@ -11,6 +11,11 @@ const playlist = [
         title: "DreamCity",
         url: "/assets/music/DreamCity.mp3",
         format: "MP3"
+    },
+    {
+        title: "HappyLand",
+        url: "/assets/music/HappyLand.mp3",
+        format: "MP3"
     }
 ];
 
@@ -421,8 +426,15 @@ function updatePlaylistUI() {
 // 切换播放器面板显示
 function togglePlayer() {
     const panel = document.querySelector('.player-panel');
+    const toggle = document.querySelector('.player-toggle');
     if (panel) {
+        const isShowing = panel.classList.contains('show');
         panel.classList.toggle('show');
+        
+        // 切换按钮的active类
+        if (toggle) {
+            toggle.classList.toggle('active', !isShowing);
+        }
     }
 }
 
