@@ -32,7 +32,18 @@ const components = {
         selector: '#app-navbar',
         template: basePath + 'components/navbar.html?v=1.0',
         callback: () => {
-            initNavbar();
+            if (typeof window.initNavbar === 'function') {
+                window.initNavbar();
+            } else {
+                // 如果initNavbar函数还不存在，等待一段时间后重试
+                setTimeout(() => {
+                    if (typeof window.initNavbar === 'function') {
+                        window.initNavbar();
+                    } else {
+                        console.warn('initNavbar函数未找到，导航栏滚动效果可能无法正常工作');
+                    }
+                }, 100);
+            }
         }
     },
     // 页脚
@@ -98,8 +109,15 @@ function initComponents() {
 }
 
 // 页面加载完成后初始化组件
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initComponents);
-} else {
-    initComponents();
+function safeInitComponents() {
+    // 确保DOM完全加载
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initComponents);
+    } else {
+        // 等待一段时间，确保所有脚本都已加载
+        setTimeout(initComponents, 200);
+    }
 }
+
+// 安全初始化组件
+safeInitComponents();
