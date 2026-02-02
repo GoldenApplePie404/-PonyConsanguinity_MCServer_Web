@@ -1,5 +1,5 @@
 <?php
-define('DATA_ACCESS_TOKEN', '8f42a73e6b9f4c8d9e2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e'); // 数据访问令牌
+define('DATA_ACCESS_TOKEN', 'fgvbjnhiulo90icdfrijklpu80efhiufehuefhouiefhio'); // 数据访问令牌
 
 function verifyDataAccess($requireToken = true) {
     if (!$requireToken) {
