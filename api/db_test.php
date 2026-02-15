@@ -1,11 +1,11 @@
 <?php
 // 数据库连接配置
 $config = array(
-    'hostname' => 'xxx.xxx.xxx.xxx', // 数据库主机名
+    'hostname' => '115.231.176.218', // 数据库主机名
     'port' => 3306, // 数据库端口
-    'database' => 'databasename', // 数据库名称
-    'username' => 'username', // 数据库用户名
-    'password' => 'password' // 数据库密码
+    'database' => 'mcsqlserver', // 数据库名称
+    'username' => 'mcsqlserver', // 数据库用户名
+    'password' => 'gapmcsql_2026' // 数据库密码
 );
 
 // 连接数据库
