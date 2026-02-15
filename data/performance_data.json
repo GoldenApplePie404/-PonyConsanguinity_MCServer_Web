@@ -1,352 +1,352 @@
 [
     {
-        "timestamp": "2026-02-02 07:09:04",
-        "time_label": "07:09",
-        "players": 8,
-        "cpu": 50.6,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:09:15",
-        "time_label": "07:09",
-        "players": 8,
+        "timestamp": "2026-02-15 07:40:13",
+        "time_label": "07:40",
+        "players": 3,
         "cpu": 50.2,
         "memory": 33
     },
     {
-        "timestamp": "2026-02-02 07:09:45",
-        "time_label": "07:09",
-        "players": 8,
+        "timestamp": "2026-02-15 07:40:15",
+        "time_label": "07:40",
+        "players": 3,
+        "cpu": 51,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 07:40:40",
+        "time_label": "07:40",
+        "players": 3,
+        "cpu": 50.2,
+        "memory": 32.8
+    },
+    {
+        "timestamp": "2026-02-15 07:40:41",
+        "time_label": "07:40",
+        "players": 0,
+        "cpu": 50.2,
+        "memory": 32.8
+    },
+    {
+        "timestamp": "2026-02-15 07:40:42",
+        "time_label": "07:40",
+        "players": 0,
         "cpu": 50.8,
         "memory": 33.1
     },
     {
-        "timestamp": "2026-02-02 07:10:15",
-        "time_label": "07:10",
-        "players": 8,
-        "cpu": 50.7,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:10:45",
-        "time_label": "07:10",
-        "players": 8,
-        "cpu": 50.6,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:11:15",
-        "time_label": "07:11",
-        "players": 8,
-        "cpu": 51.2,
+        "timestamp": "2026-02-15 07:41:10",
+        "time_label": "07:41",
+        "players": 3,
+        "cpu": 50.5,
         "memory": 32.6
     },
     {
-        "timestamp": "2026-02-02 07:12:05",
-        "time_label": "07:12",
-        "players": 8,
-        "cpu": 50.4,
-        "memory": 32.5
-    },
-    {
-        "timestamp": "2026-02-02 07:13:05",
-        "time_label": "07:13",
-        "players": 8,
-        "cpu": 50.2,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:13:14",
-        "time_label": "07:13",
-        "players": 8,
-        "cpu": 50.4,
-        "memory": 32.8
-    },
-    {
-        "timestamp": "2026-02-02 07:14:05",
-        "time_label": "07:14",
-        "players": 8,
-        "cpu": 50.3,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:14:18",
-        "time_label": "07:14",
-        "players": 5,
-        "cpu": 50.2,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:14:45",
-        "time_label": "07:14",
-        "players": 5,
+        "timestamp": "2026-02-15 07:41:12",
+        "time_label": "07:41",
+        "players": 0,
         "cpu": 50.8,
         "memory": 32.5
     },
     {
-        "timestamp": "2026-02-02 07:15:15",
-        "time_label": "07:15",
-        "players": 5,
-        "cpu": 50.4,
-        "memory": 32.5
+        "timestamp": "2026-02-15 07:41:12",
+        "time_label": "07:41",
+        "players": 0,
+        "cpu": 50.9,
+        "memory": 32.6
     },
     {
-        "timestamp": "2026-02-02 07:16:05",
-        "time_label": "07:16",
-        "players": 5,
-        "cpu": 51.2,
-        "memory": 32.8
-    },
-    {
-        "timestamp": "2026-02-02 07:17:05",
-        "time_label": "07:17",
-        "players": 5,
+        "timestamp": "2026-02-15 07:41:40",
+        "time_label": "07:41",
+        "players": 3,
         "cpu": 50.7,
-        "memory": 33.1
+        "memory": 32.5
     },
     {
-        "timestamp": "2026-02-02 07:18:05",
-        "time_label": "07:18",
-        "players": 5,
-        "cpu": 50.4,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 07:18:14",
-        "time_label": "07:18",
-        "players": 5,
-        "cpu": 50.2,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:19:05",
-        "time_label": "07:19",
-        "players": 5,
-        "cpu": 50.8,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:19:30",
-        "time_label": "07:19",
-        "players": 5,
-        "cpu": 50.2,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:19:31",
-        "time_label": "07:19",
+        "timestamp": "2026-02-15 07:41:41",
+        "time_label": "07:41",
         "players": 0,
         "cpu": 50.6,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:19:34",
-        "time_label": "07:19",
-        "players": 5,
-        "cpu": 50.9,
-        "memory": 32.6
-    },
-    {
-        "timestamp": "2026-02-02 07:19:44",
-        "time_label": "07:19",
-        "players": 5,
-        "cpu": 50.6,
         "memory": 33
     },
     {
-        "timestamp": "2026-02-02 07:20:15",
-        "time_label": "07:20",
-        "players": 5,
-        "cpu": 51.1,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:20:45",
-        "time_label": "07:20",
-        "players": 5,
-        "cpu": 51,
-        "memory": 32.6
-    },
-    {
-        "timestamp": "2026-02-02 07:22:05",
-        "time_label": "07:22",
-        "players": 5,
+        "timestamp": "2026-02-15 07:41:42",
+        "time_label": "07:41",
+        "players": 0,
         "cpu": 50.7,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 07:23:05",
-        "time_label": "07:23",
-        "players": 5,
-        "cpu": 51.1,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:23:14",
-        "time_label": "07:23",
-        "players": 5,
-        "cpu": 50.3,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:24:05",
-        "time_label": "07:24",
-        "players": 5,
-        "cpu": 50.7,
-        "memory": 32.5
-    },
-    {
-        "timestamp": "2026-02-02 07:25:05",
-        "time_label": "07:25",
-        "players": 5,
-        "cpu": 51.1,
         "memory": 32.6
     },
     {
-        "timestamp": "2026-02-02 07:26:05",
-        "time_label": "07:26",
-        "players": 5,
-        "cpu": 50.3,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 07:27:05",
-        "time_label": "07:27",
-        "players": 5,
-        "cpu": 50.9,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:28:05",
-        "time_label": "07:28",
-        "players": 5,
-        "cpu": 50.3,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 07:28:14",
-        "time_label": "07:28",
-        "players": 5,
-        "cpu": 51,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 07:29:05",
-        "time_label": "07:29",
-        "players": 5,
-        "cpu": 50.6,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:30:05",
-        "time_label": "07:30",
-        "players": 5,
-        "cpu": 50.2,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 07:31:05",
-        "time_label": "07:31",
-        "players": 5,
-        "cpu": 50.8,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:32:05",
-        "time_label": "07:32",
-        "players": 5,
-        "cpu": 50.6,
-        "memory": 32.9
-    },
-    {
-        "timestamp": "2026-02-02 07:33:05",
-        "time_label": "07:33",
-        "players": 5,
-        "cpu": 50.3,
-        "memory": 32.7
-    },
-    {
-        "timestamp": "2026-02-02 07:33:14",
-        "time_label": "07:33",
-        "players": 5,
-        "cpu": 51,
-        "memory": 32.8
-    },
-    {
-        "timestamp": "2026-02-02 07:34:05",
-        "time_label": "07:34",
-        "players": 5,
+        "timestamp": "2026-02-15 07:42:10",
+        "time_label": "07:42",
+        "players": 3,
         "cpu": 50.5,
         "memory": 33.1
     },
     {
-        "timestamp": "2026-02-02 07:35:05",
-        "time_label": "07:35",
-        "players": 5,
+        "timestamp": "2026-02-15 07:42:12",
+        "time_label": "07:42",
+        "players": 0,
+        "cpu": 50.9,
+        "memory": 32.7
+    },
+    {
+        "timestamp": "2026-02-15 07:42:13",
+        "time_label": "07:42",
+        "players": 0,
+        "cpu": 51.2,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 07:42:39",
+        "time_label": "07:42",
+        "players": 3,
+        "cpu": 51.1,
+        "memory": 32.9
+    },
+    {
+        "timestamp": "2026-02-15 07:42:41",
+        "time_label": "07:42",
+        "players": 0,
+        "cpu": 50.6,
+        "memory": 32.7
+    },
+    {
+        "timestamp": "2026-02-15 07:42:42",
+        "time_label": "07:42",
+        "players": 3,
+        "cpu": 50.6,
+        "memory": 32.5
+    },
+    {
+        "timestamp": "2026-02-15 07:43:09",
+        "time_label": "07:43",
+        "players": 3,
+        "cpu": 51.2,
+        "memory": 32.9
+    },
+    {
+        "timestamp": "2026-02-15 07:43:10",
+        "time_label": "07:43",
+        "players": 0,
+        "cpu": 50.3,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 07:43:11",
+        "time_label": "07:43",
+        "players": 0,
+        "cpu": 51.1,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:02:13",
+        "time_label": "08:02",
+        "players": 3,
+        "cpu": 50.3,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:02:15",
+        "time_label": "08:02",
+        "players": 0,
+        "cpu": 50.3,
+        "memory": 32.7
+    },
+    {
+        "timestamp": "2026-02-15 08:02:17",
+        "time_label": "08:02",
+        "players": 3,
+        "cpu": 50.8,
+        "memory": 32.8
+    },
+    {
+        "timestamp": "2026-02-15 08:02:42",
+        "time_label": "08:02",
+        "players": 3,
+        "cpu": 50.5,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:02:43",
+        "time_label": "08:02",
+        "players": 3,
+        "cpu": 51.1,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:02:45",
+        "time_label": "08:02",
+        "players": 0,
+        "cpu": 50.9,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:03:10",
+        "time_label": "08:03",
+        "players": 3,
+        "cpu": 51,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:03:12",
+        "time_label": "08:03",
+        "players": 0,
+        "cpu": 51.1,
+        "memory": 32.8
+    },
+    {
+        "timestamp": "2026-02-15 08:03:13",
+        "time_label": "08:03",
+        "players": 0,
+        "cpu": 50.2,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:31:00",
+        "time_label": "08:31",
+        "players": 3,
+        "cpu": 50.8,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:31:02",
+        "time_label": "08:31",
+        "players": 0,
+        "cpu": 50.9,
+        "memory": 32.8
+    },
+    {
+        "timestamp": "2026-02-15 08:31:04",
+        "time_label": "08:31",
+        "players": 3,
         "cpu": 50.9,
         "memory": 32.9
     },
     {
-        "timestamp": "2026-02-02 09:19:00",
-        "time_label": "09:19",
-        "players": 0,
-        "cpu": 50.4,
-        "memory": 32.5
-    },
-    {
-        "timestamp": "2026-02-02 09:19:04",
-        "time_label": "09:19",
-        "players": 0,
-        "cpu": 50.7,
-        "memory": 33.1
-    },
-    {
-        "timestamp": "2026-02-02 09:19:30",
-        "time_label": "09:19",
-        "players": 0,
-        "cpu": 51.1,
-        "memory": 33
-    },
-    {
-        "timestamp": "2026-02-02 09:20:01",
-        "time_label": "09:20",
-        "players": 0,
-        "cpu": 50.3,
+        "timestamp": "2026-02-15 08:32:00",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.6,
         "memory": 32.6
     },
     {
-        "timestamp": "2026-02-02 09:20:30",
-        "time_label": "09:20",
-        "players": 0,
-        "cpu": 51.2,
-        "memory": 32.8
+        "timestamp": "2026-02-15 08:32:05",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.8,
+        "memory": 32.5
     },
     {
-        "timestamp": "2026-02-02 09:21:00",
-        "time_label": "09:21",
-        "players": 0,
-        "cpu": 51.2,
+        "timestamp": "2026-02-15 08:32:07",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.7,
         "memory": 33
     },
     {
-        "timestamp": "2026-02-02 09:21:30",
-        "time_label": "09:21",
+        "timestamp": "2026-02-15 08:32:29",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.6,
+        "memory": 32.9
+    },
+    {
+        "timestamp": "2026-02-15 08:32:30",
+        "time_label": "08:32",
         "players": 0,
         "cpu": 50.8,
+        "memory": 32.9
+    },
+    {
+        "timestamp": "2026-02-15 08:32:31",
+        "time_label": "08:32",
+        "players": 0,
+        "cpu": 50.6,
+        "memory": 32.6
+    },
+    {
+        "timestamp": "2026-02-15 08:32:34",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.6,
         "memory": 33.1
     },
     {
-        "timestamp": "2026-02-02 09:22:00",
-        "time_label": "09:22",
-        "players": 0,
+        "timestamp": "2026-02-15 08:32:42",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 51,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:32:44",
+        "time_label": "08:32",
+        "players": 3,
+        "cpu": 50.2,
+        "memory": 32.6
+    },
+    {
+        "timestamp": "2026-02-15 08:33:00",
+        "time_label": "08:33",
+        "players": 3,
         "cpu": 50.6,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:33:02",
+        "time_label": "08:33",
+        "players": 0,
+        "cpu": 51,
+        "memory": 32.7
+    },
+    {
+        "timestamp": "2026-02-15 08:33:03",
+        "time_label": "08:33",
+        "players": 3,
+        "cpu": 50.2,
+        "memory": 32.6
+    },
+    {
+        "timestamp": "2026-02-15 08:33:17",
+        "time_label": "08:33",
+        "players": 3,
+        "cpu": 50.9,
+        "memory": 32.7
+    },
+    {
+        "timestamp": "2026-02-15 08:33:19",
+        "time_label": "08:33",
+        "players": 0,
+        "cpu": 50.5,
+        "memory": 33
+    },
+    {
+        "timestamp": "2026-02-15 08:33:20",
+        "time_label": "08:33",
+        "players": 3,
+        "cpu": 50.2,
         "memory": 32.8
     },
     {
-        "timestamp": "2026-02-02 09:22:36",
-        "time_label": "09:22",
+        "timestamp": "2026-02-15 08:34:01",
+        "time_label": "08:34",
+        "players": 3,
+        "cpu": 51,
+        "memory": 33.1
+    },
+    {
+        "timestamp": "2026-02-15 08:34:03",
+        "time_label": "08:34",
         "players": 0,
-        "cpu": 50.7,
-        "memory": 33
+        "cpu": 50.2,
+        "memory": 32.5
+    },
+    {
+        "timestamp": "2026-02-15 08:34:04",
+        "time_label": "08:34",
+        "players": 3,
+        "cpu": 51,
+        "memory": 32.8
     }
 ]

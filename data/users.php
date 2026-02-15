@@ -9,7 +9,7 @@ return array (
   array (
     'id' => 'c361cebb-3a36-4799-b094-46bc1d81f0f5',
     'username' => 'GoldenApplePie',
-    'password' => 'gap12345',
+    'password' => 'gap25225',
     'email' => 'czhdqqyx6044@qq.com',
     'created_at' => '2026-01-26 09:35:23',
     'role' => 'admin',
