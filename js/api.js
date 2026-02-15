@@ -3,10 +3,20 @@
  * 用于与 PHP 后端 API 服务器通信
  */
 
-// 根据环境自动设置 API 基础地址
-// 注意：部署环境如果无法使用 PHP，会回退到 mock 模式
-const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const API_BASE_URL = isLocalhost ? 'http://localhost:8000/api' : '/api';
+// 使用统一配置文件
+if (typeof API_CONFIG === 'undefined') {
+    console.warn('配置文件未加载，使用默认配置');
+    var API_CONFIG = {
+        baseUrl: '/api',
+        fullUrl: window.location.origin
+    };
+    var APP_CONFIG = {
+        apiTimeout: 3000
+    };
+}
+
+// API 基础地址
+const API_BASE_URL = API_CONFIG.baseUrl;
 
 // 是否使用 mock 模式（当 API 不可用时自动启用）
 let USE_MOCK_MODE = false;
@@ -16,7 +26,7 @@ async function checkApiAvailability() {
     try {
         const response = await fetch(`${API_BASE_URL}/health.php`, {
             method: 'GET',
-            signal: AbortSignal.timeout(3000)
+            signal: AbortSignal.timeout(APP_CONFIG.apiTimeout)
         });
         USE_MOCK_MODE = !response.ok;
         console.log('API 可用性检测:', USE_MOCK_MODE ? '使用 mock 模式' : '使用真实 API');
@@ -414,8 +424,18 @@ async function deleteAccount(password) {
     }, true);
 }
 
-// 暴露为全局函数供HTML页面使用
+// 调试信息
+console.log('=== api.js expose global functions ===');
+console.log('getNotifications defined:', typeof getNotifications !== 'undefined');
+console.log('markNotificationAsRead defined:', typeof markNotificationAsRead !== 'undefined');
+console.log('apiRequest defined:', typeof apiRequest !== 'undefined');
+console.log('============================');
+
+// Expose global functions for HTML pages
 if (typeof window !== 'undefined') {
+    console.log('=== Expose global functions to window object ===');
+    
+    // Ensure all functions are properly exposed
     window.registerUser = registerUser;
     window.loginUser = loginUser;
     window.logoutUser = logoutUser;
@@ -425,7 +445,15 @@ if (typeof window !== 'undefined') {
     window.setToken = setToken;
     window.getCurrentUser = getCurrentUser;
     window.setCurrentUser = setCurrentUser;
+    
+    // Specifically ensure getNotifications function is exposed
     window.getNotifications = getNotifications;
+    console.log('getNotifications exposed:', typeof window.getNotifications !== 'undefined');
+    
     window.markNotificationAsRead = markNotificationAsRead;
+    console.log('markNotificationAsRead exposed:', typeof window.markNotificationAsRead !== 'undefined');
+    
     window.deleteAccount = deleteAccount;
+    
+    console.log('=== Expose completed ===');
 }

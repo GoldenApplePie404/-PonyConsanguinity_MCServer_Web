@@ -81,7 +81,7 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     
-    const icon = type === 'success' ? '✅' : '❌';
+    const icon = type === 'success' ? '✅' : 'X';
     toast.innerHTML = `
         <span class="toast-icon">${icon}</span>
         <span class="toast-message">${message}</span>
