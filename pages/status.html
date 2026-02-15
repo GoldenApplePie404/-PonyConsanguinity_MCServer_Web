@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>服务器状态 - 万驹同源</title>
@@ -19,6 +21,165 @@
             grid-template-columns: 1fr;
             gap: 30px;
             margin-bottom: 40px;
+        }
+
+        /* 分页标签样式 */
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            border: none;
+            background: transparent;
+            color: #6c757d;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 下拉菜单样式 */
+        .chart-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chart-selector label {
+            font-size: 0.95rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .chart-selector select {
+            padding: 10px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+            color: #667eea;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            outline: none;
+        }
+
+        .chart-selector select:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .chart-selector select:focus {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .chart-selector select option {
+            padding: 10px;
+            background: white;
+            color: #667eea;
+        }
+
+        .chart-container {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .chart-container.active {
+            display: block;
+        }
+
+        .chart-wrapper {
+            height: 400px;
+            position: relative;
+        }
+
+        .chart-wrapper canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .status-main-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .status-main-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tab-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .chart-selector {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .chart-selector select {
+                width: 100%;
+            }
+
+            .server-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .server-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-wrapper {
+                height: 300px;
+            }
         }
 
         .status-card {
@@ -123,6 +284,78 @@
             50% { opacity: 0.7; transform: scale(1.1); }
         }
 
+        @keyframes satelliteFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes techPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88;
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.2);
+                box-shadow: 0 0 25px #00ff88, 0 0 50px #00ff88, 0 0 75px #00ff88;
+            }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(0) scale(1); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-20px) scale(1.5); 
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes gearRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes codePulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes progressGlow {
+            0%, 100% { 
+                box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 30px rgba(118, 75, 162, 0.6);
+            }
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes devPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 15px #ffc107, 0 0 30px #ffc107;
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.2);
+                box-shadow: 0 0 25px #ffc107, 0 0 50px #ffc107;
+            }
+        }
+
         #status-message {
             font-size: 1rem;
             color: #666;
@@ -132,31 +365,63 @@
 
         .server-info-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-top: 20px;
         }
 
         .info-item {
-            background: #f8f8f8;
-            padding: 15px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item:hover::before {
+            transform: scaleX(1);
         }
 
         .info-label {
             display: block;
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 5px;
+            font-size: 0.95rem;
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .info-value {
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--primary-color);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: block;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* 进度条样式 */
@@ -310,7 +575,7 @@
         }
     </style>
 
-<link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
+<link rel="icon" type="image/png" href="../assets/img/m.png"><link rel="shortcut icon" href="../assets/img/m.png"></head>
 <body data-components="sidebarPlayer,backToTop,footer">
 
     <!-- 导航栏组件 -->
@@ -349,125 +614,206 @@
     <!-- 状态内容区 -->
     <div class="section status-page">
         <div class="container">
-            <div class="status-main">
-                <!-- 服务器信息 -->
+            <!-- 第一行：服务器信息+性能监控 和 黄金券排行榜 -->
+            <div class="status-main-row">
+                <!-- 服务器信息和性能监控（合并卡片） -->
                 <div class="status-card fade-in">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <h2 style="margin: 0;">服务器信息</h2>
-                            <div class="status-badge loading">
-                                <span class="status-dot" id="status-indicator"></span>
-                                <span class="status-text-small" id="status-text">加载中</span>
-                            </div>
-                        </div>
-                        <button id="refresh-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
-                            刷新数据
-                        </button>
+                    <!-- 分页标签 -->
+                    <div class="tab-container">
+                        <button class="tab-btn active" data-tab="server-info">服务器信息</button>
+                        <button class="tab-btn" data-tab="monitoring">监控统计</button>
+                        <button class="tab-btn" data-tab="satellite">卫星云图</button>
                     </div>
-                    <div class="server-info-grid">
-                        <div class="info-item">
-                            <span class="info-label">系统信息</span>
-                            <span class="info-value">Windows_NT win32</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">CPU信息</span>
-                            <span class="info-value">Intel Xeon Platinum 8280</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">玩家数量</span>
-                            <span class="info-value" id="players-count">--/--</span>
-                            <div class="progress-container">
-                                <div class="progress-bar players" id="players-progress" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">服务器版本</span>
-                            <span class="info-value" id="server-version">--</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">CPU使用率</span>
-                            <span class="info-value" id="cpu-usage">--%</span>
-                            <div class="progress-container">
-                                <div class="progress-bar cpu" id="cpu-progress" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">内存使用率</span>
-                            <span class="info-value" id="memory-usage">--%</span>
-                            <div class="progress-container">
-                                <div class="progress-bar memory" id="memory-progress" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9rem;">
-                        <p>* 数据每30秒自动更新一次</p>
-                    </div>
-                </div>
-            </div>
 
-            
-            <!-- 服务器性能监控图表 -->
-            <div class="status-card fade-in-delay-2" style="margin-top: 30px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
-                    <h2 style="margin: 0;">服务器性能监控</h2>
-                    <button id="refresh-chart-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
-                        刷新数据
-                    </button>
-                </div>
-                <div style="display: flex; gap: 20px;">
-                    <!-- 左侧：CPU和内存监控 -->
-                    <div style="flex: 1; height: 400px;">
-                        <h3 style="margin-bottom: 15px; font-size: 1.1rem;">CPU & 内存使用率</h3>
-                        <div style="height: 360px;">
-                            <canvas id="performance-chart"></canvas>
+                    <!-- 服务器信息页面 -->
+                    <div class="tab-content active" id="server-info">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <h2 style="margin: 0;">服务器信息</h2>
+                                <div class="status-badge loading">
+                                    <span class="status-dot" id="status-indicator"></span>
+                                    <span class="status-text-small" id="status-text">加载中</span>
+                                </div>
+                            </div>
+                            <button id="refresh-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                                刷新数据
+                            </button>
+                        </div>
+                        <div class="server-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">系统信息</span>
+                                <span class="info-value">Windows_NT win32</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">CPU信息</span>
+                                <span class="info-value">Intel Xeon Platinum 8280</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">玩家数量</span>
+                                <span class="info-value" id="players-count">--/--</span>
+                                <div class="progress-container">
+                                    <div class="progress-bar players" id="players-progress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">服务器版本</span>
+                                <span class="info-value" id="server-version">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">CPU使用率</span>
+                                <span class="info-value" id="cpu-usage">--%</span>
+                                <div class="progress-container">
+                                    <div class="progress-bar cpu" id="cpu-progress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">内存使用率</span>
+                                <span class="info-value" id="memory-usage">--%</span>
+                                <div class="progress-container">
+                                    <div class="progress-bar memory" id="memory-progress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9rem;">
+                            <p>* 数据每30秒自动更新一次</p>
                         </div>
                     </div>
-                    <!-- 右侧：玩家人数监控 -->
-                    <div style="flex: 1; height: 400px;">
-                        <h3 style="margin-bottom: 15px; font-size: 1.1rem;">玩家人数统计</h3>
-                        <div style="height: 360px;">
-                            <canvas id="players-chart"></canvas>
+
+                    <!-- 监控统计页面 -->
+                    <div class="tab-content" id="monitoring">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                            <h2 style="margin: 0;">服务器性能监控</h2>
+                            <button id="refresh-chart-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                                刷新数据
+                            </button>
+                        </div>
+
+                        <!-- 图表选择下拉菜单 -->
+                        <div class="chart-selector">
+                            <label for="chart-select">选择监控图表：</label>
+                            <select id="chart-select">
+                                <option value="performance">CPU & 内存使用率</option>
+                                <option value="players">玩家人数统计</option>
+                            </select>
+                        </div>
+
+                        <!-- CPU & 内存使用率图表 -->
+                        <div class="chart-container active" id="chart-performance">
+                            <div class="chart-wrapper">
+                                <canvas id="performance-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 玩家人数统计图表 -->
+                        <div class="chart-container" id="chart-players">
+                            <div class="chart-wrapper">
+                                <canvas id="players-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 10px; text-align: center; color: #666; font-size: 0.9rem;">
+                            <p>* 数据每5分钟自动更新一次，显示最近30分钟的趋势，且保留50个数据点</p>
+                        </div>
+                    </div>
+
+                    <!-- 卫星云图页面 -->
+                    <div class="tab-content" id="satellite">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                            <h2 style="margin: 0;">卫星云图系统</h2>
+                        </div>
+
+                        <div style="text-align: center; padding: 60px 20px; position: relative; overflow: hidden;">
+                            <!-- 背景粒子效果 -->
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                                <div style="position: absolute; top: 20%; left: 10%; width: 4px; height: 4px; background: rgba(102, 126, 234, 0.3); border-radius: 50%; animation: particleFloat 3s ease-in-out infinite;"></div>
+                                <div style="position: absolute; top: 30%; left: 80%; width: 3px; height: 3px; background: rgba(118, 75, 162, 0.3); border-radius: 50%; animation: particleFloat 4s ease-in-out infinite 0.5s;"></div>
+                                <div style="position: absolute; top: 60%; left: 20%; width: 5px; height: 5px; background: rgba(102, 126, 234, 0.3); border-radius: 50%; animation: particleFloat 3.5s ease-in-out infinite 1s;"></div>
+                                <div style="position: absolute; top: 70%; left: 70%; width: 4px; height: 4px; background: rgba(118, 75, 162, 0.3); border-radius: 50%; animation: particleFloat 4.5s ease-in-out infinite 1.5s;"></div>
+                                <div style="position: absolute; top: 40%; left: 50%; width: 3px; height: 3px; background: rgba(102, 126, 234, 0.3); border-radius: 50%; animation: particleFloat 3.8s ease-in-out infinite 2s;"></div>
+                            </div>
+
+                            <!-- 科技感图标 -->
+                            <div style="position: relative; z-index: 1; margin-bottom: 30px;">
+                                <div style="font-size: 6rem; display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gearRotate 10s linear infinite; filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.5));">
+                                    ⚙️
+                                </div>
+                            </div>
+
+                            <!-- 开发中标题 -->
+                            <h3 style="position: relative; z-index: 1; font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 3px; text-transform: uppercase;">
+                                开发中
+                            </h3>
+
+                            <!-- 英文副标题 -->
+                            <p style="position: relative; z-index: 1; font-size: 1.2rem; color: rgba(102, 126, 234, 0.8); margin-bottom: 30px; letter-spacing: 2px; font-weight: 600;">
+                                UNDER DEVELOPMENT
+                            </p>
+
+                            <!-- 科技感进度条 -->
+                            <div style="position: relative; z-index: 1; max-width: 400px; margin: 0 auto 30px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #666;">
+                                    <span>开发进度</span>
+                                    <span>65%</span>
+                                </div>
+                                <div style="height: 8px; background: rgba(102, 126, 234, 0.1); border-radius: 10px; overflow: hidden; position: relative;">
+                                    <div style="height: 100%; width: 65%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 10px; animation: progressGlow 2s ease-in-out infinite;"></div>
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); animation: progressShine 2s linear infinite;"></div>
+                                </div>
+                            </div>
+
+                            <!-- 科技感状态信息 -->
+                            <div style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%); border: 2px solid rgba(255, 193, 7, 0.5); border-radius: 25px; box-shadow: 0 0 20px rgba(255, 193, 7, 0.3), inset 0 0 10px rgba(255, 193, 7, 0.1);">
+                                <div style="width: 12px; height: 12px; background: #ffc107; border-radius: 50%; box-shadow: 0 0 15px #ffc107, 0 0 30px #ffc107; animation: devPulse 1.5s ease-in-out infinite;"></div>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #ffc107; text-transform: uppercase; letter-spacing: 1px;">IN PROGRESS</span>
+                            </div>
+
+                            <!-- 提示信息 -->
+                            <p style="position: relative; z-index: 1; font-size: 0.95rem; color: #666; margin-top: 30px; line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto;">
+                                卫星云图系统正在紧张开发中，即将为您呈现全新的地图探索体验。<br>
+                                敬请期待！
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div style="margin-top: 10px; text-align: center; color: #666; font-size: 0.9rem;">
-                    <p>* 数据每5分钟自动更新一次，显示最近30分钟的趋势，且保留50个数据点</p>
-                </div>
-            </div>
-            
-            <!-- 黄金券排行榜 -->
-            <div class="status-card fade-in-delay-2" style="margin-top: 30px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
-                    <h2 style="margin: 0;">黄金券排行榜</h2>
-                    <div style="display: flex; align-items: center;">
-                        <span id="last-updated" style="color: #666; font-size: 0.9rem;">
-                            最后更新: 加载中...
-                        </span>
+                
+                <!-- 黄金券排行榜 -->
+                <div class="status-card fade-in-delay-2">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                        <h2 style="margin: 0;">黄金券排行榜</h2>
+                        <div style="display: flex; align-items: center;">
+                            <span id="last-updated" style="color: #666; font-size: 0.9rem;">
+                                最后更新: 加载中...
+                            </span>
+                        </div>
                     </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <p style="color: #666; margin-bottom: 20px;">服务器财富排行榜 - 每12小时自动刷新</p>
+                    </div>
+                    
+                    <!-- 排行榜表格 -->
+                    <div id="ranking-container" class="loading">
+                        <div class="spinner"></div>
+                        <p>加载中...</p>
+                    </div>
+                    
+                    <!-- 分页 -->
+                    <div id="ranking-pagination" class="pagination"></div>
                 </div>
-                <div style="text-align: center; padding: 20px;">
-                    <p style="color: #666; margin-bottom: 20px;">服务器财富排行榜 - 每12小时自动刷新</p>
-                </div>
-                
-                <!-- 排行榜表格 -->
-                <div id="ranking-container" class="loading">
-                    加载排行榜数据中...
-                </div>
-                
-                <!-- 分页控件 -->
-                <div id="ranking-pagination" class="pagination"></div>
             </div>
         </div>
     </div>
+
+    <!-- 回到顶部组件 -->
+    <div id="app-back-to-top"></div>
 
     <!-- 页脚组件 -->
     <div id="app-footer"></div>
 
     <script src="../js/main.js?v=3.5"></script>
+    <script src="../js/config.js"></script>
     <script>
-        // API配置
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const API_BASE_URL = isLocalhost ? 'http://localhost:8000/api/' : '/api/';
+        // 使用统一配置
+        const API_BASE_URL = API_CONFIG.baseUrl;
 
         // 初始化状态页
         document.addEventListener('DOMContentLoaded', () => {
@@ -477,11 +823,23 @@
 
         // 初始化状态页面
         function initStatusPage() {
+            // 初始化分页标签功能
+            initTabSwitching();
+            
+            // 初始化图表选择下拉菜单
+            initChartSelector();
+            
+            // 确保只初始化一次图表
+            if (!performanceChart) {
+                initPerformanceChart();
+            }
+            if (!playersChart) {
+                initPlayersChart();
+            }
+            
             loadServerStatus();
             loadSystemResources();
             initRanking();
-            initPerformanceChart();
-            initPlayersChart();
             updatePerformanceData();
 
             // 为刷新按钮添加点击事件处理
@@ -545,6 +903,52 @@
             }, 300000); // 5分钟
         }
 
+        // 初始化分页标签功能
+        function initTabSwitching() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+
+                    // 移除所有按钮的active类
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    // 为当前按钮添加active类
+                    btn.classList.add('active');
+
+                    // 隐藏所有标签内容
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    // 显示目标标签内容
+                    const targetContent = document.getElementById(targetTab);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // 初始化图表选择下拉菜单
+        function initChartSelector() {
+            const chartSelect = document.getElementById('chart-select');
+            const chartContainers = document.querySelectorAll('.chart-container');
+
+            if (chartSelect) {
+                chartSelect.addEventListener('change', () => {
+                    const selectedChart = chartSelect.value;
+
+                    // 隐藏所有图表容器
+                    chartContainers.forEach(container => container.classList.remove('active'));
+                    
+                    // 显示选中的图表容器
+                    const targetContainer = document.getElementById('chart-' + selectedChart);
+                    if (targetContainer) {
+                        targetContainer.classList.add('active');
+                    }
+                });
+            }
+        }
+
         // 加载服务器状态
         async function loadServerStatus() {
             const indicator = document.getElementById('status-indicator');
@@ -555,7 +959,7 @@
             statusText.textContent = '加载中';
             
             try {
-                const response = await fetch(API_BASE_URL + 'mcstatus.php');
+                const response = await fetch(API_BASE_URL + '/mcstatus.php');
                 const data = await response.json();
 
                 if (data.online) {
@@ -632,6 +1036,11 @@
         function initPerformanceChart() {
             const ctx = document.getElementById('performance-chart').getContext('2d');
             
+            // 销毁已存在的图表
+            if (performanceChart) {
+                performanceChart.destroy();
+            }
+            
             performanceChart = new Chart(ctx, {
                 type: 'line',
                 data: performanceData,
@@ -678,6 +1087,11 @@
         function initPlayersChart() {
             const ctx = document.getElementById('players-chart').getContext('2d');
             
+            // 销毁已存在的图表
+            if (playersChart) {
+                playersChart.destroy();
+            }
+            
             playersChart = new Chart(ctx, {
                 type: 'line',
                 data: playersData,
@@ -722,7 +1136,7 @@
         // 记录新的性能数据
         async function recordPerformanceData() {
             try {
-                await fetch(API_BASE_URL + 'performance.php');
+                await fetch(API_BASE_URL + '/performance.php');
             } catch (error) {
                 console.error('记录性能数据失败:', error);
             }
@@ -739,7 +1153,7 @@
                 
                 // 然后获取最新的数据
                 console.log('获取性能数据...');
-                const response = await fetch(API_BASE_URL + 'get_performance.php');
+                const response = await fetch(API_BASE_URL + '/get_performance.php');
                 
                 if (!response.ok) {
                     throw new Error('网络响应错误: ' + response.status);
@@ -807,7 +1221,7 @@
         // 加载系统资源
         async function loadSystemResources() {
             try {
-                const response = await fetch(API_BASE_URL + 'system.php');
+                const response = await fetch(API_BASE_URL + '/system.php');
                 const data = await response.json();
 
                 if (data.success) {
@@ -848,7 +1262,7 @@
 
         // 黄金券排行榜相关变量
         let rankingCurrentPage = 1;
-        const rankingItemsPerPage = 15;
+        const rankingItemsPerPage = 10;
 
         // 加载排行榜数据
         async function loadRankingData(page = 1) {
@@ -856,7 +1270,7 @@
             rankingCurrentPage = page;
             
             try {
-                const response = await fetch(API_BASE_URL + 'golden-ticket.php?action=get_ranking&page=' + page + '&limit=' + rankingItemsPerPage);
+                const response = await fetch(API_BASE_URL + '/golden-ticket.php?action=get_ranking&page=' + page + '&limit=' + rankingItemsPerPage);
                 const result = await response.json();
                 
                 const container = document.getElementById('ranking-container');
@@ -1008,4 +1422,5 @@
 
 </body>
 </html>
+
 

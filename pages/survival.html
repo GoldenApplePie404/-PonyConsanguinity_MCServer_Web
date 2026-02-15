@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生存服特色 - 万驹同源</title>
@@ -132,29 +135,59 @@
         .back-btn {
             display: inline-flex;
             align-items: center;
-            padding: 12px 30px;
+            padding: 14px 35px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
             margin-bottom: 30px;
-        }
-
-        .back-btn:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
         }
 
         .back-btn::before {
-            content: '←';
-            margin-right: 8px;
-            transition: transform 0.3s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-btn::after {
+            display: none;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-8px) translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            text-decoration: none !important;
+            background: linear-gradient(135deg, #5a67d8, #764ba2);
         }
 
         .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:active {
+            transform: translateX(-4px) translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .back-btn:hover i {
             transform: translateX(-5px);
         }
 
@@ -171,9 +204,30 @@
                 font-size: 1.5rem;
             }
         }
+
+        @keyframes satelliteFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes techPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88;
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.2);
+                box-shadow: 0 0 25px #00ff88, 0 0 50px #00ff88, 0 0 75px #00ff88;
+            }
+        }
     </style>
 
-<link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
+</head>
+
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
 
     <!-- 导航栏组件 -->
@@ -194,11 +248,9 @@
     <!-- 生存游戏内容区 -->
     <div class="section survival-page">
         <div class="container">
-            <a href="../index.html" class="back-btn">返回首页</a>
-
             <div class="content-wrapper fade-in">
                 <div class="feature-section">
-                    <div class="feature-title">🌍 探索重塑的世界</div>
+                    <div class="feature-title">🌍 全新的生存世界</div>
                     <div class="feature-grid">
                         <div class="feature-card">
                             <h4>🗺️ 全新地形生成</h4>
@@ -208,10 +260,7 @@
                             <h4>🏛️ 神秘建筑结构</h4>
                             <p>30+种新建筑结构隐藏在世界各地，每一座建筑都蕴含着神秘的故事和珍贵的宝藏。</p>
                         </div>
-                        <div class="feature-card">
-                            <h4>🎨 专属资源包</h4>
-                            <p>精心设计的粘液科技专属材质，带来沉浸式视觉体验，让游戏世界更加绚丽多彩。</p>
-                        </div>
+
                     </div>
                 </div>
 
@@ -219,7 +268,8 @@
                     <div class="feature-title">🐉 挑战极致战斗</div>
                     <div class="highlight-box">
                         <h4>⚔️ 全新战斗体验</h4>
-                        <p>20+种新怪物带来更强的敌人、更刺激的战斗、更丰厚的奖励。终极BOSS Herobrine需要通过祭坛召唤，挑战你的极限实力。</p>
+                        <p>20+种新怪物带来更强的敌人、更刺激的战斗、更丰厚的奖励。</p>
+                        <p>终极BOSS Herobrine——曾经的王，正等待着你的挑战。</p>
                         <p>末影龙全面升级，全新战斗场景、震撼音乐效果、炫酷技能特效，体验史诗级对决。每一次战斗都是对智慧和勇气的考验！</p>
                     </div>
                 </div>
@@ -239,15 +289,19 @@
                             <h4>⚔️ 个性化装备</h4>
                             <p>15+种武器皮肤，每款皮肤都有独特特效和属性加成。高级附魔系统超越原版，打造专属神器。</p>
                         </div>
+                        <div class="feature-card">
+                            <h4>🎨 专属资源包</h4>
+                            <p>精心设计的粘液科技专属材质，带来沉浸式视觉体验，让游戏世界更加绚丽多彩。</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="feature-section">
                     <div class="feature-title">🎁 核心特色功能</div>
                     <ul class="feature-list">
-                        <li><strong>便捷操作菜单：</strong>传送、邮箱、商店、领地、签到、称号等功能一键搞定，告别繁琐指令</li>
-                        <li><strong>丰富特色玩法：</strong>粘液科技、梦幻卡池、每日任务、高级附魔、药水扩展、玩家技能，玩法应有尽有</li>
-                        <li><strong>趣味交互系统：</strong>粒子特效、点歌系统、VIP特权，打造专属个性化游戏体验</li>
+                        <li><strong>便捷菜单：</strong>传送、邮箱、商店、领地、签到、称号等功能一键搞定，告别繁琐指令</li>
+                        <li><strong>特色玩法：</strong>粘液科技、梦幻卡池、每日任务、高级附魔、药水扩展、玩家技能，玩法应有尽有</li>
+                        <li><strong>趣味系统：</strong>粒子特效、点歌系统、VIP特权，打造专属个性化游戏体验</li>
                         <li><strong>传送功能：</strong>家园传送、公共传送点，快速移动到想去的地方</li>
                         <li><strong>领地系统：</strong>圈地建设，保护你的建筑和财物</li>
                         <li><strong>锁箱保护：</strong>保护你的珍贵物品，防止被他人拿取</li>
@@ -255,7 +309,38 @@
                 </div>
 
                 <div class="feature-section">
-                    <div class="feature-title">👥 适合所有玩家</div>
+                    <div class="feature-title">�️ 卫星云图系统</div>
+                    <div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #f8f9ff 0%, #f5f3ff 100%); border-radius: 15px; border: 2px solid rgba(102, 126, 234, 0.2); position: relative; overflow: hidden;">
+                        
+                        <div style="font-size: 4rem; margin-bottom: 20px; display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: satelliteFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.4));">
+                            🛰️
+                        </div>
+                        
+                        <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            实时卫星云图
+                        </h3>
+                        
+                        <p style="font-size: 1rem; color: #666; margin-bottom: 25px; line-height: 1.8; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            实时查看服务器世界地图，支持缩放和平移操作，探索每一个角落。<br>
+                            快速定位玩家位置和重要建筑坐标，一键直达目的地。
+                        </p>
+                        
+                        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 200, 100, 0.1) 100%); border: 2px solid rgba(0, 255, 136, 0.5); border-radius: 20px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1); margin-bottom: 20px;">
+                            <div style="width: 12px; height: 12px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; animation: techPulse 2s ease-in-out infinite;"></div>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: #00ff88; text-transform: uppercase; letter-spacing: 1px;">SYSTEM ONLINE</span>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <a href="satellite-map.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 30px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); position: relative; overflow: hidden; text-decoration: none;">
+                                <span>访问卫星云图</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">�� 适合所有玩家</div>
                     <div class="highlight-box">
                         <h4>🎯 个性化游戏体验</h4>
                         <p>无论是喜欢探索建造的休闲玩家，还是追求挑战极限的 hardcore玩家，万驹同源生存服都能满足你的需求！</p>
@@ -267,6 +352,10 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i>返回首页</a>
             </div>
         </div>
     </div>
@@ -287,6 +376,9 @@
     <script src="../js/sidebar-player.js?v=3.0"></script>
     <script src="../components/loader.js?v=3.0"></script>
 
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
 

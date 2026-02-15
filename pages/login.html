@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录/注册 - Minecraft服务器官网</title>
+    <title>登录/注册 - 万驹同源 | Minecraft 服务器官网</title>
     <link rel="stylesheet" href="../css/style.css?v=3.18">
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <style>
@@ -13,16 +15,34 @@
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('../assets/img/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);*/
+            z-index: 1;
         }
 
         .auth-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             width: 100%;
             max-width: 900px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
         }
 
         .auth-layout {
@@ -31,7 +51,7 @@
         }
 
         .auth-sidebar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eeaaf 0%, #764ba2af 100%);
             color: white;
             padding: 50px;
             display: flex;
@@ -165,6 +185,16 @@
             text-decoration: underline;
         }
 
+        .terms-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin: 0 2px;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
         .btn-auth {
             width: 100%;
             padding: 15px;
@@ -257,7 +287,7 @@
         }
     </style>
 
-<link rel="icon" type="image/png" href="assets/img/m.png"><link rel="shortcut icon" href="assets/img/m.png"></head>
+</head>
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
 
     <!-- 导航栏组件 -->
@@ -305,7 +335,7 @@
                                     <input type="checkbox" id="remember">
                                     记住我
                                 </label>
-                                <a href="#" class="forgot-link">忘记密码？</a>
+                                <!--<a href="#" class="forgot-link">忘记密码？</a>-->
                             </div>
                             <button type="submit" class="btn-auth">登录</button>
                         </form>
@@ -346,7 +376,7 @@
                             <div class="form-actions">
                                 <label>
                                     <input type="checkbox" id="agree" required>
-                                    我已阅读并同意服务条款
+                                    我已阅读并同意 <a href="user-agreement.html" target="_blank" class="terms-link">用户协议</a> 和 <a href="privacy-policy.html" target="_blank" class="terms-link">隐私政策</a>
                                 </label>
                             </div>
                             <button type="submit" class="btn-auth">注册</button>
@@ -449,4 +479,5 @@
 
 </body>
 </html>
+
 

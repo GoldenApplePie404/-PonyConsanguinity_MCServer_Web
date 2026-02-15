@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 
 <head>
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人中心 - Minecraft服务器官网</title>
+    <title>个人中心 - 万驹同源 | Minecraft 服务器官网</title>
     <link rel="stylesheet" href="../css/style.css?v=3.18">
     <link rel="stylesheet" href="../css/sidebar-player.css?v=2.0">
     <style>
@@ -40,12 +42,13 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
+            border: 3px solid #d3d3d3;
         }
 
         .user-name {
@@ -584,8 +587,8 @@
         }
     </style>
 
-    <link rel="icon" type="image/png" href="assets/img/m.png">
-    <link rel="shortcut icon" href="assets/img/m.png">
+    <link rel="icon" type="image/png" href="../assets/img/m.png">
+    <link rel="shortcut icon" href="../assets/img/m.png">
 </head>
 
 <body data-components="sidebarPlayer,backToTop,navbar,footer">
@@ -598,7 +601,9 @@
         <div class="profile-layout">
             <aside class="profile-sidebar">
                 <div class="user-card">
-                    <div class="user-avatar-large">👤</div>
+                    <div class="user-avatar-large">
+                        <img src="../assets/img/user.png" alt="用户头像" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;">
+                    </div>
                     <div class="user-name" id="profile-username">玩家名称</div>
                     <span class="user-role" id="profile-role">普通用户</span>
                     <div class="user-stats-grid">
@@ -639,10 +644,11 @@
                                 MCSManager</button>
 
                             <button class="admin-btn"
-                                onclick="window.open('http://localhost:8000/pages/db_test.html', '_blank')">📊
+                                onclick="window.open(PATH_CONFIG.dbTest, '_blank')">📊
                                 数据库查询</button>
                             <!--<button class="admin-btn" onclick="alert('此功能开发中')">🤖 QQ机器人管理</button>-->
                             <button class="admin-btn" onclick="openSendNotificationModal()">📢 发送通知</button>
+                            <button class="admin-btn" onclick="window.open('../tools/announcement-manager.html', '_blank')">📝 公告管理</button>
                             <!--<button class="admin-btn" onclick="alert('此功能开发中')">⚙️ 网站后台</button>
                             <button class="admin-btn" onclick="alert('此功能开发中')">👥 用户管理</button>-->
                         </div>
@@ -671,8 +677,397 @@
     <div id="app-footer"></div>
 
     <script src="../js/main.js?v=3.3"></script>
+    <script src="../js/config.js"></script>
     <script src="../js/api.js?v=1.0"></script>
     <script>
+        // 调试信息
+        console.log('=== 调试信息 ===');
+        console.log('api.js 加载状态:', typeof apiRequest !== 'undefined' ? '已加载' : '未加载');
+        console.log('getNotifications 初始状态:', typeof getNotifications !== 'undefined' ? '已定义' : '未定义');
+        console.log('API_CONFIG:', typeof API_CONFIG !== 'undefined' ? API_CONFIG : '未定义');
+        console.log('================');
+
+        // 兼容性检查函数
+        function checkCompatibility() {
+            const compatibility = {
+                localStorage: typeof localStorage !== 'undefined',
+                fetch: typeof fetch !== 'undefined',
+                Promise: typeof Promise !== 'undefined',
+                asyncAwait: typeof (async function() {}) === 'function'
+            };
+            
+            console.log('=== 浏览器兼容性检查 ===');
+            console.log('localStorage 可用:', compatibility.localStorage);
+            console.log('fetch API 可用:', compatibility.fetch);
+            console.log('Promise 可用:', compatibility.Promise);
+            console.log('async/await 可用:', compatibility.asyncAwait);
+            console.log('=====================');
+            
+            return compatibility;
+        }
+
+        // 获取存储的 token（兼容性版本）
+        function getStoredToken() {
+            const compatibility = checkCompatibility();
+            if (compatibility.localStorage) {
+                return localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            }
+            return null;
+        }
+
+        // 存储 token（兼容性版本，包含过期时间）
+        function storeToken(token, expiresIn = 3600) { // 默认过期时间为 1 小时
+            const compatibility = checkCompatibility();
+            if (compatibility.localStorage) {
+                try {
+                    // 计算过期时间
+                    const expiresAt = Date.now() + (expiresIn * 1000);
+                    
+                    // 优先使用 sessionStorage，提高安全性
+                    sessionStorage.setItem('authToken', token);
+                    sessionStorage.setItem('authTokenExpiresAt', expiresAt.toString());
+                    return true;
+                } catch (e) {
+                    console.warn('sessionStorage 存储失败，使用 localStorage:', e);
+                    try {
+                        // 计算过期时间
+                        const expiresAt = Date.now() + (expiresIn * 1000);
+                        
+                        localStorage.setItem('authToken', token);
+                        localStorage.setItem('authTokenExpiresAt', expiresAt.toString());
+                        return true;
+                    } catch (e) {
+                        console.error('localStorage 存储失败:', e);
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // 清除 token（兼容性版本）
+        function clearStoredToken() {
+            const compatibility = checkCompatibility();
+            if (compatibility.localStorage) {
+                try {
+                    sessionStorage.removeItem('authToken');
+                    sessionStorage.removeItem('authTokenExpiresAt');
+                } catch (e) {
+                    console.warn('sessionStorage 清除失败:', e);
+                }
+                try {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('authTokenExpiresAt');
+                } catch (e) {
+                    console.warn('localStorage 清除失败:', e);
+                }
+            }
+        }
+
+        // 获取 token 过期时间（兼容性版本）
+        function getTokenExpiration() {
+            const compatibility = checkCompatibility();
+            if (compatibility.localStorage) {
+                try {
+                    const expiresAt = sessionStorage.getItem('authTokenExpiresAt');
+                    if (expiresAt) {
+                        return parseInt(expiresAt);
+                    }
+                } catch (e) {
+                    console.warn('sessionStorage 读取失败:', e);
+                }
+                try {
+                    const expiresAt = localStorage.getItem('authTokenExpiresAt');
+                    if (expiresAt) {
+                        return parseInt(expiresAt);
+                    }
+                } catch (e) {
+                    console.warn('localStorage 读取失败:', e);
+                }
+            }
+            return null;
+        }
+
+        // 检查 token 是否已过期
+        function isTokenExpired() {
+            const expiresAt = getTokenExpiration();
+            if (!expiresAt) {
+                return true; // 如果没有过期时间，认为 token 已过期
+            }
+            return Date.now() > expiresAt;
+        }
+
+        // 刷新 token
+        async function refreshToken() {
+            try {
+                console.log('Refreshing token...');
+                const API_BASE_URL = typeof API_CONFIG !== 'undefined' ? API_CONFIG.baseUrl : '/api';
+                
+                // 检查 refresh_token.php 文件是否存在
+                const response = await makeRequest(`${API_BASE_URL}/refresh_token.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({}),
+                    timeout: 10000
+                });
+                
+                if (!response.ok) {
+                    // 如果是 404 错误，说明 refresh_token.php 文件不存在，返回 true，这样系统就不会清除 token
+                    if (response.status === 404) {
+                        console.warn('Refresh token endpoint not found (404), assuming token is still valid');
+                        return true;
+                    }
+                    throw new Error('Token refresh failed with status: ' + response.status);
+                }
+                
+                const result = await response.json();
+                console.log('Token refresh result:', result);
+                
+                if (result.success && result.token) {
+                    // 存储新 token
+                    storeToken(result.token, result.expires_in || 3600);
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error refreshing token:', error);
+                return false;
+            }
+        }
+
+        // 获取有效的 token（如果过期则尝试刷新）
+        async function getValidToken() {
+            const token = getStoredToken();
+            if (!token) {
+                return null;
+            }
+            
+            if (isTokenExpired()) {
+                console.log('Token expired, trying to refresh...');
+                const refreshed = await refreshToken();
+                if (refreshed) {
+                    console.log('Token refresh successful, using refreshed token');
+                    return getStoredToken();
+                } else {
+                    console.log('Token refresh failed, but keeping existing token...');
+                    // 不清除 token，因为可能 refresh_token.php 文件不存在
+                    // 但是 token 可能仍然有效，或者用户可以通过重新登录获取新 token
+                    return token;
+                }
+            }
+            
+            console.log('Token is valid, using existing token');
+            return token;
+        }
+
+        // 通用请求函数（支持 fetch 和 XMLHttpRequest）
+        function makeRequest(url, options) {
+            const compatibility = checkCompatibility();
+            
+            // 如果支持 fetch API，使用 fetch
+            if (compatibility.fetch && compatibility.Promise) {
+                return fetch(url, options);
+            }
+            
+            // 否则使用 XMLHttpRequest 作为备用
+            return new Promise(function(resolve, reject) {
+                const xhr = new XMLHttpRequest();
+                xhr.open(options.method || 'GET', url, true);
+                
+                // 设置请求头
+                if (options.headers) {
+                    Object.keys(options.headers).forEach(function(key) {
+                        xhr.setRequestHeader(key, options.headers[key]);
+                    });
+                }
+                
+                xhr.onload = function() {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        try {
+                            const response = {
+                                ok: true,
+                                status: xhr.status,
+                                json: function() {
+                                    return Promise.resolve(JSON.parse(xhr.responseText));
+                                },
+                                text: function() {
+                                    return Promise.resolve(xhr.responseText);
+                                }
+                            };
+                            resolve(response);
+                        } catch (e) {
+                            reject(new Error('响应解析失败'));
+                        }
+                    } else {
+                        const response = {
+                            ok: false,
+                            status: xhr.status
+                        };
+                        resolve(response);
+                    }
+                };
+                
+                xhr.onerror = function() {
+                    reject(new Error('网络错误'));
+                };
+                
+                xhr.timeout = options.timeout || 10000;
+                xhr.ontimeout = function() {
+                    reject(new Error('请求超时'));
+                };
+                
+                if (options.body) {
+                    xhr.send(options.body);
+                } else {
+                    xhr.send();
+                }
+            });
+        }
+
+        // 确保 getNotifications 函数存在
+        if (typeof getNotifications === 'undefined') {
+            console.warn('getNotifications 函数未定义，使用备用实现');
+            window.getNotifications = async function() {
+                try {
+                    // 直接调用 API
+                    const API_BASE_URL = typeof API_CONFIG !== 'undefined' ? API_CONFIG.baseUrl : '/api';
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+                    
+                    // 添加认证头
+                    const token = await getValidToken();
+                    if (token) {
+                        headers['Authorization'] = `Bearer ${token}`;
+                    }
+                    
+                    console.log('使用备用实现调用 API:', API_BASE_URL + '/notification.php?action=list');
+                    
+                    const response = await makeRequest(`${API_BASE_URL}/notification.php?action=list`, {
+                        method: 'GET',
+                        headers: headers,
+                        timeout: 10000
+                    });
+                    
+                    if (!response.ok) {
+                        // 如果是 401 错误，可能是 token 过期，尝试刷新 token 后重试
+                        if (response.status === 401) {
+                            console.log('Token expired, trying to refresh...');
+                            const refreshed = await refreshToken();
+                            if (refreshed) {
+                                const newToken = getStoredToken();
+                                if (newToken) {
+                                    headers['Authorization'] = `Bearer ${newToken}`;
+                                    console.log('Retrying with refreshed token...');
+                                    const retryResponse = await makeRequest(`${API_BASE_URL}/notification.php?action=list`, {
+                                        method: 'GET',
+                                        headers: headers,
+                                        timeout: 10000
+                                    });
+                                    
+                                    if (!retryResponse.ok) {
+                                        throw new Error('API 请求失败，状态码: ' + retryResponse.status);
+                                    }
+                                    
+                                    const retryResult = await retryResponse.json();
+                                    console.log('备用实现 API 响应（重试）:', retryResult);
+                                    return retryResult;
+                                }
+                            } else {
+                                console.log('Token refresh failed, but keeping existing token...');
+                                // 不清除 token，因为可能 refresh_token.php 文件不存在
+                                // 但是 token 可能仍然有效，或者用户可以通过重新登录获取新 token
+                            }
+                        }
+                        throw new Error('API 请求失败，状态码: ' + response.status);
+                    }
+                    
+                    const result = await response.json();
+                    console.log('备用实现 API 响应:', result);
+                    return result;
+                } catch (error) {
+                    console.error('获取通知失败:', error);
+                    return {
+                        success: false,
+                        message: '获取通知失败: ' + error.message
+                    };
+                }
+            };
+        } else {
+            console.log('使用 api.js 中的 getNotifications 实现');
+        }
+
+        // 确保 markNotificationAsRead 函数存在
+        if (typeof markNotificationAsRead === 'undefined') {
+            console.warn('markNotificationAsRead 函数未定义，使用备用实现');
+            window.markNotificationAsRead = async function(notificationId) {
+                try {
+                    const API_BASE_URL = typeof API_CONFIG !== 'undefined' ? API_CONFIG.baseUrl : '/api';
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+                    
+                    // 添加认证头
+                    const token = await getValidToken();
+                    if (token) {
+                        headers['Authorization'] = `Bearer ${token}`;
+                    }
+                    
+                    const response = await makeRequest(`${API_BASE_URL}/notification.php?action=mark_read`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({ notification_id: notificationId }),
+                        timeout: 10000
+                    });
+                    
+                    if (!response.ok) {
+                        // 如果是 401 错误，可能是 token 过期，尝试刷新 token 后重试
+                        if (response.status === 401) {
+                            console.log('Token expired, trying to refresh...');
+                            const refreshed = await refreshToken();
+                            if (refreshed) {
+                                const newToken = getStoredToken();
+                                if (newToken) {
+                                    headers['Authorization'] = `Bearer ${newToken}`;
+                                    console.log('Retrying with refreshed token...');
+                                    const retryResponse = await makeRequest(`${API_BASE_URL}/notification.php?action=mark_read`, {
+                                        method: 'POST',
+                                        headers: headers,
+                                        body: JSON.stringify({ notification_id: notificationId }),
+                                        timeout: 10000
+                                    });
+                                    
+                                    if (!retryResponse.ok) {
+                                        throw new Error('API 请求失败，状态码: ' + retryResponse.status);
+                                    }
+                                    
+                                    const retryResult = await retryResponse.json();
+                                    console.log('备用实现 API 响应（重试）:', retryResult);
+                                    return retryResult;
+                                }
+                            } else {
+                                console.log('Token refresh failed, but keeping existing token...');
+                                // 不清除 token，因为可能 refresh_token.php 文件不存在
+                                // 但是 token 可能仍然有效，或者用户可以通过重新登录获取新 token
+                            }
+                        }
+                        throw new Error('API 请求失败，状态码: ' + response.status);
+                    }
+                    
+                    const result = await response.json();
+                    return result;
+                } catch (error) {
+                    console.error('标记通知已读失败:', error);
+                    return {
+                        success: false,
+                        message: '标记通知已读失败: ' + error.message
+                    };
+                }
+            };
+        }
+
         function switchProfileTab(tab) {
             // 移除所有标签的active类
             document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
@@ -728,7 +1123,9 @@
 
         async function loadNotifications(resetPage = true) {
             try {
+                console.log('Loading notifications...');
                 const result = await getNotifications();
+                console.log('Notifications loaded:', result);
 
                 if (result.success) {
                     allNotifications = result.data.notifications;
@@ -737,10 +1134,31 @@
                     }
                     displayNotifications();
                 } else {
-                    showNotificationMessage(result.message, 'error');
+                    // 根据错误消息提供更详细的错误提示
+                    let errorMessage = result.message || '获取通知失败';
+                    if (errorMessage.includes('401')) {
+                        errorMessage = '未授权访问，请重新登录';
+                    } else if (errorMessage.includes('403')) {
+                        errorMessage = '权限不足，无法获取通知';
+                    } else if (errorMessage.includes('404')) {
+                        errorMessage = '通知服务不可用，请稍后重试';
+                    } else if (errorMessage.includes('500')) {
+                        errorMessage = '服务器内部错误，请稍后重试';
+                    }
+                    showNotificationMessage(errorMessage, 'error');
                 }
             } catch (error) {
-                showNotificationMessage('加载通知失败: ' + error.message, 'error');
+                console.error('Error loading notifications:', error);
+                // 根据错误类型提供更详细的错误提示
+                let errorMessage = '加载通知失败';
+                if (error.message.includes('Network')) {
+                    errorMessage = '网络连接失败，请检查网络设置';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = '请求超时，请稍后重试';
+                } else if (error.message.includes('parse')) {
+                    errorMessage = '服务器响应格式错误，请稍后重试';
+                }
+                showNotificationMessage(errorMessage + ': ' + error.message, 'error');
             }
         }
 
@@ -923,16 +1341,39 @@
 
         async function markAsRead(notificationId) {
             try {
-                const result = await markNotificationAsRead(notificationId);
+                console.log('Marking notification as read:', notificationId);
+                const result = await window.markNotificationAsRead(notificationId);
+                console.log('Mark as read result:', result);
 
                 if (result.success) {
                     showNotificationMessage('标记成功', 'success');
                     loadNotifications(false);
                 } else {
-                    showNotificationMessage(result.message, 'error');
+                    // 根据错误消息提供更详细的错误提示
+                    let errorMessage = result.message || '标记失败';
+                    if (errorMessage.includes('401')) {
+                        errorMessage = '未授权访问，请重新登录';
+                    } else if (errorMessage.includes('403')) {
+                        errorMessage = '权限不足，无法标记通知';
+                    } else if (errorMessage.includes('404')) {
+                        errorMessage = '通知不存在或已被删除';
+                    } else if (errorMessage.includes('500')) {
+                        errorMessage = '服务器内部错误，请稍后重试';
+                    }
+                    showNotificationMessage(errorMessage, 'error');
                 }
             } catch (error) {
-                showNotificationMessage('标记失败', 'error');
+                console.error('Error marking notification as read:', error);
+                // 根据错误类型提供更详细的错误提示
+                let errorMessage = '标记失败';
+                if (error.message.includes('Network')) {
+                    errorMessage = '网络连接失败，请检查网络设置';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = '请求超时，请稍后重试';
+                } else if (error.message.includes('parse')) {
+                    errorMessage = '服务器响应格式错误，请稍后重试';
+                }
+                showNotificationMessage(errorMessage + ': ' + error.message, 'error');
             }
         }
 
@@ -1019,6 +1460,48 @@
             }
         }
 
+        // 确保 deleteAccount 函数存在
+        if (typeof deleteAccount === 'undefined') {
+            console.warn('deleteAccount 函数未定义，使用备用实现');
+            window.deleteAccount = async function(password) {
+                try {
+                    // 直接调用 API
+                    const API_BASE_URL = typeof API_CONFIG !== 'undefined' ? API_CONFIG.baseUrl : '/api';
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+                    
+                    // 添加认证头
+                    const token = getStoredToken();
+                    if (token) {
+                        headers['Authorization'] = `Bearer ${token}`;
+                    }
+                    
+                    console.log('使用备用实现调用 API:', API_BASE_URL + '/delete_account.php');
+                    const response = await makeRequest(`${API_BASE_URL}/delete_account.php`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({ password: password }),
+                        timeout: 10000
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('API 请求失败，状态码: ' + response.status);
+                    }
+                    
+                    const result = await response.json();
+                    console.log('备用实现 API 响应:', result);
+                    return result;
+                } catch (error) {
+                    console.error('注销账户失败:', error);
+                    return {
+                        success: false,
+                        message: '网络错误，请检查连接' + error.message
+                    };
+                }
+            };
+        }
+
         async function submitDeleteAccount() {
             const passwordInput = document.getElementById('delete-account-password');
             const password = passwordInput.value.trim();
@@ -1029,7 +1512,8 @@
             }
             
             try {
-                const result = await deleteAccount(password);
+                // 使用 window.deleteAccount 确保函数存在
+                const result = await window.deleteAccount(password);
                 
                 if (result.success) {
                     closeDeleteAccountDialog();
@@ -1114,6 +1598,11 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            console.log('=== DOMContentLoaded 事件触发 ===');
+            console.log('getNotifications 最终状态:', typeof getNotifications !== 'undefined' ? '已定义' : '未定义');
+            console.log('loadNotifications 函数定义:', typeof loadNotifications !== 'undefined' ? '已定义' : '未定义');
+            console.log('================================');
+            
             const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
                 currentUser = JSON.parse(storedUser);
@@ -1128,6 +1617,7 @@
                 }
                 
                 // 预加载通知数据，确保切换标签时能立即显示
+                console.log('开始预加载通知数据...');
                 loadNotifications();
             } else {
                 showMessage('请先登录', 'error');
@@ -1237,3 +1727,4 @@
 </body>
 
 </html>
+
